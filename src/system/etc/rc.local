@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+powertop --auto-tune
+
+exit 0

@@ -1,0 +1,9 @@
+[core]
+	editor = vim
+	excludesfile = /home/morgan/.gitignore_global
+[user]
+	email = morgan.auchede@gmail.com
+	name = Morgan Auchede
+[alias]
+	lg = log --graph --pretty=tformat:\"%Cred%h%Creset -%C(cyan)%d %Creset%s %Cgreen(%an %cr)%Creset\" --abbrev-commit --date=relative
+	oops = commit --amend -C HEAD

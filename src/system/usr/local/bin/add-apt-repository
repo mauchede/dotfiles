@@ -1,0 +1,9 @@
+#!/bin/bash
+set -e
+
+/usr/bin/add-apt-repository "$@"
+
+TEMPFILE=$(mktemp)
+awk '!NF || !seen[$0]++' /etc/apt/sources.list > $TEMPFILE
+mv $TEMPFILE /etc/apt/sources.list
+chmod 644 /etc/apt/sources.list

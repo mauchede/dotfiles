@@ -1,0 +1,17 @@
+#!/bin/bash
+
+TTY=$([ -t 0 ] && echo "true" || echo "false")
+USER=$(id -u)
+HOME=$(getent passwd $USER | cut -d: -f6)
+
+[[ -z $VERSION ]] && VERSION="5.6"
+
+docker run \
+    --env HOME=$HOME \
+    --interactive \
+    --net host \
+    --rm \
+    --tty=$TTY \
+    --user $USER \
+    --volume $HOME:$HOME \
+    mysql:$VERSION mysql $*
