@@ -69,7 +69,8 @@ apt-get update
 apt-get install -y --no-install-recommends \
     chromium-browser \
     chromium-browser-l10n \
-    google-talkplugin
+    google-talkplugin \
+    pepperflashplugin-nonfree
 
 # codecs
 

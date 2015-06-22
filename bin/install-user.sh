@@ -58,7 +58,7 @@ chmod a+x $HOME/bin/symfony
 
     ## disable screen auto locking after inactivity
 
-    gsettings set org.gnome.desktop.screensaver lock-delay 0
+    dconf write /org/gnome/desktop/screensaver/lock-enabled false
 
     ## disable sticky edges
 

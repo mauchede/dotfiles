@@ -14,7 +14,7 @@ Files and scripts used to configure my Ubuntu computer.
 
 * Add applications/aliases/commands:
   - `add-apt-repository` (similar to the original command but avoid duplicate sources in `/etc/apt/sources.list`)
-  - `chromium-browser`
+  - `chromium-browser` (with `google-talkplugin` and `pepperflashplugin-nonfree`)
   - `docker`
   - `extract` (easily extract an archive)
   - `filezilla`
