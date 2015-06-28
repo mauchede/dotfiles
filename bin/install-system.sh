@@ -57,7 +57,11 @@ apt-get install -y --no-install-recommends \
 # archives
 
 apt-get install -y --no-install-recommends \
-    rar unrar unzip zip
+    p7zip-full \
+    rar \
+    unrar \
+    unzip \
+    zip
 
 # chromium-browser
 
@@ -96,6 +100,12 @@ apt-get install -y --no-install-recommends \
     git
 
 gem install --no-rdoc --no-ri git-up
+
+# gparted
+
+apt-get install -y --no-install-recommends \
+    gpart \
+    gparted
 
 # homebank
 
