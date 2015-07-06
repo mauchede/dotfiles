@@ -28,28 +28,24 @@ chmod a+x $HOME/bin/symfony
 
     gsettings set com.canonical.Unity always-show-menus true
 
-    ## autohide launcher
+    # configure default applications
 
-    #dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
+    xdg-settings set default-web-browser chromium-browser.desktop
 
     ## configure keyboard shortcuts
 
-        gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
 
+    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'xfce4-terminal'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'xfce4-terminal --drop-down'
+    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding 'F12'
 
-        ### lock the screen with "Super + l"
+    ## configure launcher
 
-        gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
+    #dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
 
-        ### open dropdown terminal with "F12"
-
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'xfce4-terminal'
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'xfce4-terminal --drop-down'
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding 'F12'
-
-    ## configure the launcher favorites
-
-    gsettings set com.canonical.Unity.Launcher favorites "['application://ubiquity.desktop', 'application://nautilus.desktop', 'application://firefox.desktop', 'unity://running-apps', 'unity://devices']"
+    gsettings set com.canonical.Unity.Launcher favorites "['application://nautilus.desktop', 'application://chromium-browser.desktop', 'application://thunderbird.desktop', 'unity://running-apps', 'unity://devices']"
 
     ## configure workspaces
 

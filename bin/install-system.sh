@@ -46,6 +46,7 @@ apt-get install -y --no-install-recommends \
     php5-intl \
     php5-mysqlnd \
     php5-pgsql \
+    php5-readline \
     php5-xdebug
 
 # ruby

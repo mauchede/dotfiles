@@ -18,8 +18,7 @@ Files and scripts used to configure my Ubuntu computer.
   - `docker`
   - `extract` (easily extract an archive)
   - `filezilla`
-  - `git`
-  - `git-up`
+  - `git` (with `git-up`)
   - `homebank`
   - `keepass`
   - `phpstorm`
@@ -43,6 +42,8 @@ With these applications, you can define the version:
 
 ### User modifications
 
+* Use `chromium` as default browser.
+
 * Use `xfce4-terminal` as a dropdown terminal (open / hide it with `F12`).
 
 * Add applications/aliases/commands:
@@ -65,7 +66,7 @@ With these applications, you can define the version:
 
 * Configure unity:
   - always show the menu.
-  - configure the launcher favorites.
+  - configure launcher.
   - disable screen auto locking after inactivity.
   - disable sticky edges.
   - disable the remote lenses.
