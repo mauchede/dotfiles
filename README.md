@@ -12,18 +12,23 @@ Files and scripts used to configure my Ubuntu computer.
   - use `intel_backlight`.
   - use `thermald`.
 
+* Configure unity:
+  - remove file lens.
+
 * Add applications/aliases/commands:
-  - `add-apt-repository` (similar to the original command but avoid duplicate sources in `/etc/apt/sources.list`)
-  - `chromium-browser` (with `google-talkplugin` and `pepperflashplugin-nonfree`)
+  - `add-apt-repository`: similar to the original command but avoid duplicate sources in `/etc/apt/sources.list`
+  - `chromium-browser` with `google-talkplugin` and `pepperflashplugin-nonfree`
   - `docker`
-  - `extract` (easily extract an archive)
+  - `extract` : easily extract an archive
   - `filezilla`
-  - `git` (with `git-up`)
+  - `git` with `git-up`
   - `homebank`
   - `keepass`
+  - `mysql` (dockerized)
   - `phpstorm`
   - `picard`
   - `pidgin`
+  - `postgresql` (dockerized)
   - `remmina`
   - `skype`
   - `soap-ui`
@@ -32,13 +37,9 @@ Files and scripts used to configure my Ubuntu computer.
   - `xfce4-terminal`
   - `xmllint`
 
-* Add applications/aliases/commands:
-  - `mysql`
-  - `psql`
-
-With these applications, you can define the version:
-  - `mysql ...` will use the "default" version (`5.6`).
-  - `VERSION=5.7 mysql ..` will use the version `5.7`.
+For the dockerized applications, you can define the version. For example:
+  - the command `mysql ...` will use the "default" version (`5.6`), `VERSION=5.7 mysql ..` will use the version `5.7`.
+  - the `mysql` service will use the "default" version (`5.6`). To change the version, define a variable `VERSION` in `/etc/default/mysql`.
 
 ### User modifications
 
@@ -67,6 +68,7 @@ With these applications, you can define the version:
 * Configure unity:
   - always show the menu.
   - configure launcher.
+  - disable automount.
   - disable screen auto locking after inactivity.
   - disable sticky edges.
   - disable the remote lenses.

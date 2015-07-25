@@ -2,7 +2,7 @@
 set -e
 
 if [[ -z "$1" ]] ; then
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>" 1>&2
+    echo "Usage: extract <file>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>" 1>&2
     exit 1
 fi
 
@@ -20,77 +20,76 @@ case "$1" in
     *.7z)
         create-folder "${1::-3}"
         7z x "../$1"
-        ;;
+    ;;
 
     *.tar.bz2)
         create-folder "${1::-8}"
         tar xvjf "../$1"
-        ;;
+    ;;
 
     *.bz2)
         create-folder "${1::-4}"
         bunzip2 "../$1"
-        ;;
+    ;;
 
     *.exe)
         create-folder "${1::-4}"
         cabextract "../$1"
-        ;;
+    ;;
 
     *.tar.gz)
         create-folder "${1::-7}"
         tar xvzf "../$1"
-        ;;
+    ;;
 
     *.gz)
         create-folder "${1::-3}"
         gunzip "../$1"
-        ;;
+    ;;
 
     *.lzma)
         create-folder "${1::-5}"
         unlzma "../$1"
-        ;;
+    ;;
 
     *.rar)
-        create-folder "${1::-4}"
-        unrar x -ad "../$1"
-        ;;
+        unrar x -ad "$1"
+    ;;
 
     *.tar)
         create-folder "${1::-4}"
         tar xvf "../$1"
-        ;;
+    ;;
 
     *.tbz2)
         create-folder "${1::-5}"
         tar xvjf "../$1"
-        ;;
+    ;;
 
     *.tgz)
         create-folder "${1::-4}"
         tar "xvzf ../$1"
-        ;;
+    ;;
 
     *.tar.xz)
         create-folder "${1::-7}"
         tar xvJf "../$1"
-        ;;
+    ;;
 
     *.xz)
         create-folder "${1::-3}"
         unxz "../$1"
-        ;;
+    ;;
 
     *.Z)
         create-folder "${1::-2}"
         uncompress "../$1"
-        ;;
+    ;;
 
     *.zip)
         create-folder "${1::-4}"
         unzip "../$1"
-        ;;
+    ;;
 
     *)
         echo "extract: '$1' - unknown archive method" 1>&2

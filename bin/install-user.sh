@@ -52,6 +52,10 @@ chmod a+x $HOME/bin/symfony
     gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ hsize 2
     gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ vsize 1
 
+    ## disable automount
+
+    gsettings set org.gnome.desktop.media-handling automount false
+
     ## disable screen auto locking after inactivity
 
     dconf write /org/gnome/desktop/screensaver/lock-enabled false

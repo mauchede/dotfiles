@@ -7,180 +7,192 @@ if [[ $EUID != 0 ]] ; then
     exit 1
 fi
 
-# base
+# install
 
-add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
-apt-get update
+    ## base
 
-apt-get install -y --no-install-recommends \
-    curl \
-    htop \
-    myspell-fr \
-    powertop \
-    thermald \
-    vim \
-    wget
+    add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+    apt-get update
 
-cp -rT ./src/system /
+    apt-get install -y --no-install-recommends \
+        curl \
+        htop \
+        myspell-fr \
+        powertop \
+        thermald \
+        vim \
+        wget
 
-if grep --quiet intel_pstate=enable /etc/default/grub; then
-    sed -i 's/quiet splash/quiet splash intel_pstate=enable/' /etc/default/grub
-    update-grub
-fi
+    cp -rT ./src/system /
 
-if [[ ! $(cat /etc/sysctl.conf | grep -q "fs.inotify.max_user_watches") ]] ; then
-    echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
-fi
+    if grep --quiet intel_pstate=enable /etc/default/grub; then
+        sed -i 's/quiet splash/quiet splash intel_pstate=enable/' /etc/default/grub
+        update-grub
+    fi
 
-# java
+    if [[ ! $(cat /etc/sysctl.conf | grep -q "fs.inotify.max_user_watches") ]] ; then
+        echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
+    fi
 
-apt-get install -y --no-install-recommends \
-    openjdk-7-jdk \
-    openjdk-7-jre
+    ## java
 
-# php
+    apt-get install -y --no-install-recommends \
+        openjdk-7-jdk \
+        openjdk-7-jre
 
-apt-get install -y --no-install-recommends \
-    php5-cli \
-    php5-curl \
-    php5-intl \
-    php5-mysqlnd \
-    php5-pgsql \
-    php5-readline \
-    php5-xdebug
+    ## php
 
-# ruby
+    apt-get install -y --no-install-recommends \
+        php5-cli \
+        php5-curl \
+        php5-intl \
+        php5-mysqlnd \
+        php5-pgsql \
+        php5-readline \
+        php5-xdebug
 
-apt-get install -y --no-install-recommends \
-    ruby \
-    ruby-dev
+    ## ruby
 
-# archives
+    apt-get install -y --no-install-recommends \
+        ruby \
+        ruby-dev
 
-apt-get install -y --no-install-recommends \
-    p7zip-full \
-    rar \
-    unrar \
-    unzip \
-    zip
+    ## archives
 
-# chromium-browser
+    apt-get install -y --no-install-recommends \
+        p7zip-full \
+        rar \
+        unrar \
+        unzip \
+        zip
 
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+    ## chromium-browser
 
-echo "deb http://dl.google.com/linux/talkplugin/deb/ stable main" > /etc/apt/sources.list.d/google-talkplugin.list
-apt-get update
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 
-apt-get install -y --no-install-recommends \
-    chromium-browser \
-    chromium-browser-l10n \
-    google-talkplugin \
-    pepperflashplugin-nonfree
+    echo "deb http://dl.google.com/linux/talkplugin/deb/ stable main" > /etc/apt/sources.list.d/google-talkplugin.list
+    apt-get update
 
-# codecs
+    apt-get install -y --no-install-recommends \
+        chromium-browser \
+        chromium-browser-l10n \
+        google-talkplugin \
+        pepperflashplugin-nonfree
 
-apt-get install -y \
-    ubuntu-restricted-extras
+    ## codecs
 
-# docker
+    apt-get install -y \
+        ubuntu-restricted-extras
 
-curl -sSL https://get.docker.com/ubuntu/ | sh
-[[ -n $SUDO_USER ]] && adduser $SUDO_USER docker
+    ## docker
 
-curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.2.0/docker-compose-$(uname -s)-$(uname -m)
-chmod +x /usr/local/bin/docker-compose
+    curl -sSL https://get.docker.com/ubuntu/ | sh
+    [[ -n $SUDO_USER ]] && adduser $SUDO_USER docker
 
-# filezilla
+    curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.2.0/docker-compose-$(uname -s)-$(uname -m)
+    chmod +x /usr/local/bin/docker-compose
 
-apt-get install -y --no-install-recommends \
-    filezilla
+    ## filezilla
 
-# git
+    apt-get install -y --no-install-recommends \
+        filezilla
 
-apt-get install -y --no-install-recommends \
-    git
+    ## git
 
-gem install --no-rdoc --no-ri git-up
+    apt-get install -y --no-install-recommends \
+        git
 
-# gparted
+    gem install --no-rdoc --no-ri git-up
 
-apt-get install -y --no-install-recommends \
-    gpart \
-    gparted
+    ## gparted
 
-# homebank
+    apt-get install -y --no-install-recommends \
+        gpart \
+        gparted
 
-add-apt-repository -y ppa:mdoyen/homebank
-apt-get update
+    ## homebank
 
-apt-get install -y --no-install-recommends \
-    homebank
+    add-apt-repository -y ppa:mdoyen/homebank
+    apt-get update
 
-# keepass
+    apt-get install -y --no-install-recommends \
+        homebank
 
-apt-get install -y --no-install-recommends \
-    keepass2
+    ## keepass
 
-# libreoffice
+    apt-get install -y --no-install-recommends \
+        keepass2
 
-apt-get install -y --no-install-recommends \
-    libreoffice \
-    libreoffice-l10n-fr \
-    libreoffice-style-sifr
+    ## libreoffice
 
-# phpstorm
+    apt-get install -y --no-install-recommends \
+        libreoffice \
+        libreoffice-l10n-fr \
+        libreoffice-style-sifr
 
-if [[ ! -d /opt/phpstorm ]] ; then
-    curl -sLo /tmp/PhpStorm-8.0.3.tar.gz http://download.jetbrains.com/webide/PhpStorm-8.0.3.tar.gz
-    tar -zxvf /tmp/PhpStorm-8.0.3.tar.gz -C /opt/
-    mv /opt/PhpStorm-139.1348 /opt/phpstorm
-fi
+    ## phpstorm
 
-# picard
+    if [[ ! -d /opt/phpstorm ]] ; then
+        curl -sLo /tmp/PhpStorm-8.0.3.tar.gz http://download.jetbrains.com/webide/PhpStorm-8.0.3.tar.gz
+        tar -zxvf /tmp/PhpStorm-8.0.3.tar.gz -C /opt/
+        mv /opt/PhpStorm-139.1348 /opt/phpstorm
+    fi
 
-apt-get install -y --no-install-recommends \
-    picard
+    ## picard
 
-# pidgin
+    apt-get install -y --no-install-recommends \
+        picard
 
-apt-get install -y --no-install-recommends \
-    pidgin \
-    pidgin-libnotify
+    ## pidgin
 
-# remmina
+    apt-get install -y --no-install-recommends \
+        pidgin \
+        pidgin-libnotify
 
-apt-get install -y --no-install-recommends \
-    remmina
+    ## remmina
 
-# soapui
+    apt-get install -y --no-install-recommends \
+        remmina
 
-if [[ ! -d /opt/soapui ]] ; then
-    curl -sLo /tmp/SoapUI-5.1.3-linux-bin.tar.gz http://downloads.sourceforge.net/project/soapui/soapui/5.1.3/SoapUI-5.1.3-linux-bin.tar.gz
-    tar -zxvf /tmp/SoapUI-5.1.3-linux-bin.tar.gz -C /opt/
-    mv /opt/SoapUI-5.1.3 /opt/soapui
-fi
+    ## soapui
 
-# skype
+    if [[ ! -d /opt/soapui ]] ; then
+        curl -sLo /tmp/SoapUI-5.1.3-linux-bin.tar.gz http://downloads.sourceforge.net/project/soapui/soapui/5.1.3/SoapUI-5.1.3-linux-bin.tar.gz
+        tar -zxvf /tmp/SoapUI-5.1.3-linux-bin.tar.gz -C /opt/
+        mv /opt/SoapUI-5.1.3 /opt/soapui
+    fi
 
-apt-get install -y \
-    skype
+    ## skype
 
-# virtualbox
+    apt-get install -y \
+        skype
 
-apt-get install -y --no-install-recommends \
-    virtualbox
+    ## unity
 
-# vlc
+    apt-get purge \
+        unity-lens-files
 
-apt-get install -y --no-install-recommends \
-    vlc
+    ## virtualbox
 
-# xfce4-terminal
+    apt-get install -y --no-install-recommends \
+        virtualbox
 
-apt-get install -y --no-install-recommends \
-    xfce4-terminal
+    ## vlc
 
-# xmllint
+    apt-get install -y --no-install-recommends \
+        vlc
 
-apt-get install -y --no-install-recommends \
-    libxml2-utils
+    ## xfce4-terminal
+
+    apt-get install -y --no-install-recommends \
+        xfce4-terminal
+
+    ## xmllint
+
+    apt-get install -y --no-install-recommends \
+        libxml2-utils
+
+# clean
+
+apt-get autoremove
+apt-get clean

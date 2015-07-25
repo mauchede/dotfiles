@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+docker run -v /var/run/docker.sock:/var/run/docker.sock cpuguy83/docker-volumes "$@"

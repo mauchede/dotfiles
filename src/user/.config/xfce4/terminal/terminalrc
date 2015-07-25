@@ -21,4 +21,5 @@ DropdownStatusIcon=FALSE
 DropdownOpacity=80
 DropdownWidth=100
 FontName=Monospace 10
+DropdownKeepOpenDefault=TRUE
 
