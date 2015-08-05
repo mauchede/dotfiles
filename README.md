@@ -16,30 +16,27 @@ Files and scripts used to configure my Ubuntu computer.
   - remove file lens.
 
 * Add applications/aliases/commands:
-  - `add-apt-repository`: similar to the original command but avoid duplicate sources in `/etc/apt/sources.list`
-  - `chromium-browser` with `google-talkplugin` and `pepperflashplugin-nonfree`
-  - `docker`
-  - `extract` : easily extract an archive
-  - `filezilla`
-  - `git` with `git-up`
-  - `homebank`
-  - `keepass`
-  - `mysql` (dockerized)
-  - `phpstorm`
-  - `picard`
-  - `pidgin`
-  - `postgresql` (dockerized)
-  - `remmina`
-  - `skype`
-  - `soap-ui`
-  - `virtualbox`
-  - `vlc`
-  - `xfce4-terminal`
-  - `xmllint`
-
-For the dockerized applications, you can define the version. For example:
-  - the command `mysql ...` will use the "default" version (`5.6`), `VERSION=5.7 mysql ..` will use the version `5.7`.
-  - the `mysql` service will use the "default" version (`5.6`). To change the version, define a variable `VERSION` in `/etc/default/mysql`.
+  - [add-apt-repository](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/add-apt-repository): similar to the original command but avoid duplicate sources
+  - [chromium-browser](https://www.chromium.org/) with `google-talkplugin` and `pepperflashplugin-nonfree`
+  - [docker](https://www.docker.com)
+  - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
+  - [filezilla](https://filezilla-project.org)
+  - [git](https://git-scm.com/)
+  - [git-up](https://github.com/aanand/git-up)
+  - [homebank](http://homebank.free.fr)
+  - [keepass](http://keepass.info)
+  - [mysql](http://www.mysql.com) ([dockerized](https://github.com/mauchede/mysql))
+  - [phpstorm](https://www.jetbrains.com/phpstorm)
+  - [picard](https://picard.musicbrainz.org)
+  - [pidgin](https://pidgin.im)
+  - [postgresql](http://www.postgresql.org)
+  - [remmina](http://freerdp.github.io/Remmina/index.html)
+  - [skype](http://www.skype.com)
+  - [soap-ui](http://www.soapui.org)
+  - [virtualbox](https://www.virtualbox.org)
+  - [vlc](http://www.videolan.org/vlc)
+  - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
+  - [xmllint](http://xmlsoft.org/xmllint.html)
 
 ### User modifications
 

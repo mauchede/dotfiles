@@ -34,23 +34,6 @@ fi
         echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
     fi
 
-    ## java
-
-    apt-get install -y --no-install-recommends \
-        openjdk-7-jdk \
-        openjdk-7-jre
-
-    ## php
-
-    apt-get install -y --no-install-recommends \
-        php5-cli \
-        php5-curl \
-        php5-intl \
-        php5-mysqlnd \
-        php5-pgsql \
-        php5-readline \
-        php5-xdebug
-
     ## ruby
 
     apt-get install -y --no-install-recommends \
@@ -123,12 +106,35 @@ fi
     apt-get install -y --no-install-recommends \
         keepass2
 
+    ## java
+
+    apt-get install -y --no-install-recommends \
+        openjdk-7-jdk \
+        openjdk-7-jre
+
     ## libreoffice
 
     apt-get install -y --no-install-recommends \
         libreoffice \
         libreoffice-l10n-fr \
         libreoffice-style-sifr
+
+    ## mysql
+
+    curl -sLo /etc/init.d/mysql https://raw.githubusercontent.com/mauchede/mysql/master/bin/service
+    curl -sLo /usr/local/bin/mysql https://raw.githubusercontent.com/mauchede/mysql/master/bin/mysql
+
+    ## php
+
+    apt-get install -y --no-install-recommends \
+        php5-apcu \
+        php5-cli \
+        php5-curl \
+        php5-intl \
+        php5-mysqlnd \
+        php5-pgsql \
+        php5-readline \
+        php5-xdebug
 
     ## phpstorm
 
@@ -194,5 +200,5 @@ fi
 
 # clean
 
-apt-get autoremove
+apt-get autoremove -y
 apt-get clean
