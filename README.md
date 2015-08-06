@@ -29,12 +29,13 @@ Files and scripts used to configure my Ubuntu computer.
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [picard](https://picard.musicbrainz.org)
   - [pidgin](https://pidgin.im)
-  - [postgresql](http://www.postgresql.org)
+  - [postgresql](http://www.postgresql.org) ([dockerized](https://github.com/mauchede/postgresql))
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [skype](http://www.skype.com)
   - [soap-ui](http://www.soapui.org)
   - [virtualbox](https://www.virtualbox.org)
   - [vlc](http://www.videolan.org/vlc)
+  - [vsftpd](https://security.appspot.com/vsftpd.html) ([dockerized](https://github.com/mauchede/vsftpd))
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
   - [xmllint](http://xmlsoft.org/xmllint.html)
 
@@ -45,11 +46,11 @@ Files and scripts used to configure my Ubuntu computer.
 * Use `xfce4-terminal` as a dropdown terminal (open / hide it with `F12`).
 
 * Add applications/aliases/commands:
-  - `composer` (dependency management in PHP).
-  - `docker-ip` (get a container IP).
-  - `fuck` (re-run the last command with root privileges).
-  - `melody` (one-file composer scripts).
-  - `ssh-unsafe` (run a ssh client without server key checking).
+  - [composer](https://getcomposer.org/)
+  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): get a container IP
+  - [fuck](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L28): re-run the last command with root privileges
+  - [melody](http://melody.sensiolabs.org/)
+  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L24): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.
@@ -59,8 +60,8 @@ Files and scripts used to configure my Ubuntu computer.
 
 * Configure git:
   - ignore PhpStorm metadata.
-  - add alias `lg` (have more logs about the current project).
-  - add alias `oops` (add the current changes to the previous commit).
+  - add alias [lg](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig#L8): have more logs about the current project
+  - add alias [oops](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig#L9): add the current changes to the previous commit
 
 * Configure unity:
   - always show the menu.
