@@ -19,6 +19,7 @@ Files and scripts used to configure my Ubuntu computer.
   - [add-apt-repository](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/add-apt-repository): similar to the original command but avoid duplicate sources
   - [chromium-browser](https://www.chromium.org/) with `google-talkplugin` and `pepperflashplugin-nonfree`
   - [docker](https://www.docker.com)
+  - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/mauchede/drive))
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [filezilla](https://filezilla-project.org)
   - [git](https://git-scm.com/)
@@ -30,12 +31,12 @@ Files and scripts used to configure my Ubuntu computer.
   - [picard](https://picard.musicbrainz.org)
   - [pidgin](https://pidgin.im)
   - [postgresql](http://www.postgresql.org) ([dockerized](https://github.com/mauchede/postgresql))
+  - [pyftpd](https://github.com/giampaolo/pyftpdlib) ([dockerized](https://github.com/mauchede/pyftpd))
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [skype](http://www.skype.com)
   - [soap-ui](http://www.soapui.org)
   - [virtualbox](https://www.virtualbox.org)
   - [vlc](http://www.videolan.org/vlc)
-  - [vsftpd](https://security.appspot.com/vsftpd.html) ([dockerized](https://github.com/mauchede/vsftpd))
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
   - [xmllint](http://xmlsoft.org/xmllint.html)
 

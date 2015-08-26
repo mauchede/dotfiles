@@ -75,6 +75,11 @@ fi
     curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.2.0/docker-compose-$(uname -s)-$(uname -m)
     chmod +x /usr/local/bin/docker-compose
 
+    ## drive
+
+    curl -sLo /usr/local/bin/drive https://raw.githubusercontent.com/mauchede/drive/master/bin/drive
+    chmod +x /usr/local/bin/drive
+
     ## filezilla
 
     apt-get install -y --no-install-recommends \
@@ -166,6 +171,11 @@ fi
     curl -sLo /usr/local/bin/psql https://raw.githubusercontent.com/mauchede/postgresql/master/bin/psql
     chmod +x /usr/local/bin/psql
 
+    ## pyftpd
+
+    curl -sLo /etc/init.d/pyftpd https://raw.githubusercontent.com/mauchede/pyftpd/master/bin/service
+    chmod +x /etc/init.d/pyftpd
+
     ## remmina
 
     apt-get install -y --no-install-recommends \
@@ -184,6 +194,11 @@ fi
     apt-get install -y \
         skype
 
+    ## ssh
+
+    apt-get install -y --no-install-recommends \
+        sshpass
+
     ## unity
 
     apt-get purge \
@@ -198,11 +213,6 @@ fi
 
     apt-get install -y --no-install-recommends \
         vlc
-
-    ## vsftpd
-
-    curl -sLo /etc/init.d/vsftpd https://raw.githubusercontent.com/mauchede/vsftpd/master/bin/service
-    chmod +x /etc/init.d/vsftpd
 
     ## xfce4-terminal
 
