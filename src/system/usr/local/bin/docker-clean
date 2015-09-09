@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker rm $(docker ps -aq) 2> /dev/null
+docker rmi $(docker images -q --filter "dangling=true") 2> /dev/null

@@ -76,6 +76,10 @@ chmod a+x $HOME/bin/symfony
 
     dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
 
+    ## show battery percentage
+
+    gsettings set com.canonical.indicator.power show-percentage true
+
     ## use recursive search
 
     gsettings set org.gnome.nautilus.preferences enable-interactive-search false

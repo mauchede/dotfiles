@@ -19,13 +19,15 @@ Files and scripts used to configure my Ubuntu computer.
   - [add-apt-repository](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/add-apt-repository): similar to the original command but avoid duplicate sources
   - [chromium-browser](https://www.chromium.org/) with `google-talkplugin` and `pepperflashplugin-nonfree`
   - [docker](https://www.docker.com)
+  - [docker-clean](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/docker-clean): remove stopped containers and dangling images
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/mauchede/drive))
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [filezilla](https://filezilla-project.org)
   - [git](https://git-scm.com/)
-  - [git-up](https://github.com/aanand/git-up)
+  - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/mauchede/git-up))
   - [homebank](http://homebank.free.fr)
   - [keepass](http://keepass.info)
+  - [mnemosyne](http://mnemosyne-proj.org/) ([dockerized](https://github.com/mauchede/mnemosyne))
   - [mysql](http://www.mysql.com) ([dockerized](https://github.com/mauchede/mysql))
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [picard](https://picard.musicbrainz.org)
@@ -73,6 +75,7 @@ Files and scripts used to configure my Ubuntu computer.
   - disable the remote lenses.
   - lock the screen with `Super + l`.
   - minimize applications in launcher.
+  - show battery percentage.
   - use recursive search.
 
 ## How to use this project?

@@ -34,12 +34,6 @@ fi
         echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
     fi
 
-    ## ruby
-
-    apt-get install -y --no-install-recommends \
-        ruby \
-        ruby-dev
-
     ## archives
 
     apt-get install -y --no-install-recommends \
@@ -90,7 +84,8 @@ fi
     apt-get install -y --no-install-recommends \
         git
 
-    gem install --no-rdoc --no-ri git-up
+    curl -sLo /usr/local/bin/git-up https://raw.githubusercontent.com/mauchede/git-up/master/bin/git-up
+    chmod +x /usr/local/bin/git-up
 
     ## gparted
 
@@ -123,6 +118,11 @@ fi
         libreoffice \
         libreoffice-l10n-fr \
         libreoffice-style-sifr
+
+    ## mnemosyne
+
+    curl -sLo /usr/local/bin/mnemosyne https://raw.githubusercontent.com/mauchede/mnemosyne/master/bin/mnemosyne
+    chmod +x /usr/local/bin/mnemosyne
 
     ## mysql
 
