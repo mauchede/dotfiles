@@ -43,6 +43,11 @@ fi
         unzip \
         zip
 
+    ## bower
+
+    curl -sLo /usr/local/bin/bower https://raw.githubusercontent.com/mauchede/bower/master/bin/bower
+    chmod +x /usr/local/bin/bower
+
     ## chromium-browser
 
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -66,7 +71,7 @@ fi
     curl -sSL https://get.docker.com/ubuntu/ | sh
     [[ -n $SUDO_USER ]] && adduser $SUDO_USER docker
 
-    curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.2.0/docker-compose-$(uname -s)-$(uname -m)
+    curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.4.0/docker-compose-$(uname -s)-$(uname -m)
     chmod +x /usr/local/bin/docker-compose
 
     ## drive
@@ -131,6 +136,11 @@ fi
 
     curl -sLo /usr/local/bin/mysql https://raw.githubusercontent.com/mauchede/mysql/master/bin/mysql
     chmod +x /usr/local/bin/mysql
+
+    ## node
+
+    curl -sLo /usr/local/bin/npm https://raw.githubusercontent.com/mauchede/node/master/bin/npm
+    chmod +x /usr/local/bin/npm
 
     ## php
 

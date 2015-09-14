@@ -17,9 +17,9 @@ Files and scripts used to configure my Ubuntu computer.
 
 * Add applications/aliases/commands:
   - [add-apt-repository](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/add-apt-repository): similar to the original command but avoid duplicate sources
+  - [bower](https://github.com/bower/bower) ([dockerized](https://github.com/mauchede/bower))
   - [chromium-browser](https://www.chromium.org/) with `google-talkplugin` and `pepperflashplugin-nonfree`
   - [docker](https://www.docker.com)
-  - [docker-clean](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/docker-clean): remove stopped containers and dangling images
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/mauchede/drive))
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [filezilla](https://filezilla-project.org)
@@ -29,6 +29,7 @@ Files and scripts used to configure my Ubuntu computer.
   - [keepass](http://keepass.info)
   - [mnemosyne](http://mnemosyne-proj.org/) ([dockerized](https://github.com/mauchede/mnemosyne))
   - [mysql](http://www.mysql.com) ([dockerized](https://github.com/mauchede/mysql))
+  - [nodejs](https://nodejs.org) ([dockerized](https://github.com/mauchede/node))
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [picard](https://picard.musicbrainz.org)
   - [pidgin](https://pidgin.im)
@@ -50,10 +51,11 @@ Files and scripts used to configure my Ubuntu computer.
 
 * Add applications/aliases/commands:
   - [composer](https://getcomposer.org/)
-  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): get a container IP
-  - [fuck](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L28): re-run the last command with root privileges
+  - [docker-clean](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): remove stopped containers and dangling images
+  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L21): get a container IP
+  - [fuck](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L29): re-run the last command with root privileges
   - [melody](http://melody.sensiolabs.org/)
-  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L24): run a ssh client without server key checking
+  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L25): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.
