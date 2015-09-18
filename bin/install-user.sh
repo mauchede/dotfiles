@@ -2,84 +2,105 @@
 set -ex
 cd "`dirname "$0"`/.."
 
-# dotfiles
+if [[ $EUID != 0 ]] ; then
+    echo "Impossible to configure an user without root privileges." 1>&2
+    exit 1
+fi
 
-mkdir -p $HOME/bin
-cp -rT ./src/user $HOME/
+if [[ -z $1 ]] || ! id -u $1 >/dev/null 2>&1 ; then
+    echo "Invalid user." 1>&2
+    echo "Usage: $0 [USER]" 1>&2
+    exit 1
+fi
 
-# composer
+# configure system
 
-curl -sS https://getcomposer.org/installer | php -- --install-dir=$HOME/bin
-mv $HOME/bin/composer.phar $HOME/bin/composer
+    ## docker
 
-# melody
+    adduser $1 docker
 
-curl -sLo $HOME/bin/melody http://get.sensiolabs.org/melody.phar
-chmod a+x $HOME/bin/melody
+# configure user
 
-# symfony
+sudo -u $1 -H -s -- <<"EOF"
 
-curl -sLo $HOME/bin/symfony http://symfony.com/installer
-chmod a+x $HOME/bin/symfony
+    ## base
 
-# unity
+    mkdir -p $HOME/bin
+    cp -rT ./src/user $HOME/
 
-    ## always show the menu
+    ## composer
 
-    gsettings set com.canonical.Unity always-show-menus true
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=$HOME/bin
+    mv $HOME/bin/composer.phar $HOME/bin/composer
 
-    # configure default applications
+    ## melody
 
-    xdg-settings set default-web-browser chromium-browser.desktop
+    curl -sLo $HOME/bin/melody http://get.sensiolabs.org/melody.phar
+    chmod a+x $HOME/bin/melody
 
-    ## configure keyboard shortcuts
+    ## symfony
 
-    gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
+    curl -sLo $HOME/bin/symfony http://symfony.com/installer
+    chmod a+x $HOME/bin/symfony
 
-    gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'xfce4-terminal'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'xfce4-terminal --drop-down'
-    gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding 'F12'
+    ## unity
 
-    ## configure launcher
+        ### always show the menu
 
-    #dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
+        gsettings set com.canonical.Unity always-show-menus true
 
-    gsettings set com.canonical.Unity.Launcher favorites "['application://nautilus.desktop', 'application://chromium-browser.desktop', 'application://thunderbird.desktop', 'unity://running-apps', 'unity://devices']"
+        ### configure default applications
 
-    ## configure workspaces
+        xdg-settings set default-web-browser chromium-browser.desktop
 
-    gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ hsize 2
-    gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ vsize 1
+        ### configure keyboard shortcuts
 
-    ## disable automount
+        gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
+        gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'xfce4-terminal'
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'xfce4-terminal --drop-down'
+        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding 'F12'
 
-    gsettings set org.gnome.desktop.media-handling automount false
+        ### configure launcher
 
-    ## disable screen auto locking after inactivity
+        #dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
+        gsettings set com.canonical.Unity.Launcher favorites "['application://nautilus.desktop', 'application://chromium-browser.desktop', 'application://thunderbird.desktop', 'unity://running-apps', 'unity://devices']"
 
-    dconf write /org/gnome/desktop/screensaver/lock-enabled false
+        ### configure workspaces
 
-    ## disable sticky edges
+        gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ hsize 2
+        gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ vsize 1
 
-    dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-capture-mouse false
+        ### disable automount
 
-    ## disable the remote lenses
+        gsettings set org.gnome.desktop.media-handling automount false
 
-    gsettings set com.canonical.Unity.Lenses remote-content-search none
+        ### disable screen auto locking after inactivity
 
-    ## lock the screen with "Super + l"
+        dconf write /org/gnome/desktop/screensaver/lock-enabled false
 
-    gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
+        ### disable sticky edges
 
-    ## minimize applications in launcher
+        dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-capture-mouse false
 
-    dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
+        ### disable the remote lenses
 
-    ## show battery percentage
+        gsettings set com.canonical.Unity.Lenses remote-content-search none
 
-    gsettings set com.canonical.indicator.power show-percentage true
+        ### lock the screen with "Super + l"
 
-    ## use recursive search
+        gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
 
-    gsettings set org.gnome.nautilus.preferences enable-interactive-search false
+        ### minimize applications in launcher
+
+        dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
+
+        ### show battery percentage
+
+        gsettings set com.canonical.indicator.power show-percentage true
+
+        ### use recursive search
+
+        gsettings set org.gnome.nautilus.preferences enable-interactive-search false
+
+EOF
