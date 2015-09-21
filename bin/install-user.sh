@@ -23,6 +23,8 @@ fi
 
 sudo -u $1 -H -s -- <<"EOF"
 
+    set -ex
+
     ## base
 
     mkdir -p $HOME/bin
@@ -48,10 +50,6 @@ sudo -u $1 -H -s -- <<"EOF"
         ### always show the menu
 
         gsettings set com.canonical.Unity always-show-menus true
-
-        ### configure default applications
-
-        xdg-settings set default-web-browser chromium-browser.desktop
 
         ### configure keyboard shortcuts
 
