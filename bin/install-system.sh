@@ -205,7 +205,7 @@ fi
 
     ## unity
 
-    apt-get purge \
+    apt-get purge -y \
         unity-lens-files
 
     ## virtualbox

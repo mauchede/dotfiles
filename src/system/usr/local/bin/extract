@@ -68,7 +68,7 @@ case "$1" in
 
     *.tgz)
         create-folder "${1::-4}"
-        tar "xvzf ../$1"
+        tar xvzf "../$1"
     ;;
 
     *.tar.xz)
