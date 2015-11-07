@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+[[ ! -f $HOME/.psql_history ]] && touch $HOME/.psql_history
+
+[[ -z $IMAGE ]] && IMAGE="postgres"
+[[ -z $TAG ]] && TAG="9.4"
+
+docker run \
+    -e HOME=$HOME \
+    -i \
+    --net host \
+    --rm \
+    -t=$([ -t 0 ] && echo "true" || echo "false") \
+    -v $HOME/.psql_history:/root/.psql_history \
+    $IMAGE:$TAG psql "$@"

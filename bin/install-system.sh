@@ -68,7 +68,9 @@ fi
 
     ## docker
 
-    curl -sSL https://get.docker.com/ubuntu/ | sh
+    if [[ ! -f /usr/bin/docker ]] ; then
+        curl -sSL https://get.docker.com/ | sh
+    fi
 
     curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.4.0/docker-compose-$(uname -s)-$(uname -m)
     chmod +x /usr/local/bin/docker-compose
@@ -109,6 +111,14 @@ fi
 
     apt-get install -y --no-install-recommends \
         keepass2
+
+    ## intellij
+
+    if [[ ! -d /opt/intellij ]] ; then
+        curl -sLo /tmp/ideaIC-14.1.5.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.5.tar.gz
+        tar -zxvf /tmp/ideaIC-14.1.5.tar.gz -C /opt/
+        mv /opt/idea-IC-141.2735.5 /opt/intellij
+    fi
 
     ## java
 
@@ -153,24 +163,27 @@ fi
         php5-readline \
         php5-xdebug
 
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
+    mv /usr/local/bin/composer.phar /usr/local/bin/composer
+
+    curl -sLo /usr/local/bin/melody http://get.sensiolabs.org/melody.phar
+    chmod a+x /usr/local/bin/melody
+
+    curl -sLo /usr/local/bin/symfony http://symfony.com/installer
+    chmod a+x /usr/local/bin/symfony
+
     ## phpstorm
 
     if [[ ! -d /opt/phpstorm ]] ; then
-        curl -sLo /tmp/PhpStorm-8.0.3.tar.gz http://download.jetbrains.com/webide/PhpStorm-8.0.3.tar.gz
-        tar -zxvf /tmp/PhpStorm-8.0.3.tar.gz -C /opt/
-        mv /opt/PhpStorm-139.1348 /opt/phpstorm
+        curl -sLo /tmp/PhpStorm-9.0.2.tar.gz http://download.jetbrains.com/webide/PhpStorm-9.0.2.tar.gz
+        tar -zxvf /tmp/PhpStorm-9.0.2.tar.gz -C /opt/
+        mv /opt/PhpStorm-141.2462 /opt/phpstorm
     fi
 
     ## picard
 
     apt-get install -y --no-install-recommends \
         picard
-
-    ## pidgin
-
-    apt-get install -y --no-install-recommends \
-        pidgin \
-        pidgin-libnotify
 
     ## postgresql
 

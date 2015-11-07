@@ -30,21 +30,6 @@ sudo -u $1 -H -s -- <<"EOF"
     mkdir -p $HOME/bin
     cp -rT ./src/user $HOME/
 
-    ## composer
-
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=$HOME/bin
-    mv $HOME/bin/composer.phar $HOME/bin/composer
-
-    ## melody
-
-    curl -sLo $HOME/bin/melody http://get.sensiolabs.org/melody.phar
-    chmod a+x $HOME/bin/melody
-
-    ## symfony
-
-    curl -sLo $HOME/bin/symfony http://symfony.com/installer
-    chmod a+x $HOME/bin/symfony
-
     ## unity
 
         ### always show the menu
@@ -61,7 +46,7 @@ sudo -u $1 -H -s -- <<"EOF"
 
         ### configure launcher
 
-        #dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
+        dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
         gsettings set com.canonical.Unity.Launcher favorites "['application://nautilus.desktop', 'application://chromium-browser.desktop', 'application://thunderbird.desktop', 'unity://running-apps', 'unity://devices']"
 
         ### configure workspaces

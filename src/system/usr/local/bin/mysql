@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+[[ -z $IMAGE ]] && IMAGE="mysql"
+[[ -z $TAG ]] && TAG="5.6"
+
+docker run \
+    -e HOME=$HOME \
+    -i \
+    --net host \
+    --rm \
+    -t=$([ -t 0 ] && echo "true" || echo "false") \
+    -u $UID \
+    -v $HOME:$HOME \
+    $IMAGE:$TAG mysql "$@"
