@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-[[ -z $IMAGE ]] && IMAGE="node"
-[[ -z $TAG ]] && TAG="slim"
+IMAGE=${IMAGE:-node}
+TAG=${TAG:-slim}
 
 docker run \
     --rm \

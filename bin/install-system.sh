@@ -138,19 +138,6 @@ fi
     curl -sLo /usr/local/bin/mnemosyne https://raw.githubusercontent.com/mauchede/mnemosyne/master/bin/mnemosyne
     chmod +x /usr/local/bin/mnemosyne
 
-    ## mysql
-
-    curl -sLo /etc/init.d/mysql https://raw.githubusercontent.com/mauchede/mysql/master/bin/service
-    chmod +x /etc/init.d/mysql
-
-    curl -sLo /usr/local/bin/mysql https://raw.githubusercontent.com/mauchede/mysql/master/bin/mysql
-    chmod +x /usr/local/bin/mysql
-
-    ## node
-
-    curl -sLo /usr/local/bin/npm https://raw.githubusercontent.com/mauchede/node/master/bin/npm
-    chmod +x /usr/local/bin/npm
-
     ## php
 
     apt-get install -y --no-install-recommends \
@@ -184,14 +171,6 @@ fi
 
     apt-get install -y --no-install-recommends \
         picard
-
-    ## postgresql
-
-    curl -sLo /etc/init.d/postgresql https://raw.githubusercontent.com/mauchede/postgresql/master/bin/service
-    chmod +x /etc/init.d/postgresql
-
-    curl -sLo /usr/local/bin/psql https://raw.githubusercontent.com/mauchede/postgresql/master/bin/psql
-    chmod +x /usr/local/bin/psql
 
     ## remmina
 
@@ -230,11 +209,6 @@ fi
 
     apt-get install -y --no-install-recommends \
         vlc
-
-    ## vsftpd
-
-    curl -sLo /etc/init.d/vsftpd https://raw.githubusercontent.com/mauchede/vsftpd/master/bin/service
-    chmod +x /etc/init.d/vsftpd
 
     ## xfce4-terminal
 
