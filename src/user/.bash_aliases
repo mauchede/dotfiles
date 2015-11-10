@@ -19,6 +19,7 @@ alias mv='mv -i'
 
 alias docker-clean='docker rm $(docker ps -q -f status=exited) 2> /dev/null ; docker rmi $(docker images -q -f "dangling=true") 2> /dev/null || :'
 alias docker-ip='docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
+alias docker-stop='docker kill $(docker ps -q) 2> /dev/null || :'
 
 # ssh
 

@@ -55,9 +55,10 @@ Files and scripts used to configure my Ubuntu computer.
   - [composer](https://getcomposer.org/)
   - [docker-clean](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): remove stopped containers and dangling images
   - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L21): get a container IP
-  - [fuck](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L29): re-run the last command with root privileges
+  - [docker-stop](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L22): stop all containers
+  - [fuck](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L30): re-run the last command with root privileges
   - [melody](http://melody.sensiolabs.org/)
-  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L25): run a ssh client without server key checking
+  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L26): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.
