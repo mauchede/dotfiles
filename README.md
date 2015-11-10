@@ -1,10 +1,6 @@
-# dotfiles
+### What kind of modifications are applied?
 
-Files and scripts used to configure my Ubuntu computer.
-
-## What kind of modifications are applied?
-
-### System modifications
+#### System modifications
 
 * Configure the system for intel hardware:
   - use `intel_pstate` governor.
@@ -45,7 +41,7 @@ Files and scripts used to configure my Ubuntu computer.
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
   - [xmllint](http://xmlsoft.org/xmllint.html)
 
-### User modifications
+#### User modifications
 
 * Use `chromium` as default browser.
 
@@ -83,7 +79,7 @@ Files and scripts used to configure my Ubuntu computer.
   - show battery percentage.
   - use recursive search.
 
-## Usage
+### Usage
 
 To configure the system:
 ```bash
@@ -97,7 +93,7 @@ To configure the user:
 bin/install-user.sh
 ```
 
-## Contributing
+### Contributing
 
 1. Fork it.
 2. Create your branch: `git checkout -b my-new-feature`.
@@ -105,7 +101,7 @@ bin/install-user.sh
 4. Push to the branch: `git push origin my-new-feature`.
 5. Submit a pull request.
 
-## Links
+### Links
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 * [mauchede/bower](https://github.com/mauchede/bower)
