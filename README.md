@@ -22,7 +22,7 @@
   - [filezilla](https://filezilla-project.org)
   - [git](https://git-scm.com/)
   - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/mauchede/git-up))
-  - [homebank](http://homebank.free.fr)
+  - [homebank](http://homebank.free.fr) ([dockerized](https://github.com/mauchede/homebank))
   - [keepass](http://keepass.info)
   - [melody](http://melody.sensiolabs.org/)
   - [mnemosyne](http://mnemosyne-proj.org/) ([dockerized](https://github.com/mauchede/mnemosyne))

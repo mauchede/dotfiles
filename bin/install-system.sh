@@ -101,11 +101,8 @@ fi
 
     ## homebank
 
-    add-apt-repository -y ppa:mdoyen/homebank
-    apt-get update
-
-    apt-get install -y --no-install-recommends \
-        homebank
+    curl -sLo /usr/local/bin/homebank https://github.com/mauchede/homebank/raw/bin/homebank
+    chmod +x /usr/local/bin/homebank
 
     ## keepass
 
@@ -197,7 +194,7 @@ fi
 
     ## unity
 
-    apt-get purge -y \
+    apt-get remove -y --purge \
         unity-lens-files
 
     ## virtualbox
@@ -222,5 +219,5 @@ fi
 
 # clean
 
-apt-get autoremove -y
+apt-get autoremove -y --purge
 apt-get clean
