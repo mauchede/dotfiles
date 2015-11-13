@@ -101,7 +101,7 @@ fi
 
     ## homebank
 
-    curl -sLo /usr/local/bin/homebank https://github.com/mauchede/homebank/raw/bin/homebank
+    curl -sLo /usr/local/bin/homebank https://github.com/mauchede/homebank/raw/master/bin/homebank
     chmod +x /usr/local/bin/homebank
 
     ## keepass
