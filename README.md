@@ -35,7 +35,6 @@
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [skype](http://www.skype.com)
   - [soap-ui](http://www.soapui.org)
-  - [virtualbox](https://www.virtualbox.org)
   - [vlc](http://www.videolan.org/vlc)
   - [vsftpd](https://security.appspot.com/vsftpd.html) ([dockerized](https://github.com/mauchede/vsftpd))
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)

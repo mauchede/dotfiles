@@ -197,11 +197,6 @@ fi
     apt-get remove -y --purge \
         unity-lens-files
 
-    ## virtualbox
-
-    apt-get install -y --no-install-recommends \
-        virtualbox
-
     ## vlc
 
     apt-get install -y --no-install-recommends \
