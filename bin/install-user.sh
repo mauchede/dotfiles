@@ -30,11 +30,21 @@ sudo -u $1 -H -s -- <<"EOF"
     mkdir -p $HOME/bin
     cp -rT ./src/user $HOME/
 
+    ## gedit
+
+    gsettings set org.gnome.gedit.preferences.editor create-backup-copy false
+    gsettings set org.gnome.gedit.preferences.editor display-line-numbers true
+    gsettings set org.gnome.gedit.preferences.editor highlight-current-line true
+    gsettings set org.gnome.gedit.preferences.editor insert-spaces true
+    gsettings set org.gnome.gedit.preferences.editor scheme oblivion
+    gsettings set org.gnome.gedit.preferences.editor wrap-mode none
+
     ## unity
 
-        ### always show the menu
+        ### always show the integrated menus
 
         gsettings set com.canonical.Unity always-show-menus true
+        gsettings set com.canonical.Unity integrated-menus true
 
         ### configure keyboard shortcuts
 
@@ -47,7 +57,7 @@ sudo -u $1 -H -s -- <<"EOF"
         ### configure launcher
 
         dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
-        gsettings set com.canonical.Unity.Launcher favorites "['application://nautilus.desktop', 'application://chromium-browser.desktop', 'application://thunderbird.desktop', 'unity://running-apps', 'unity://devices']"
+        gsettings set com.canonical.Unity.Launcher favorites "['application://chromium-browser.desktop', 'application://thunderbird.desktop', 'unity://running-apps', 'unity://devices']"
 
         ### configure workspaces
 
@@ -57,10 +67,12 @@ sudo -u $1 -H -s -- <<"EOF"
         ### disable automount
 
         gsettings set org.gnome.desktop.media-handling automount false
+        gsettings set org.gnome.desktop.media-handling automount-open false
 
         ### disable screen auto locking after inactivity
 
         dconf write /org/gnome/desktop/screensaver/lock-enabled false
+        gsettings set org.gnome.desktop.session idle-delay 0
 
         ### disable sticky edges
 

@@ -70,6 +70,8 @@ fi
 
     if [[ ! -f /usr/bin/docker ]] ; then
         curl -sSL https://get.docker.com/ | sh
+
+        echo "DOCKER_OPTS=\"-s overlay\"" > /etc/default/docker
     fi
 
     curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.4.0/docker-compose-$(uname -s)-$(uname -m)
@@ -120,8 +122,8 @@ fi
     ## java
 
     apt-get install -y --no-install-recommends \
-        openjdk-7-jdk \
-        openjdk-7-jre
+        openjdk-8-jdk \
+        openjdk-8-jre
 
     ## libreoffice
 
@@ -182,10 +184,10 @@ fi
         mv /opt/SoapUI-5.1.3 /opt/soapui
     fi
 
-    ## skype
+    ## rsync
 
-    apt-get install -y \
-        skype
+    apt-get install -y --no-install-recommends \
+        rsync
 
     ## ssh
 

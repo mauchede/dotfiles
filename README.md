@@ -33,7 +33,7 @@
   - [pidgin](https://pidgin.im)
   - [postgresql](http://www.postgresql.org) (dockerized)
   - [remmina](http://freerdp.github.io/Remmina/index.html)
-  - [skype](http://www.skype.com)
+  - [rsync](https://rsync.samba.org/)
   - [soap-ui](http://www.soapui.org)
   - [vlc](http://www.videolan.org/vlc)
   - [vsftpd](https://security.appspot.com/vsftpd.html) ([dockerized](https://github.com/mauchede/vsftpd))
@@ -41,8 +41,6 @@
   - [xmllint](http://xmlsoft.org/xmllint.html)
 
 #### User modifications
-
-* Use `chromium` as default browser.
 
 * Use `xfce4-terminal` as a dropdown terminal (open / hide it with `F12`).
 
