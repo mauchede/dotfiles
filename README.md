@@ -13,6 +13,7 @@
 
 * Add applications/aliases/commands:
   - [add-apt-repository](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/add-apt-repository): similar to the original command but avoid duplicate sources
+  - [ansible](http://www.ansible.com/)
   - [bower](https://github.com/bower/bower) ([dockerized](https://github.com/mauchede/bower))
   - [chromium-browser](https://www.chromium.org/) with `google-talkplugin` and `pepperflashplugin-nonfree`
   - [composer](https://getcomposer.org/)
@@ -66,6 +67,7 @@
 
 * Configure unity:
   - always show the menu.
+  - change theme: use [Flatabulous](https://github.com/anmoljagetia/Flatabulous).
   - configure launcher.
   - disable automount.
   - disable screen auto locking after inactivity.
@@ -74,6 +76,7 @@
   - lock the screen with `Super + l`.
   - minimize applications in launcher.
   - show battery percentage.
+  - use user background as lock-screen background.
   - use recursive search.
 
 ### Usage

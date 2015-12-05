@@ -7,11 +7,12 @@ if [[ $EUID != 0 ]] ; then
     exit 1
 fi
 
-# install
+# installation
 
     ## base
 
     add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+    add-apt-repository -y ppa:noobslab/icons
     apt-get update
 
     apt-get install -y --no-install-recommends \
@@ -23,8 +24,6 @@ fi
         vim \
         wget
 
-    cp -rT ./src/system /
-
     if grep --quiet intel_pstate=enable /etc/default/grub; then
         sed -i 's/quiet splash/quiet splash intel_pstate=enable/' /etc/default/grub
         update-grub
@@ -33,6 +32,14 @@ fi
     if [[ ! $(cat /etc/sysctl.conf | grep -q "fs.inotify.max_user_watches") ]] ; then
         echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
     fi
+
+    ## ansible
+
+    apt-add-repository -y ppa:ansible/ansible
+    apt-get update
+
+    apt-get install -y --no-install-recommends \
+        ansible
 
     ## archives
 
@@ -70,12 +77,14 @@ fi
 
     if [[ ! -f /usr/bin/docker ]] ; then
         curl -sSL https://get.docker.com/ | sh
-
-        echo "DOCKER_OPTS=\"-s overlay\"" > /etc/default/docker
     fi
 
-    curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.4.0/docker-compose-$(uname -s)-$(uname -m)
-    chmod +x /usr/local/bin/docker-compose
+    if [[ ! -f /usr/local/bin/docker-compose ]] ; then
+        DOCKER_COMPOSE_VERSION="1.4.0"
+
+        curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)
+        chmod +x /usr/local/bin/docker-compose
+    fi
 
     ## drive
 
@@ -114,9 +123,12 @@ fi
     ## intellij
 
     if [[ ! -d /opt/intellij ]] ; then
-        curl -sLo /tmp/ideaIC-14.1.5.tar.gz http://download.jetbrains.com/idea/ideaIC-14.1.5.tar.gz
-        tar -zxvf /tmp/ideaIC-14.1.5.tar.gz -C /opt/
-        mv /opt/idea-IC-141.2735.5 /opt/intellij
+        INTELLIJ_VERSION="14.1.5"
+        INTELLIJ_PACKAGE_VERSION="141.2735.5"
+
+        curl -sLo /tmp/ideaIC-$INTELLIJ_VERSION.tar.gz http://download.jetbrains.com/idea/ideaIC-$INTELLIJ_VERSION.tar.gz
+        tar -zxvf /tmp/ideaIC-$INTELLIJ_VERSION.tar.gz -C /opt/
+        mv /opt/idea-IC-$INTELLIJ_PACKAGE_VERSION /opt/intellij
     fi
 
     ## java
@@ -161,15 +173,28 @@ fi
     ## phpstorm
 
     if [[ ! -d /opt/phpstorm ]] ; then
-        curl -sLo /tmp/PhpStorm-9.0.2.tar.gz http://download.jetbrains.com/webide/PhpStorm-9.0.2.tar.gz
-        tar -zxvf /tmp/PhpStorm-9.0.2.tar.gz -C /opt/
-        mv /opt/PhpStorm-141.2462 /opt/phpstorm
+        PHPSTORM_VERSION="9.0.2"
+        PHPSTORM_PACKAGE_VERSION="141.2462"
+
+        curl -sLo /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz http://download.jetbrains.com/webide/PhpStorm-$PHPSTORM_VERSION.tar.gz
+        tar -zxvf /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz -C /opt/
+        mv /opt/PhpStorm-$PHPSTORM_PACKAGE_VERSION /opt/phpstorm
     fi
 
     ## picard
 
     apt-get install -y --no-install-recommends \
         picard
+
+    ## rancher
+
+    if [[ ! -f /usr/local/bin/rancher-compose ]] ; then
+        RANCHER_VERSION="v0.5.3"
+
+        curl -sLo /tmp/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz "https://github.com/rancher/rancher-compose/releases/download/$RANCHER_VERSION/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz"
+        tar -zxvf /tmp/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz -C /tmp
+        mv /tmp/rancher-compose-$RANCHER_VERSION/rancher-compose /usr/local/bin/rancher-compose
+    fi
 
     ## remmina
 
@@ -179,9 +204,11 @@ fi
     ## soapui
 
     if [[ ! -d /opt/soapui ]] ; then
-        curl -sLo /tmp/SoapUI-5.1.3-linux-bin.tar.gz http://downloads.sourceforge.net/project/soapui/soapui/5.1.3/SoapUI-5.1.3-linux-bin.tar.gz
-        tar -zxvf /tmp/SoapUI-5.1.3-linux-bin.tar.gz -C /opt/
-        mv /opt/SoapUI-5.1.3 /opt/soapui
+        SOAPUI_VERSION="5.1.3"
+
+        curl -sLo /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz http://downloads.sourceforge.net/project/soapui/soapui/$SOAPUI_VERSION/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz
+        tar -zxvf /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz -C /opt/
+        mv /opt/SoapUI-$SOAPUI_VERSION /opt/soapui
     fi
 
     ## rsync
@@ -196,12 +223,20 @@ fi
 
     ## unity
 
+    apt-get install -y --no-install-recommends \
+        ultra-flat-icons
+
     apt-get remove -y --purge \
         unity-lens-files
+
+    if [[ ! -d /usr/share/themes/Flatabulous ]] ; then
+        git clone https://github.com/anmoljagetia/Flatabulous /usr/share/themes/Flatabulous
+    fi
 
     ## vlc
 
     apt-get install -y --no-install-recommends \
+        browser-plugin-vlc \
         vlc
 
     ## xfce4-terminal
@@ -213,6 +248,10 @@ fi
 
     apt-get install -y --no-install-recommends \
         libxml2-utils
+
+# configuration
+
+cp -rT ./src/system /
 
 # clean
 

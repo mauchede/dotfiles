@@ -17,9 +17,13 @@ alias mv='mv -i'
 
 # docker
 
-alias docker-clean='docker rm $(docker ps -q -f status=exited) 2> /dev/null ; docker rmi $(docker images -q -f "dangling=true") 2> /dev/null || :'
+alias docker-clean='docker rm $(docker ps -q -f status=exited) > /dev/null 2>&1 ; docker rmi $(docker images -q -f "dangling=true") > /dev/null 2>&1 || :'
 alias docker-ip='docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
-alias docker-stop='docker kill $(docker ps -q) 2> /dev/null || :'
+alias docker-stop='docker kill $(docker ps -q) > /dev/null 2>&1 || :'
+
+# history
+
+alias history-clean='echo > $HOME/.bash_history ; history -c'
 
 # ssh
 

@@ -46,6 +46,12 @@ sudo -u $1 -H -s -- <<"EOF"
         gsettings set com.canonical.Unity always-show-menus true
         gsettings set com.canonical.Unity integrated-menus true
 
+        ### change theme
+
+        gsettings set org.gnome.desktop.interface icon-theme Ultra-Flat
+        gsettings set org.gnome.desktop.interface gtk-theme Flatabulous
+        gsettings set org.gnome.desktop.wm.preferences theme Flatabulous
+
         ### configure keyboard shortcuts
 
         gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
@@ -56,8 +62,9 @@ sudo -u $1 -H -s -- <<"EOF"
 
         ### configure launcher
 
+        dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 42
         dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
-        gsettings set com.canonical.Unity.Launcher favorites "['application://chromium-browser.desktop', 'application://thunderbird.desktop', 'unity://running-apps', 'unity://devices']"
+        gsettings set com.canonical.Unity.Launcher favorites "['unity://running-apps', 'unity://devices']"
 
         ### configure workspaces
 
@@ -93,6 +100,10 @@ sudo -u $1 -H -s -- <<"EOF"
         ### show battery percentage
 
         gsettings set com.canonical.indicator.power show-percentage true
+
+        ### use user background as lock-screen background
+
+        gsettings set com.canonical.unity-greeter draw-user-backgrounds true
 
         ### use recursive search
 
