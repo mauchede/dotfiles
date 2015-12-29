@@ -11,8 +11,14 @@ fi
 
     ## base
 
-    add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
-    add-apt-repository -y ppa:noobslab/icons
+    if grep --quiet "deb http://archive.canonical.com/ $(lsb_release -cs) partner" /etc/apt/sources.list ; then
+        add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -cs) partner"
+    fi
+
+    if [[ ! -f /etc/apt/sources.list.d/noobslab-ubuntu-icons-$(lsb_release -cs).list ]] ; then
+        add-apt-repository -y ppa:noobslab/icons
+    fi
+
     apt-get update
 
     apt-get install -y --no-install-recommends \
@@ -24,12 +30,12 @@ fi
         vim \
         wget
 
-    if grep --quiet intel_pstate=enable /etc/default/grub; then
+    if ! grep --quiet "intel_pstate=enable" /etc/default/grub ; then
         sed -i 's/quiet splash/quiet splash intel_pstate=enable/' /etc/default/grub
         update-grub
     fi
 
-    if [[ ! $(cat /etc/sysctl.conf | grep -q "fs.inotify.max_user_watches") ]] ; then
+    if ! grep --quiet "fs.inotify.max_user_watches" /etc/sysctl.conf ; then
         echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
     fi
 
@@ -52,8 +58,7 @@ fi
 
     ## bower
 
-    curl -sLo /usr/local/bin/bower https://raw.githubusercontent.com/mauchede/bower/master/bin/bower
-    chmod +x /usr/local/bin/bower
+    curl -sSL https://github.com/timonier/bower/raw/master/bin/installer | bash -s install
 
     ## chromium-browser
 
@@ -88,8 +93,7 @@ fi
 
     ## drive
 
-    curl -sLo /usr/local/bin/drive https://raw.githubusercontent.com/mauchede/drive/master/bin/drive
-    chmod +x /usr/local/bin/drive
+    curl -sSL https://github.com/timonier/drive/raw/master/bin/installer | bash -s install
 
     ## filezilla
 
@@ -101,8 +105,7 @@ fi
     apt-get install -y --no-install-recommends \
         git
 
-    curl -sLo /usr/local/bin/git-up https://raw.githubusercontent.com/mauchede/git-up/master/bin/git-up
-    chmod +x /usr/local/bin/git-up
+    curl -sSL https://github.com/timonier/git-up/raw/master/bin/installer | bash -s install
 
     ## gparted
 
@@ -112,8 +115,7 @@ fi
 
     ## homebank
 
-    curl -sLo /usr/local/bin/homebank https://github.com/mauchede/homebank/raw/master/bin/homebank
-    chmod +x /usr/local/bin/homebank
+    curl -sSL https://github.com/timonier/homebank/raw/master/bin/installer | bash -s install
 
     ## keepass
 
@@ -146,8 +148,7 @@ fi
 
     ## mnemosyne
 
-    curl -sLo /usr/local/bin/mnemosyne https://raw.githubusercontent.com/mauchede/mnemosyne/master/bin/mnemosyne
-    chmod +x /usr/local/bin/mnemosyne
+    curl -sSL https://github.com/timonier/mnemosyne/raw/master/bin/installer | bash -s install
 
     ## php
 
@@ -254,6 +255,10 @@ fi
 cp -rT ./src/system /
 
 # clean
+
+docker rm -f $(docker ps -aq) 2> /dev/null
+docker rmi -f $(docker images -aq) 2> /dev/null
+rm -rf /var/lib/docker
 
 apt-get autoremove -y --purge
 apt-get clean

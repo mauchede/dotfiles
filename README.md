@@ -12,21 +12,20 @@
   - remove file lens.
 
 * Add applications/aliases/commands:
-  - [add-apt-repository](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/add-apt-repository): similar to the original command but avoid duplicate sources
   - [ansible](http://www.ansible.com/)
-  - [bower](https://github.com/bower/bower) ([dockerized](https://github.com/mauchede/bower))
+  - [bower](https://github.com/bower/bower) ([dockerized](https://github.com/timonier/bower))
   - [chromium-browser](https://www.chromium.org/) with `google-talkplugin` and `pepperflashplugin-nonfree`
   - [composer](https://getcomposer.org/)
   - [docker](https://www.docker.com)
-  - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/mauchede/drive))
+  - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [filezilla](https://filezilla-project.org)
   - [git](https://git-scm.com/)
-  - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/mauchede/git-up))
-  - [homebank](http://homebank.free.fr) ([dockerized](https://github.com/mauchede/homebank))
+  - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/timonier/git-up))
+  - [homebank](http://homebank.free.fr) ([dockerized](https://github.com/timonier/homebank))
   - [keepass](http://keepass.info)
   - [melody](http://melody.sensiolabs.org/)
-  - [mnemosyne](http://mnemosyne-proj.org/) ([dockerized](https://github.com/mauchede/mnemosyne))
+  - [mnemosyne](http://mnemosyne-proj.org/) ([dockerized](https://github.com/timonier/mnemosyne))
   - [mysql](http://www.mysql.com) (dockerized)
   - [nodejs](https://nodejs.org) (dockerized)
   - [phpstorm](https://www.jetbrains.com/phpstorm)
@@ -37,7 +36,7 @@
   - [rsync](https://rsync.samba.org/)
   - [soap-ui](http://www.soapui.org)
   - [vlc](http://www.videolan.org/vlc)
-  - [vsftpd](https://security.appspot.com/vsftpd.html) ([dockerized](https://github.com/mauchede/vsftpd))
+  - [vsftpd](https://security.appspot.com/vsftpd.html) ([dockerized](https://github.com/timonier/vsftpd))
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
   - [xmllint](http://xmlsoft.org/xmllint.html)
 
@@ -104,9 +103,10 @@ bin/install-user.sh
 ### Links
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
-* [mauchede/bower](https://github.com/mauchede/bower)
-* [mauchede/drive](https://github.com/mauchede/drive)
-* [mauchede/git-up](https://github.com/mauchede/git-up)
-* [mauchede/mnemosyne](https://github.com/mauchede/mnemosyne)
-* [mauchede/vsftpd](https://github.com/mauchede/vsftpd)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
+* [timonier/bower](https://github.com/timonier/bower)
+* [timonier/drive](https://github.com/timonier/drive)
+* [timonier/git-up](https://github.com/timonier/git-up)
+* [timonier/homebank](https://github.com/timonier/homebank)
+* [timonier/mnemosyne](https://github.com/timonier/mnemosyne)
+* [timonier/vsftpd](https://github.com/timonier/vsftpd)
