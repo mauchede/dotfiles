@@ -62,15 +62,9 @@ fi
 
     ## chromium-browser
 
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-
-    echo "deb http://dl.google.com/linux/talkplugin/deb/ stable main" > /etc/apt/sources.list.d/google-talkplugin.list
-    apt-get update
-
     apt-get install -y --no-install-recommends \
         chromium-browser \
         chromium-browser-l10n \
-        google-talkplugin \
         pepperflashplugin-nonfree
 
     ## codecs
@@ -258,9 +252,13 @@ cp -rT ./src/system /
 
 # clean
 
-docker rm -f $(docker ps -aq) 2> /dev/null
-docker rmi -f $(docker images -aq) 2> /dev/null
-rm -rf /var/lib/docker
+    ## docker
 
-apt-get autoremove -y --purge
-apt-get clean
+    systemctl stop docker
+    rm -rf /var/lib/docker
+    systemctl start docker
+
+    ## apt
+
+    apt-get autoremove -y --purge
+    apt-get clean

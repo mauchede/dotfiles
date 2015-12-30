@@ -14,7 +14,7 @@
 * Add applications/aliases/commands:
   - [ansible](http://www.ansible.com/)
   - [bower](https://github.com/bower/bower) ([dockerized](https://github.com/timonier/bower))
-  - [chromium-browser](https://www.chromium.org/) with `google-talkplugin` and `pepperflashplugin-nonfree`
+  - [chromium-browser](https://www.chromium.org/) with `pepperflashplugin-nonfree`
   - [composer](https://getcomposer.org/)
   - [docker](https://www.docker.com)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
