@@ -162,6 +162,8 @@ fi
         php5-readline \
         php5-xdebug
 
+    rm /etc/php5/cli/conf.d/20-xdebug.ini
+
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
     mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
