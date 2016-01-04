@@ -111,11 +111,6 @@ fi
 
     curl -sSL https://github.com/timonier/homebank/raw/master/bin/installer | bash -s install
 
-    ## keepass
-
-    apt-get install -y --no-install-recommends \
-        keepass2
-
     ## intellij
 
     if [[ ! -d /opt/intellij ]] ; then
@@ -133,12 +128,22 @@ fi
         openjdk-8-jdk \
         openjdk-8-jre
 
+    ## keepass
+
+    apt-get install -y --no-install-recommends \
+        keepass2
+
     ## libreoffice
 
     apt-get install -y --no-install-recommends \
         libreoffice \
         libreoffice-l10n-fr \
         libreoffice-style-sifr
+
+    ## license
+
+    curl -sLo /usr/local/bin/license https://storage.googleapis.com/license-binaries/linux_amd64/license
+    chmod +x /usr/local/bin/license
 
     ## mnemosyne
 

@@ -23,7 +23,10 @@
   - [git](https://git-scm.com/)
   - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/timonier/git-up))
   - [homebank](http://homebank.free.fr) ([dockerized](https://github.com/timonier/homebank))
+  - [intellij](https://www.jetbrains.com/idea/)
   - [keepass](http://keepass.info)
+  - [libreoffice](https://www.libreoffice.org/)
+  - [license](https://github.com/nishanths/license)
   - [melody](http://melody.sensiolabs.org/)
   - [mnemosyne](http://mnemosyne-proj.org/) ([dockerized](https://github.com/timonier/mnemosyne))
   - [mysql](http://www.mysql.com) (dockerized)
@@ -47,11 +50,12 @@
 * Add applications/aliases/commands:
   - [composer](https://getcomposer.org/)
   - [docker-clean](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): remove stopped containers and dangling images
-  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L21): get a container IP
-  - [docker-stop](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L22): stop all containers
+  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L26): get a container IP
+  - [docker-rename](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L30): rename image
+  - [docker-stop](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L34): stop all containers
   - [fuck](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L30): re-run the last command with root privileges
   - [melody](http://melody.sensiolabs.org/)
-  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L26): run a ssh client without server key checking
+  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L48): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.

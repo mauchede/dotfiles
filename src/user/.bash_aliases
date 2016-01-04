@@ -17,9 +17,23 @@ alias mv='mv -i'
 
 # docker
 
-alias docker-clean='docker rm $(docker ps -q -f status=exited) > /dev/null 2>&1 ; docker rmi $(docker images -q -f "dangling=true") > /dev/null 2>&1 ; docker run -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm martin/docker-cleanup-volumes > /dev/null 2>&1'
-alias docker-ip='docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
-alias docker-stop='docker rm -f $(docker ps -q) > /dev/null 2>&1 || :'
+docker-clean() {
+    docker rm $(docker ps -q -f status=exited) > /dev/null 2>&1
+    docker rmi $(docker images -q -f "dangling=true") > /dev/null 2>&1
+    docker run -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm martin/docker-cleanup-volumes > /dev/null 2>&1
+}
+
+docker-ip() {
+    docker inspect --format "{{ .NetworkSettings.IPAddress }}" $1
+}
+
+docker-rename() {
+    docker tag $1 $2 && docker rmi $1 > /dev/null 2>&1
+}
+
+docker-stop() {
+    docker rm -f $(docker ps -q) > /dev/null 2>&1 || :
+}
 
 # php
 
