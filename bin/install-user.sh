@@ -1,17 +1,16 @@
 #!/bin/bash
-set -ex
+set -x
 cd "`dirname "$0"`/.."
 
-if [[ $EUID != 0 ]] ; then
-    echo "Impossible to configure an user without root privileges." 1>&2
-    exit 1
-fi
-
-if [[ -z $1 ]] || ! id -u $1 >/dev/null 2>&1 ; then
-    echo "Invalid user." 1>&2
+fail() {
+    echo $1 1>&2
     echo "Usage: $0 [USER]" 1>&2
     exit 1
-fi
+}
+
+[[ $EUID != 0 ]] && fail "Impossible to configure an user without root privileges."
+[[ $# -lt 1 ]] && fail "Invalid number of arguments"
+[[ ! $(id -u $1 > /dev/null 2>&1) ]] && fail "User $1 does not exist."
 
 # configure system
 
@@ -19,10 +18,13 @@ fi
 
     adduser $1 docker
 
+    ## video
+
+    adduser $1 video
+
 # configure user
 
 sudo -u $1 -H -s -- <<"EOF"
-
     set -ex
 
     ## base
@@ -108,5 +110,4 @@ sudo -u $1 -H -s -- <<"EOF"
         ### use recursive search
 
         gsettings set org.gnome.nautilus.preferences enable-interactive-search false
-
 EOF

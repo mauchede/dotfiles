@@ -1,20 +1,18 @@
 #!/bin/bash
-set -e
-
-if [[ -z "$1" ]] ; then
-    echo "Usage: extract <file>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>" 1>&2
-    exit 1
-fi
-
-if [[ ! -f "$1" ]] ; then
-    echo "extract: '$1' - file does not exist." 1>&2
-    exit 1
-fi
 
 create-folder() {
     mkdir "$1"
     cd "$1"
 }
+
+fail() {
+    echo $1 1>&2
+    echo "Usage: extract [ARCHIVE].<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>" 1>&2
+    exit 1
+}
+
+[[ -z "$1" ]] && fail "Argument ARCHIVE is missing."
+[[ ! -f "$1" ]] && fail "Archive $1 does not exist."
 
 case "$1" in
     *.7z)
@@ -92,6 +90,5 @@ case "$1" in
     ;;
 
     *)
-        echo "extract: '$1' - unknown archive method" 1>&2
-        exit 1
+        fail "Archive $1 is not supported by this script."
 esac

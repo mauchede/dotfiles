@@ -26,6 +26,10 @@ export HISTFILESIZE=${HISTSIZE}
 export HISTIGNORE="ls:cd:[bf]g:exit:clear"
 export HISTCONTROL="ignoreboth"
 
+# xorg configuration
+
+[[ $(declare -Ff setxkbmap) ]] && setxkbmap -option "nbsp:none"
+
 # prompt configuration
 
 __get_terminal_column() {
@@ -84,7 +88,7 @@ __set_prompt () {
 
     # vcs
 
-    if [[ -n $(__git_ps1) ]] ; then
+    if [[ $(declare -Ff __git_ps1) ]] && [[ -n $(__git_ps1) ]] ; then
         # yellow: branch is not up to date
         GIT_COLOR=$YELLOW
 
@@ -106,7 +110,3 @@ __set_prompt () {
 }
 PROMPT_COMMAND='__set_prompt'
 trap 'echo -ne "\e[0m"' DEBUG
-
-# xorg configuration
-
-setxkbmap -option "nbsp:none"

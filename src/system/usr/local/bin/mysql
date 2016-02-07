@@ -1,15 +1,16 @@
 #!/bin/bash
-set -e
 
-IMAGE=${IMAGE:-mysql}
-TAG=${TAG:-5.6}
+USER=$(/usr/bin/id -nu)
+HOME=$(/usr/bin/getent passwd $USER | cut -d: -f6)
 
 docker run \
-    -e HOME=$HOME \
     -i \
+    -t=$([[ -t 0 ]] && echo "true" || echo "false") \
+    -u "$USER" \
+    -v /etc/group:/etc/group:ro \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v "$HOME:$HOME" \
     --net host \
     --rm \
-    -t=$([ -t 0 ] && echo "true" || echo "false") \
-    -u $UID \
-    -v $HOME:$HOME \
-    $IMAGE:$TAG mysql "$@"
+    ${IMAGE:-mysql}:${TAG:-5.6} /usr/bin/mysql "$@"

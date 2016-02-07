@@ -1,6 +1,6 @@
-### What kind of modifications are applied?
+# What kind of modifications are applied?
 
-#### System modifications
+## System modifications
 
 * Configure the system for intel hardware:
   - use `intel_pstate` governor.
@@ -13,12 +13,14 @@
 
 * Add applications/aliases/commands:
   - [ansible](http://www.ansible.com/)
+  - [atom](https://atom.io/) ([dockerized](https://github.com/timonier/atom))
   - [bower](https://github.com/bower/bower) ([dockerized](https://github.com/timonier/bower))
   - [chromium-browser](https://www.chromium.org/) with `pepperflashplugin-nonfree`
   - [composer](https://getcomposer.org/)
   - [docker](https://www.docker.com)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
+  - [extract-xiso](http://sourceforge.net/projects/extract-xiso/) ([dockerized](https://github.com/timonier/extract-xiso))
   - [filezilla](https://filezilla-project.org)
   - [git](https://git-scm.com/)
   - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/timonier/git-up))
@@ -37,13 +39,13 @@
   - [postgresql](http://www.postgresql.org) (dockerized)
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [rsync](https://rsync.samba.org/)
+  - [skype](http://www.skype.com/) ([dockerized](https://github.com/timonier/skype))
   - [soap-ui](http://www.soapui.org)
   - [vlc](http://www.videolan.org/vlc)
-  - [vsftpd](https://security.appspot.com/vsftpd.html) ([dockerized](https://github.com/timonier/vsftpd))
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
   - [xmllint](http://xmlsoft.org/xmllint.html)
 
-#### User modifications
+## User modifications
 
 * Use `xfce4-terminal` as a dropdown terminal (open / hide it with `F12`).
 
@@ -64,7 +66,7 @@
   - add git information.
 
 * Configure git:
-  - ignore PhpStorm metadata.
+  - ignore PhpStorm metadata (`.idea` folder).
   - add alias [lg](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig#L8): have more logs about the current project
   - add alias [oops](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig#L9): add the current changes to the previous commit
 
@@ -82,7 +84,7 @@
   - use user background as lock-screen background.
   - use recursive search.
 
-### Usage
+# Usage
 
 To configure the system:
 ```bash
@@ -96,7 +98,7 @@ To configure the user:
 bin/install-user.sh
 ```
 
-### Contributing
+# Contributing
 
 1. Fork it.
 2. Create your branch: `git checkout -b my-new-feature`.
@@ -104,13 +106,15 @@ bin/install-user.sh
 4. Push to the branch: `git push origin my-new-feature`.
 5. Submit a pull request.
 
-### Links
+# Links
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
+* [timonier/atom](https://github.com/timonier/bower)
 * [timonier/bower](https://github.com/timonier/bower)
 * [timonier/drive](https://github.com/timonier/drive)
+* [timonier/extract-xiso](https://github.com/timonier/extract-xiso)
 * [timonier/git-up](https://github.com/timonier/git-up)
 * [timonier/homebank](https://github.com/timonier/homebank)
 * [timonier/mnemosyne](https://github.com/timonier/mnemosyne)
-* [timonier/vsftpd](https://github.com/timonier/vsftpd)
+* [timonier/skype](https://github.com/timonier/skype)

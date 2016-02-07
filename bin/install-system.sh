@@ -1,11 +1,13 @@
 #!/bin/bash
-set -ex
+set -x
 cd "`dirname "$0"`/.."
 
-if [[ $EUID != 0 ]] ; then
-    echo "Impossible to prepare the system without root privileges." 1>&2
+fail() {
+    echo $1 1>&2
     exit 1
-fi
+}
+
+[[ $EUID != 0 ]] && fail "Impossible to prepare the system without root privileges."
 
 # installation
 
@@ -23,6 +25,7 @@ fi
 
     apt-get install -y --no-install-recommends \
         curl \
+        git \
         htop \
         myspell-fr \
         powertop \
@@ -56,10 +59,6 @@ fi
         unzip \
         zip
 
-    ## bower
-
-    curl -sSL https://github.com/timonier/bower/raw/master/bin/installer | bash -s install
-
     ## chromium-browser
 
     apt-get install -y --no-install-recommends \
@@ -85,31 +84,48 @@ fi
         chmod +x /usr/local/bin/docker-compose
     fi
 
-    ## drive
+        ### atom
 
-    curl -sSL https://github.com/timonier/drive/raw/master/bin/installer | bash -s install
+        curl -sSL https://github.com/timonier/atom/raw/master/bin/installer | bash -s install
+
+        ### bower
+
+        curl -sSL https://github.com/timonier/bower/raw/master/bin/installer | bash -s install
+
+        ### drive
+
+        curl -sSL https://github.com/timonier/drive/raw/master/bin/installer | bash -s install
+
+        ### extract-xiso
+
+        curl -sSL https://github.com/timonier/extract-xiso/raw/master/bin/installer | bash -s install
+
+        ### git-up
+
+        curl -sSL https://github.com/timonier/git-up/raw/master/bin/installer | bash -s install
+
+        ### homebank
+
+        curl -sSL https://github.com/timonier/homebank/raw/master/bin/installer | bash -s install
+
+        ### mnemosyne
+
+        curl -sSL https://github.com/timonier/mnemosyne/raw/master/bin/installer | bash -s install
+
+        ### skype
+
+        curl -sSL https://github.com/timonier/skype/raw/master/bin/installer | bash -s install
 
     ## filezilla
 
     apt-get install -y --no-install-recommends \
         filezilla
 
-    ## git
-
-    apt-get install -y --no-install-recommends \
-        git
-
-    curl -sSL https://github.com/timonier/git-up/raw/master/bin/installer | bash -s install
-
     ## gparted
 
     apt-get install -y --no-install-recommends \
         gpart \
         gparted
-
-    ## homebank
-
-    curl -sSL https://github.com/timonier/homebank/raw/master/bin/installer | bash -s install
 
     ## intellij
 
@@ -144,10 +160,6 @@ fi
 
     curl -sLo /usr/local/bin/license https://storage.googleapis.com/license-binaries/linux_amd64/license
     chmod +x /usr/local/bin/license
-
-    ## mnemosyne
-
-    curl -sSL https://github.com/timonier/mnemosyne/raw/master/bin/installer | bash -s install
 
     ## php
 

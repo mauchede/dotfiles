@@ -1,16 +1,18 @@
 #!/bin/bash
-set -e
+
+USER=$(/usr/bin/id -nu)
+HOME=$(/usr/bin/getent passwd $USER | cut -d: -f6)
 
 [[ ! -f $HOME/.psql_history ]] && touch $HOME/.psql_history
 
-IMAGE=${IMAGE:-postgres}
-TAG=${TAG:-9.4}
-
 docker run \
-    -e HOME=$HOME \
     -i \
+    -t=$([[ -t 0 ]] && echo "true" || echo "false") \
+    -u "$USER" \
+    -v /etc/group:/etc/group:ro \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v "$HOME:$HOME" \
     --net host \
     --rm \
-    -t=$([ -t 0 ] && echo "true" || echo "false") \
-    -v $HOME/.psql_history:/root/.psql_history \
-    $IMAGE:$TAG psql "$@"
+    ${IMAGE:-postgres}:${TAG:-9.4} /usr/lib/postgresql/9.4/bin/psql "$@"

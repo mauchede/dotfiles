@@ -1,16 +1,17 @@
 #!/bin/bash
-set -e
 
-IMAGE=${IMAGE:-node}
-TAG=${TAG:-slim}
+USER=$(/usr/bin/id -nu)
+HOME=$(/usr/bin/getent passwd $USER | cut -d: -f6)
 
 docker run \
-    --rm \
+    -i \
+    -t=$([[ -t 0 ]] && echo "true" || echo "false") \
+    -u "$USER" \
     -v /etc/group:/etc/group:ro \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/localtime:/etc/localtime:ro \
-    -v $HOME:$HOME \
+    -v "$HOME:$HOME" \
     -v "$PWD:$PWD" \
-    -u $USER \
     -w "$PWD" \
-    -ti $IMAGE:$TAG npm "$@"
+    --rm \
+    ${IMAGE:-node}:${TAG:-slim} /usr/local/bin/npm "$@"
