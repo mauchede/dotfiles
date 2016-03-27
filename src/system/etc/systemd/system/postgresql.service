@@ -6,3 +6,6 @@ After=docker.service
 [Service]
 ExecStart=/usr/bin/docker run --name postgresql --net host -v /srv/postgresql:/var/lib/postgresql/data postgres:9.4
 ExecStop=/usr/bin/docker stop postgresql ; /usr/bin/docker rm -f postgresql
+
+[Install]
+WantedBy=multi-user.target

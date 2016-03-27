@@ -1,0 +1,11 @@
+[Unit]
+Description=npm-proxy-cache container
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/bin/docker run --name npm-proxy-cache --net=host -v /srv/npm-proxy-cache:/srv/npm-proxy-cache timonier/npm-proxy-cache:0.4.2 -s /srv/npm-proxy-cache
+ExecStop=/usr/bin/docker stop npm-proxy-cache ; /usr/bin/docker rm -f npm-proxy-cache
+
+[Install]
+WantedBy=multi-user.target
