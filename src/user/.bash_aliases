@@ -18,9 +18,9 @@ alias mv='mv -i'
 # docker
 
 docker-clean() {
-    docker rm $(docker ps -q -f status=exited) > /dev/null 2>&1
-    docker rmi $(docker images -q -f "dangling=true") > /dev/null 2>&1
-    docker run -v $(which docker):/bin/docker -v /var/run/docker.sock:/var/run/docker.sock -v $(readlink -f /var/lib/docker):/var/lib/docker --rm martin/docker-cleanup-volumes > /dev/null 2>&1
+    docker ps -qf status=exited | xargs docker rm > /dev/null 2>&1
+    docker images -qf dangling=true | xargs docker rmi > /dev/null 2>&1
+    docker volume ls -qf dangling=true | xargs -r docker volume rm > /dev/null 2>&1
 }
 
 docker-ip() {

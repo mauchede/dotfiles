@@ -14,7 +14,6 @@
 * Add applications/aliases/commands:
   - [ansible](http://www.ansible.com/)
   - [atom](https://atom.io/) ([dockerized](https://github.com/timonier/atom))
-  - [bower](https://github.com/bower/bower) ([dockerized](https://github.com/timonier/bower))
   - [chromium-browser](https://www.chromium.org/) with `pepperflashplugin-nonfree`
   - [composer](https://getcomposer.org/)
   - [docker](https://www.docker.com)
@@ -110,8 +109,7 @@ bin/install-user.sh
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
-* [timonier/atom](https://github.com/timonier/bower)
-* [timonier/bower](https://github.com/timonier/bower)
+* [timonier/atom](https://github.com/timonier/atom)
 * [timonier/drive](https://github.com/timonier/drive)
 * [timonier/extract-xiso](https://github.com/timonier/extract-xiso)
 * [timonier/git-up](https://github.com/timonier/git-up)

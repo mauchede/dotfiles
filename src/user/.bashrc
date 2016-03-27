@@ -28,7 +28,7 @@ export HISTCONTROL="ignoreboth"
 
 # xorg configuration
 
-[[ $(declare -Ff setxkbmap) ]] && setxkbmap -option "nbsp:none"
+[[ $(which setxkbmap) ]] && setxkbmap -option "nbsp:none"
 
 # prompt configuration
 

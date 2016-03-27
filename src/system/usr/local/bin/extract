@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 create-folder() {
     mkdir "$1"
@@ -11,8 +11,8 @@ fail() {
     exit 1
 }
 
-[[ -z "$1" ]] && fail "Argument ARCHIVE is missing."
-[[ ! -f "$1" ]] && fail "Archive $1 does not exist."
+[ -z "$1" ] && fail "Argument ARCHIVE is missing."
+[ ! -f "$1" ] && fail "Archive $1 does not exist."
 
 case "$1" in
     *.7z)

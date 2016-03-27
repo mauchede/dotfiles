@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -x
 cd "`dirname "$0"`/.."
 
@@ -7,7 +7,7 @@ fail() {
     exit 1
 }
 
-[[ $EUID != 0 ]] && fail "Impossible to prepare the system without root privileges."
+[ $EUID != 0 ] && fail "Impossible to prepare the system without root privileges."
 
 # installation
 
@@ -17,7 +17,7 @@ fail() {
         add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -cs) partner"
     fi
 
-    if [[ ! -f /etc/apt/sources.list.d/noobslab-ubuntu-icons-$(lsb_release -cs).list ]] ; then
+    if [ ! -f /etc/apt/sources.list.d/noobslab-ubuntu-icons-$(lsb_release -cs).list ] ; then
         add-apt-repository -y ppa:noobslab/icons
     fi
 
@@ -73,48 +73,44 @@ fail() {
 
     ## docker
 
-    if [[ ! -f /usr/bin/docker ]] ; then
-        curl -sSL https://get.docker.com/ | sh
+    if [ ! -f /usr/bin/docker ] ; then
+        curl -sL "https://get.docker.com/" | sh
     fi
 
-    if [[ ! -f /usr/local/bin/docker-compose ]] ; then
+    if [ ! -f /usr/local/bin/docker-compose ] ; then
         DOCKER_COMPOSE_VERSION="1.4.0"
 
-        curl -sLo /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)
+        curl -sLo /usr/local/bin/docker-compose "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)"
         chmod +x /usr/local/bin/docker-compose
     fi
 
         ### atom
 
-        curl -sSL https://github.com/timonier/atom/raw/master/bin/installer | bash -s install
-
-        ### bower
-
-        curl -sSL https://github.com/timonier/bower/raw/master/bin/installer | bash -s install
+        curl -sL "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s install
 
         ### drive
 
-        curl -sSL https://github.com/timonier/drive/raw/master/bin/installer | bash -s install
+        curl -sL "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s install
 
         ### extract-xiso
 
-        curl -sSL https://github.com/timonier/extract-xiso/raw/master/bin/installer | bash -s install
+        curl -sL "https://github.com/timonier/extract-xiso/raw/master/bin/installer" | sh -s install
 
         ### git-up
 
-        curl -sSL https://github.com/timonier/git-up/raw/master/bin/installer | bash -s install
+        curl -sL "https://github.com/timonier/git-up/raw/master/bin/installer" | sh -s install
 
         ### homebank
 
-        curl -sSL https://github.com/timonier/homebank/raw/master/bin/installer | bash -s install
+        curl -sL "https://github.com/timonier/homebank/raw/master/bin/installer" | sh -s install
 
         ### mnemosyne
 
-        curl -sSL https://github.com/timonier/mnemosyne/raw/master/bin/installer | bash -s install
+        curl -sL "https://github.com/timonier/mnemosyne/raw/master/bin/installer" | sh -s install
 
         ### skype
 
-        curl -sSL https://github.com/timonier/skype/raw/master/bin/installer | bash -s install
+        curl -sL "https://github.com/timonier/skype/raw/master/bin/installer" | sh -s install
 
     ## filezilla
 
@@ -129,11 +125,11 @@ fail() {
 
     ## intellij
 
-    if [[ ! -d /opt/intellij ]] ; then
+    if [ ! -d /opt/intellij ] ; then
         INTELLIJ_VERSION="14.1.5"
         INTELLIJ_PACKAGE_VERSION="141.2735.5"
 
-        curl -sLo /tmp/ideaIC-$INTELLIJ_VERSION.tar.gz http://download.jetbrains.com/idea/ideaIC-$INTELLIJ_VERSION.tar.gz
+        curl -sLo /tmp/ideaIC-$INTELLIJ_VERSION.tar.gz "http://download.jetbrains.com/idea/ideaIC-$INTELLIJ_VERSION.tar.gz"
         tar -zxvf /tmp/ideaIC-$INTELLIJ_VERSION.tar.gz -C /opt/
         mv /opt/idea-IC-$INTELLIJ_PACKAGE_VERSION /opt/intellij
     fi
@@ -158,7 +154,7 @@ fail() {
 
     ## license
 
-    curl -sLo /usr/local/bin/license https://storage.googleapis.com/license-binaries/linux_amd64/license
+    curl -sLo /usr/local/bin/license "https://storage.googleapis.com/license-binaries/linux_amd64/license"
     chmod +x /usr/local/bin/license
 
     ## php
@@ -175,22 +171,22 @@ fail() {
 
     rm /etc/php5/cli/conf.d/20-xdebug.ini
 
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
+    curl -sL "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
     mv /usr/local/bin/composer.phar /usr/local/bin/composer
 
-    curl -sLo /usr/local/bin/melody http://get.sensiolabs.org/melody.phar
+    curl -sLo /usr/local/bin/melody "http://get.sensiolabs.org/melody.phar"
     chmod a+x /usr/local/bin/melody
 
-    curl -sLo /usr/local/bin/symfony http://symfony.com/installer
+    curl -sLo /usr/local/bin/symfony "http://symfony.com/installer"
     chmod a+x /usr/local/bin/symfony
 
     ## phpstorm
 
-    if [[ ! -d /opt/phpstorm ]] ; then
+    if [ ! -d /opt/phpstorm ] ; then
         PHPSTORM_VERSION="9.0.2"
         PHPSTORM_PACKAGE_VERSION="141.2462"
 
-        curl -sLo /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz http://download.jetbrains.com/webide/PhpStorm-$PHPSTORM_VERSION.tar.gz
+        curl -sLo /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz "http://download.jetbrains.com/webide/PhpStorm-$PHPSTORM_VERSION.tar.gz"
         tar -zxvf /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz -C /opt/
         mv /opt/PhpStorm-$PHPSTORM_PACKAGE_VERSION /opt/phpstorm
     fi
@@ -202,7 +198,7 @@ fail() {
 
     ## rancher
 
-    if [[ ! -f /usr/local/bin/rancher-compose ]] ; then
+    if [ ! -f /usr/local/bin/rancher-compose ] ; then
         RANCHER_VERSION="v0.5.3"
 
         curl -sLo /tmp/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz "https://github.com/rancher/rancher-compose/releases/download/$RANCHER_VERSION/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz"
@@ -217,10 +213,10 @@ fail() {
 
     ## soapui
 
-    if [[ ! -d /opt/soapui ]] ; then
+    if [ ! -d /opt/soapui ] ; then
         SOAPUI_VERSION="5.1.3"
 
-        curl -sLo /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz http://downloads.sourceforge.net/project/soapui/soapui/$SOAPUI_VERSION/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz
+        curl -sLo /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz "http://downloads.sourceforge.net/project/soapui/soapui/$SOAPUI_VERSION/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz"
         tar -zxvf /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz -C /opt/
         mv /opt/SoapUI-$SOAPUI_VERSION /opt/soapui
     fi
@@ -243,7 +239,7 @@ fail() {
     apt-get remove -y --purge \
         unity-lens-files
 
-    if [[ ! -d /usr/share/themes/Flatabulous ]] ; then
+    if [ ! -d /usr/share/themes/Flatabulous ] ; then
         git clone https://github.com/anmoljagetia/Flatabulous /usr/share/themes/Flatabulous
     fi
 

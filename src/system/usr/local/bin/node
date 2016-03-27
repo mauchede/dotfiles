@@ -13,5 +13,6 @@ docker run \
     -v "$HOME:$HOME" \
     -v "$PWD:$PWD" \
     -w "$PWD" \
+    --net=host \
     --rm \
-    ${IMAGE:-node}:${TAG:-5.9} /bin/bash -c "echo > /dev/null && /usr/local/bin/npm $*"
+    ${IMAGE:-node}:${TAG:-5.9} /bin/bash -c "echo > /dev/null && /usr/local/bin/node $*"
