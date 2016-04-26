@@ -9,43 +9,44 @@ fail() {
 
 [ $EUID != 0 ] && fail "Impossible to prepare the system without root privileges."
 
-# installation
+# preparation
 
-    ## base
+    ## update
+
+    apt-get update
+    apt-get upgrade -y
+
+    ## install base
 
     if grep --quiet "deb http://archive.canonical.com/ $(lsb_release -cs) partner" /etc/apt/sources.list ; then
         add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -cs) partner"
+        apt-get update
     fi
-
-    if [ ! -f /etc/apt/sources.list.d/noobslab-ubuntu-icons-$(lsb_release -cs).list ] ; then
-        add-apt-repository -y ppa:noobslab/icons
-    fi
-
-    apt-get update
 
     apt-get install -y --no-install-recommends \
         curl \
         git \
         htop \
-        myspell-fr \
-        powertop \
-        thermald \
         vim \
         wget
 
-    if ! grep --quiet "intel_pstate=enable" /etc/default/grub ; then
-        sed -i 's/quiet splash/quiet splash intel_pstate=enable/' /etc/default/grub
-        update-grub
+    ## install docker
+
+    if [ ! -f /usr/bin/docker ] ; then
+        curl -sL "https://get.docker.com/" | sh
+
+        cp -rT ./src/system/etc/default/docker /etc/default/docker
+        cp -rT ./src/system/etc/systemd/system/docker.service.d /etc/systemd/system/docker.service.d
+
+        systemctl stop docker
+        rm -rf /var/lib/docker
+        systemctl daemon-reload
+        systemctl start docker
     fi
 
-    if ! grep --quiet "fs.inotify.max_user_watches" /etc/sysctl.conf ; then
-        echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf
-    fi
+# installation
 
     ## ansible
-
-    apt-add-repository -y ppa:ansible/ansible
-    apt-get update
 
     apt-get install -y --no-install-recommends \
         ansible
@@ -59,6 +60,12 @@ fail() {
         unzip \
         zip
 
+    cp -rT ./src/system/usr/local/bin/extract /usr/local/bin/extract
+
+    ## atom
+
+    curl -sL "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s install
+
     ## chromium-browser
 
     apt-get install -y --no-install-recommends \
@@ -71,11 +78,7 @@ fail() {
     apt-get install -y \
         ubuntu-restricted-extras
 
-    ## docker
-
-    if [ ! -f /usr/bin/docker ] ; then
-        curl -sL "https://get.docker.com/" | sh
-    fi
+    ## docker-compose
 
     if [ ! -f /usr/local/bin/docker-compose ] ; then
         DOCKER_COMPOSE_VERSION="1.4.0"
@@ -84,38 +87,22 @@ fail() {
         chmod +x /usr/local/bin/docker-compose
     fi
 
-        ### atom
+    ## drive
 
-        curl -sL "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s install
+    curl -sL "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s install
 
-        ### drive
+    ## extract-xiso
 
-        curl -sL "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s install
-
-        ### extract-xiso
-
-        curl -sL "https://github.com/timonier/extract-xiso/raw/master/bin/installer" | sh -s install
-
-        ### git-up
-
-        curl -sL "https://github.com/timonier/git-up/raw/master/bin/installer" | sh -s install
-
-        ### homebank
-
-        curl -sL "https://github.com/timonier/homebank/raw/master/bin/installer" | sh -s install
-
-        ### mnemosyne
-
-        curl -sL "https://github.com/timonier/mnemosyne/raw/master/bin/installer" | sh -s install
-
-        ### skype
-
-        curl -sL "https://github.com/timonier/skype/raw/master/bin/installer" | sh -s install
+    curl -sL "https://github.com/timonier/extract-xiso/raw/master/bin/installer" | sh -s install
 
     ## filezilla
 
     apt-get install -y --no-install-recommends \
         filezilla
+
+    ## git-up
+
+    curl -sL "https://github.com/timonier/git-up/raw/master/bin/installer" | sh -s install
 
     ## gparted
 
@@ -123,15 +110,19 @@ fail() {
         gpart \
         gparted
 
+    ## homebank
+
+    curl -sL "https://github.com/timonier/homebank/raw/master/bin/installer" | sh -s install
+
     ## intellij
 
     if [ ! -d /opt/intellij ] ; then
         INTELLIJ_VERSION="14.1.5"
-        INTELLIJ_PACKAGE_VERSION="141.2735.5"
+        INTELLIJ_BUILD="141.2735.5"
 
         curl -sLo /tmp/ideaIC-$INTELLIJ_VERSION.tar.gz "http://download.jetbrains.com/idea/ideaIC-$INTELLIJ_VERSION.tar.gz"
         tar -zxvf /tmp/ideaIC-$INTELLIJ_VERSION.tar.gz -C /opt/
-        mv /opt/idea-IC-$INTELLIJ_PACKAGE_VERSION /opt/intellij
+        mv /opt/idea-IC-$INTELLIJ_BUILD /opt/intellij
     fi
 
     ## java
@@ -157,19 +148,49 @@ fail() {
     curl -sLo /usr/local/bin/license "https://storage.googleapis.com/license-binaries/linux_amd64/license"
     chmod +x /usr/local/bin/license
 
+    ## mnemosyne
+
+    curl -sL "https://github.com/timonier/mnemosyne/raw/master/bin/installer" | sh -s install
+
+    ## myspell
+
+    apt-get install -y --no-install-recommends \
+        myspell-fr
+
+    ## mysql
+
+    if [ ! -f /etc/systemd/mysql.service ] ; then
+        cp -rT ./src/system/etc/systemd/system/mysql.service /etc/systemd/system/mysql.service
+        systemctl daemon-reload
+    fi
+
+    cp -rT ./src/system/usr/local/bin/mysql /usr/local/bin/mysql
+
+    ## nodejs
+
+    cp -rT ./src/system/usr/local/bin/node /usr/local/bin/node
+    cp -rT ./src/system/usr/local/bin/npm /usr/local/bin/npm
+
+    ## npm-proxy-cache
+
+    if [ ! -f /etc/systemd/npm-proxy-cache.service ] ; then
+        cp -rT ./src/system/etc/systemd/system/npm-proxy-cache.service /etc/systemd/system/npm-proxy-cache.service
+        systemctl daemon-reload
+    fi
+
     ## php
 
     apt-get install -y --no-install-recommends \
-        php5-apcu \
-        php5-cli \
-        php5-curl \
-        php5-intl \
-        php5-mysqlnd \
-        php5-pgsql \
-        php5-readline \
-        php5-xdebug
+        php-apcu \
+        php-cli \
+        php-curl \
+        php-intl \
+        php-mysql \
+        php-pgsql \
+        php-readline \
+        php-xdebug
 
-    rm /etc/php5/cli/conf.d/20-xdebug.ini
+    rm /etc/php/7.0/cli/conf.d/20-xdebug.ini
 
     curl -sL "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
     mv /usr/local/bin/composer.phar /usr/local/bin/composer
@@ -184,17 +205,33 @@ fail() {
 
     if [ ! -d /opt/phpstorm ] ; then
         PHPSTORM_VERSION="9.0.2"
-        PHPSTORM_PACKAGE_VERSION="141.2462"
+        PHPSTORM_BUILD="141.2462"
 
         curl -sLo /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz "http://download.jetbrains.com/webide/PhpStorm-$PHPSTORM_VERSION.tar.gz"
         tar -zxvf /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz -C /opt/
-        mv /opt/PhpStorm-$PHPSTORM_PACKAGE_VERSION /opt/phpstorm
+        mv /opt/PhpStorm-$PHPSTORM_BUILD /opt/phpstorm
     fi
 
     ## picard
 
     apt-get install -y --no-install-recommends \
         picard
+
+    ## postgresql
+
+    if [ ! -f /etc/systemd/postgresql.service ] ; then
+        cp -rT ./src/system/etc/systemd/system/postgresql.service /etc/systemd/system/postgresql.service
+        systemctl daemon-reload
+    fi
+
+    cp -rT ./src/system/usr/local/bin/psql /usr/local/bin/psql
+
+    ## powertop
+
+    apt-get install -y --no-install-recommends \
+        powertop
+
+    cp -rT ./src/system/etc/rc.local /etc/rc.local
 
     ## rancher
 
@@ -211,12 +248,16 @@ fail() {
     apt-get install -y --no-install-recommends \
         remmina
 
+    ## skype
+
+    curl -sL "https://github.com/timonier/skype/raw/master/bin/installer" | sh -s install
+
     ## soapui
 
     if [ ! -d /opt/soapui ] ; then
         SOAPUI_VERSION="5.1.3"
 
-        curl -sLo /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz "http://downloads.sourceforge.net/project/soapui/soapui/$SOAPUI_VERSION/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz"
+        curl -sLo /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz "http://smartbearsoftware.com/distrib/soapui/$SOAPUI_VERSION/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz"
         tar -zxvf /tmp/SoapUI-$SOAPUI_VERSION-linux-bin.tar.gz -C /opt/
         mv /opt/SoapUI-$SOAPUI_VERSION /opt/soapui
     fi
@@ -231,17 +272,15 @@ fail() {
     apt-get install -y --no-install-recommends \
         sshpass
 
-    ## unity
+    ## thermald
 
     apt-get install -y --no-install-recommends \
-        ultra-flat-icons
+        thermald
 
-    apt-get remove -y --purge \
-        unity-lens-files
+    ## unity-tweak-tool
 
-    if [ ! -d /usr/share/themes/Flatabulous ] ; then
-        git clone https://github.com/anmoljagetia/Flatabulous /usr/share/themes/Flatabulous
-    fi
+    apt-get install -y --no-install-recommends \
+        unity-tweak-tool
 
     ## vlc
 
@@ -261,15 +300,20 @@ fail() {
 
 # configuration
 
-cp -rT ./src/system /
+    ## intel hardware
+
+    if ! grep --quiet "intel_pstate=enable" /etc/default/grub ; then
+        sed -i 's/quiet splash/quiet splash intel_pstate=enable/' /etc/default/grub
+        update-grub
+    fi
+
+    if ! grep --quiet "fs.inotify.max_user_watches" /etc/sysctl.conf ; then
+        echo "fs.inotify.max_user_watches=524288" | tee -a /etc/sysctl.conf
+    fi
+
+    cp -rT ./src/system/usr/share/X11/xorg.conf.d/20-intel.conf /usr/share/X11/xorg.conf.d/20-intel.conf
 
 # clean
-
-    ## docker
-
-    systemctl stop docker
-    rm -rf /var/lib/docker
-    systemctl start docker
 
     ## apt
 

@@ -41,6 +41,7 @@
   - [rsync](https://rsync.samba.org/)
   - [skype](http://www.skype.com/) ([dockerized](https://github.com/timonier/skype))
   - [soap-ui](http://www.soapui.org)
+  - [unity-tweak-tool](https://github.com/freyja-dev/unity-tweak-tool)
   - [vlc](http://www.videolan.org/vlc)
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
   - [xmllint](http://xmlsoft.org/xmllint.html)
@@ -72,7 +73,6 @@
 
 * Configure unity:
   - always show the menu.
-  - change theme: use [Flatabulous](https://github.com/anmoljagetia/Flatabulous).
   - configure launcher.
   - disable automount.
   - disable screen auto locking after inactivity.
@@ -88,14 +88,13 @@
 
 To configure the system:
 ```bash
-sudo apt-get update && sudo apt-get upgrade
 sudo bin/install-system.sh
 sudo powertop --calibrate
 ```
 
 To configure the user:
 ```bash
-bin/install-user.sh
+sudo bin/install-user.sh [USER]
 ```
 
 # Contributing

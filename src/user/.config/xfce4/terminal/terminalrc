@@ -18,9 +18,9 @@ MiscTabPosition=GTK_POS_TOP
 MiscHighlightUrls=TRUE
 MiscScrollAlternateScreen=TRUE
 DropdownStatusIcon=FALSE
-DropdownOpacity=70
+DropdownOpacity=90
 DropdownWidth=100
-FontName=Monospace 10
 DropdownKeepOpenDefault=TRUE
 DropdownHeight=90
+FontName=Monospace 10
 

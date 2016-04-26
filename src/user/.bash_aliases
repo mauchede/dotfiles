@@ -32,7 +32,7 @@ docker-rename() {
 }
 
 docker-stop() {
-    docker rm -f $(docker ps -q) > /dev/null 2>&1 || :
+    docker rm -fv $(docker ps -q) > /dev/null 2>&1 || :
 }
 
 # php

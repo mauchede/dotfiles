@@ -4,7 +4,7 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/bin/docker run --name npm-proxy-cache --net=host -v /srv/npm-proxy-cache:/srv/npm-proxy-cache timonier/npm-proxy-cache:0.4.2 -s /srv/npm-proxy-cache
+ExecStart=/usr/bin/docker run --name npm-proxy-cache --net=host -v /srv/npm-proxy-cache:/srv/npm-proxy-cache timonier/npm-proxy-cache:0.4.2 -e -s /srv/npm-proxy-cache -t 0
 ExecStop=/usr/bin/docker stop npm-proxy-cache ; /usr/bin/docker rm -f npm-proxy-cache
 
 [Install]

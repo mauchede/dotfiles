@@ -10,7 +10,7 @@ fail() {
 
 [ $EUID != 0 ] && fail "Impossible to configure an user without root privileges."
 [ $# -lt 1 ] && fail "Invalid number of arguments"
-[ ! $(id -u $1 > /dev/null 2>&1) ] && fail "User $1 does not exist."
+! $(id -u $1 > /dev/null 2>&1) && fail "User $1 does not exist."
 
 # configure system
 
@@ -48,12 +48,6 @@ sudo -u $1 -H -s -- <<"EOF"
         gsettings set com.canonical.Unity always-show-menus true
         gsettings set com.canonical.Unity integrated-menus true
 
-        ### change theme
-
-        gsettings set org.gnome.desktop.interface icon-theme Ultra-Flat
-        gsettings set org.gnome.desktop.interface gtk-theme Flatabulous
-        gsettings set org.gnome.desktop.wm.preferences theme Flatabulous
-
         ### configure keyboard shortcuts
 
         gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
@@ -64,7 +58,7 @@ sudo -u $1 -H -s -- <<"EOF"
 
         ### configure launcher
 
-        dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 42
+        dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 48
         dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
         gsettings set com.canonical.Unity.Launcher favorites "['unity://running-apps', 'unity://devices']"
 
