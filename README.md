@@ -33,13 +33,13 @@
   - [mysql](http://www.mysql.com) (dockerized)
   - [nodejs](https://nodejs.org) (dockerized)
   - [npm-proxy-cache](https://github.com/runk/npm-proxy-cache) ([dockerized](https://github.com/timonier/npm-proxy-cache))
+  - [php](http://www.php.net) ([dockerized](https://github.com/mauchede/php))
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [picard](https://picard.musicbrainz.org)
   - [pidgin](https://pidgin.im)
   - [postgresql](http://www.postgresql.org) (dockerized)
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [rsync](https://rsync.samba.org/)
-  - [skype](http://www.skype.com/) ([dockerized](https://github.com/timonier/skype))
   - [soap-ui](http://www.soapui.org)
   - [unity-tweak-tool](https://github.com/freyja-dev/unity-tweak-tool)
   - [vlc](http://www.videolan.org/vlc)
@@ -68,8 +68,7 @@
 
 * Configure git:
   - ignore PhpStorm metadata (`.idea` folder).
-  - add alias [lg](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig#L8): have more logs about the current project
-  - add alias [oops](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig#L9): add the current changes to the previous commit
+  - add [aliases](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig)
 
 * Configure unity:
   - always show the menu.
@@ -109,6 +108,7 @@ sudo bin/install-user.sh [USER]
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
+* [human git aliases](http://gggritso.com/human-git-aliases)
 * [npm-proxy-cache](https://github.com/runk/npm-proxy-cache)
 * [timonier/atom](https://github.com/timonier/atom)
 * [timonier/drive](https://github.com/timonier/drive)
@@ -117,4 +117,3 @@ sudo bin/install-user.sh [USER]
 * [timonier/homebank](https://github.com/timonier/homebank)
 * [timonier/mnemosyne](https://github.com/timonier/mnemosyne)
 * [timonier/npm-proxy-cache](https://github.com/timonier/npm-proxy-cache)
-* [timonier/skype](https://github.com/timonier/skype)

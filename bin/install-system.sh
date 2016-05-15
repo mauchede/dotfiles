@@ -81,7 +81,7 @@ fail() {
     ## docker-compose
 
     if [ ! -f /usr/local/bin/docker-compose ] ; then
-        DOCKER_COMPOSE_VERSION="1.4.0"
+        DOCKER_COMPOSE_VERSION="1.7.0"
 
         curl -sLo /usr/local/bin/docker-compose "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)"
         chmod +x /usr/local/bin/docker-compose
@@ -180,26 +180,16 @@ fail() {
 
     ## php
 
-    apt-get install -y --no-install-recommends \
-        php-apcu \
-        php-cli \
-        php-curl \
-        php-intl \
-        php-mysql \
-        php-pgsql \
-        php-readline \
-        php-xdebug
+    curl -sL "https://github.com/mauchede/php/raw/master/bin/installer" | sh -s install
 
-    rm /etc/php/7.0/cli/conf.d/20-xdebug.ini
-
-    curl -sL "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin
-    mv /usr/local/bin/composer.phar /usr/local/bin/composer
+    curl -sLo /usr/local/bin/composer "https://getcomposer.org/composer.phar"
+    chmod +x /usr/local/bin/melody
 
     curl -sLo /usr/local/bin/melody "http://get.sensiolabs.org/melody.phar"
-    chmod a+x /usr/local/bin/melody
+    chmod +x /usr/local/bin/melody
 
     curl -sLo /usr/local/bin/symfony "http://symfony.com/installer"
-    chmod a+x /usr/local/bin/symfony
+    chmod +x /usr/local/bin/symfony
 
     ## phpstorm
 
@@ -307,11 +297,13 @@ fail() {
         update-grub
     fi
 
+    cp -rT ./src/system/usr/share/X11/xorg.conf.d/20-intel.conf /usr/share/X11/xorg.conf.d/20-intel.conf
+
+    ## kernel
+
     if ! grep --quiet "fs.inotify.max_user_watches" /etc/sysctl.conf ; then
         echo "fs.inotify.max_user_watches=524288" | tee -a /etc/sysctl.conf
     fi
-
-    cp -rT ./src/system/usr/share/X11/xorg.conf.d/20-intel.conf /usr/share/X11/xorg.conf.d/20-intel.conf
 
 # clean
 
