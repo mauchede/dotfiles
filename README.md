@@ -107,6 +107,7 @@ sudo bin/install-user.sh [USER]
 # Links
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
+* [docker-clean](https://github.com/ZZROTDesign/docker-clean)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
 * [human git aliases](http://gggritso.com/human-git-aliases)
 * [npm-proxy-cache](https://github.com/runk/npm-proxy-cache)

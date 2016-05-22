@@ -87,6 +87,15 @@ fail() {
         chmod +x /usr/local/bin/docker-compose
     fi
 
+    ## docker-clean
+
+    if [ ! -f /usr/local/bin/docker-clean ] ; then
+        DOCKER_CLEAN_VERSION="2.0.3"
+
+        curl -sLo /usr/local/bin/docker-clean "https://raw.githubusercontent.com/ZZROTDesign/docker-clean/v$DOCKER_CLEAN_VERSION/docker-clean"
+        chmod +x /usr/local/bin/docker-clean
+    fi
+
     ## drive
 
     curl -sL "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s install

@@ -17,22 +17,12 @@ alias mv='mv -i'
 
 # docker
 
-docker-clean() {
-    docker ps -qf status=exited | xargs docker rm > /dev/null 2>&1
-    docker images -qf dangling=true | xargs docker rmi > /dev/null 2>&1
-    docker volume ls -qf dangling=true | xargs -r docker volume rm > /dev/null 2>&1
-}
-
 docker-ip() {
     docker inspect --format "{{ .NetworkSettings.IPAddress }}" $1
 }
 
 docker-rename() {
     docker tag $1 $2 && docker rmi $1 > /dev/null 2>&1
-}
-
-docker-stop() {
-    docker rm -fv $(docker ps -q) > /dev/null 2>&1 || :
 }
 
 # php
