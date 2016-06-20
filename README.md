@@ -8,9 +8,6 @@
   - use `intel_backlight`.
   - use `thermald`.
 
-* Configure unity:
-  - remove file lens.
-
 * Add applications/aliases/commands:
   - [ansible](http://www.ansible.com/)
   - [atom](https://atom.io/) ([dockerized](https://github.com/timonier/atom))
@@ -108,6 +105,7 @@ sudo bin/install-user.sh [USER]
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 * [docker-clean](https://github.com/ZZROTDesign/docker-clean)
+* [files disappears from the launcher Ubuntu 16.04](http://ubuntuforums.org/showthread.php?t=2321285&p=13487098#post13487098)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
 * [human git aliases](http://gggritso.com/human-git-aliases)
 * [npm-proxy-cache](https://github.com/runk/npm-proxy-cache)

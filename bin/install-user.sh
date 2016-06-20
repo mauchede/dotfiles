@@ -32,6 +32,11 @@ sudo -u $1 -H -s -- <<"EOF"
     mkdir -p $HOME/bin
     cp -rT ./src/user $HOME/
 
+    ## atom
+
+    apm install eclipse-keybindings
+    apm install language-docker
+
     ## gedit
 
     gsettings set org.gnome.gedit.preferences.editor create-backup-copy false
