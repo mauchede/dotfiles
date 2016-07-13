@@ -35,7 +35,9 @@ sudo -u $1 -H -s -- <<"EOF"
     ## atom
 
     apm install eclipse-keybindings
+    apm install file-icons
     apm install language-docker
+    apm install open-recent
 
     ## gedit
 
