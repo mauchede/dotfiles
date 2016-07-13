@@ -11,6 +11,7 @@
 * Add applications/aliases/commands:
   - [ansible](http://www.ansible.com/)
   - [atom](https://atom.io/) ([dockerized](https://github.com/timonier/atom))
+  - [blackfire](https://blackfire.io/) (dockerized)
   - [chromium-browser](https://www.chromium.org/) with `pepperflashplugin-nonfree`
   - [composer](https://getcomposer.org/)
   - [docker](https://www.docker.com)
@@ -35,6 +36,7 @@
   - [picard](https://picard.musicbrainz.org)
   - [pidgin](https://pidgin.im)
   - [postgresql](http://www.postgresql.org) (dockerized)
+  - [rabbitmq](https://www.rabbitmq.com/) (dockerized)
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [rsync](https://rsync.samba.org/)
   - [soap-ui](http://www.soapui.org)

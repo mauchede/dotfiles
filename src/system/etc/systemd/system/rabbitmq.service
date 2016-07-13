@@ -1,0 +1,11 @@
+[Unit]
+Description=RabbitMQ container
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/bin/docker run --name rabbitmq --net host rabbitmq:3.6.2-management
+ExecStop=/usr/bin/docker stop rabbitmq ; /usr/bin/docker rm -fv rabbitmq
+
+[Install]
+WantedBy=multi-user.target

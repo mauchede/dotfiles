@@ -1,0 +1,11 @@
+[Unit]
+Description=Blackfire container
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/bin/docker run -e BLACKFIRE_SERVER_ID -e BLACKFIRE_SERVER_TOKEN --name blackfire --net host blackfire/blackfire
+ExecStop=/usr/bin/docker stop blackfire ; /usr/bin/docker rm -fv blackfire
+
+[Install]
+WantedBy=multi-user.target
