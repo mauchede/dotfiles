@@ -33,6 +33,11 @@ alias php='php -dzend_extension=xdebug.so'
 
 alias history-clean='echo > $HOME/.bash_history ; history -c'
 
+# nodejs
+
+alias bower='node_modules/.bin/bower'
+alias gulp='node_modules/.bin/gulp'
+
 # ssh
 
 alias ssh-unsafe='ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile /dev/null"'

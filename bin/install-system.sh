@@ -32,14 +32,18 @@ fail() {
 
     ## install docker
 
-    if [ ! -f /usr/bin/docker ] ; then
-        curl -sL "https://get.docker.com/" | sh
+    if [ ! -f /usr/local/bin/docker ] ; then
+        DOCKER_VERSION="1.12.0"
 
-        cp -rT ./src/system/etc/default/docker /etc/default/docker
-        cp -rT ./src/system/etc/systemd/system/docker.service.d /etc/systemd/system/docker.service.d
+        curl -sLo /tmp/docker.tgz "https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz"
+        tar xvf /tmp/docker.tgz -C /tmp
+        mv /tmp/docker/* /usr/local/bin/
 
-        systemctl stop docker
-        rm -rf /var/lib/docker
+        cp -rT ./src/system/etc/systemd/system/docker.service /etc/systemd/system/docker.service
+        cp -rT ./src/system/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
+
+        groupadd -g 999 docker
+
         systemctl daemon-reload
         systemctl start docker
     fi
@@ -203,10 +207,10 @@ fail() {
     ## phpstorm
 
     if [ ! -d /opt/phpstorm ] ; then
-        PHPSTORM_VERSION="9.0.2"
-        PHPSTORM_BUILD="141.2462"
+        PHPSTORM_VERSION="2016.2"
+        PHPSTORM_BUILD="162.1121.38"
 
-        curl -sLo /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz "http://download.jetbrains.com/webide/PhpStorm-$PHPSTORM_VERSION.tar.gz"
+        curl -sLo /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz "https://download.jetbrains.com/webide/PhpStorm-$PHPSTORM_VERSION.tar.gz"
         tar -zxvf /tmp/PhpStorm-$PHPSTORM_VERSION.tar.gz -C /opt/
         mv /opt/PhpStorm-$PHPSTORM_BUILD /opt/phpstorm
     fi

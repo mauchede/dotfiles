@@ -1,0 +1,17 @@
+[Unit]
+After=network.target docker.socket
+Description=docker engine
+Requires=docker.socket
+
+[Service]
+Delegate=yes
+ExecStart=/usr/local/bin/docker daemon -H fd:// -s overlay
+LimitCORE=infinity
+LimitNOFILE=1048576
+LimitNPROC=1048576
+MountFlags=slave
+TimeoutStartSec=0
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
