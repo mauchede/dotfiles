@@ -7,7 +7,8 @@ fail() {
     exit 1
 }
 
-[ $EUID != 0 ] && fail "Impossible to prepare the system without root privileges."
+[ $EUID != 0 ] && \
+    fail "Impossible to prepare the system without root privileges."
 
 # preparation
 
@@ -32,21 +33,17 @@ fail() {
 
     ## install docker
 
-    if [ ! -f /usr/local/bin/docker ] ; then
-        DOCKER_VERSION="1.12.0"
+    DOCKER_VERSION="1.12.0"
+    curl -sLo /tmp/docker.tgz "https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz"
+    tar xvf /tmp/docker.tgz -C /tmp
+    mv /tmp/docker/* /usr/local/bin/
 
-        curl -sLo /tmp/docker.tgz "https://get.docker.com/builds/Linux/x86_64/docker-$DOCKER_VERSION.tgz"
-        tar xvf /tmp/docker.tgz -C /tmp
-        mv /tmp/docker/* /usr/local/bin/
+    groupadd -g 999 docker
 
-        cp -rT ./src/system/etc/systemd/system/docker.service /etc/systemd/system/docker.service
-        cp -rT ./src/system/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
-
-        groupadd -g 999 docker
-
-        systemctl daemon-reload
-        systemctl start docker
-    fi
+    cp -rT ./src/system/etc/systemd/system/docker.service /etc/systemd/system/docker.service
+    cp -rT ./src/system/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
+    systemctl daemon-reload
+    systemctl restart docker
 
 # installation
 
@@ -70,6 +67,11 @@ fail() {
 
     curl -sL "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s install
 
+    ## blackfire
+
+    cp -rT ./src/system/etc/systemd/system/blackfire.service /etc/systemd/system/blackfire.service
+    systemctl daemon-reload
+
     ## chromium-browser
 
     apt-get install -y --no-install-recommends \
@@ -84,21 +86,15 @@ fail() {
 
     ## docker-compose
 
-    if [ ! -f /usr/local/bin/docker-compose ] ; then
-        DOCKER_COMPOSE_VERSION="1.7.0"
-
-        curl -sLo /usr/local/bin/docker-compose "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)"
-        chmod +x /usr/local/bin/docker-compose
-    fi
+    DOCKER_COMPOSE_VERSION="1.7.0"
+    curl -sLo /usr/local/bin/docker-compose "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)"
+    chmod +x /usr/local/bin/docker-compose
 
     ## docker-clean
 
-    if [ ! -f /usr/local/bin/docker-clean ] ; then
-        DOCKER_CLEAN_VERSION="2.0.3"
-
-        curl -sLo /usr/local/bin/docker-clean "https://raw.githubusercontent.com/ZZROTDesign/docker-clean/v$DOCKER_CLEAN_VERSION/docker-clean"
-        chmod +x /usr/local/bin/docker-clean
-    fi
+    DOCKER_CLEAN_VERSION="2.0.3"
+    curl -sLo /usr/local/bin/docker-clean "https://raw.githubusercontent.com/ZZROTDesign/docker-clean/v$DOCKER_CLEAN_VERSION/docker-clean"
+    chmod +x /usr/local/bin/docker-clean
 
     ## drive
 
@@ -172,10 +168,8 @@ fail() {
 
     ## mysql
 
-    if [ ! -f /etc/systemd/mysql.service ] ; then
-        cp -rT ./src/system/etc/systemd/system/mysql.service /etc/systemd/system/mysql.service
-        systemctl daemon-reload
-    fi
+    cp -rT ./src/system/etc/systemd/system/mysql.service /etc/systemd/system/mysql.service
+    systemctl daemon-reload
 
     cp -rT ./src/system/usr/local/bin/mysql /usr/local/bin/mysql
 
@@ -186,17 +180,15 @@ fail() {
 
     ## npm-proxy-cache
 
-    if [ ! -f /etc/systemd/npm-proxy-cache.service ] ; then
-        cp -rT ./src/system/etc/systemd/system/npm-proxy-cache.service /etc/systemd/system/npm-proxy-cache.service
-        systemctl daemon-reload
-    fi
+    cp -rT ./src/system/etc/systemd/system/npm-proxy-cache.service /etc/systemd/system/npm-proxy-cache.service
+    systemctl daemon-reload
 
     ## php
 
     curl -sL "https://github.com/mauchede/php/raw/master/bin/installer" | sh -s install
 
     curl -sLo /usr/local/bin/composer "https://getcomposer.org/composer.phar"
-    chmod +x /usr/local/bin/melody
+    chmod +x /usr/local/bin/composer
 
     curl -sLo /usr/local/bin/melody "http://get.sensiolabs.org/melody.phar"
     chmod +x /usr/local/bin/melody
@@ -222,10 +214,8 @@ fail() {
 
     ## postgresql
 
-    if [ ! -f /etc/systemd/postgresql.service ] ; then
-        cp -rT ./src/system/etc/systemd/system/postgresql.service /etc/systemd/system/postgresql.service
-        systemctl daemon-reload
-    fi
+    cp -rT ./src/system/etc/systemd/system/postgresql.service /etc/systemd/system/postgresql.service
+    systemctl daemon-reload
 
     cp -rT ./src/system/usr/local/bin/psql /usr/local/bin/psql
 
@@ -236,15 +226,17 @@ fail() {
 
     cp -rT ./src/system/etc/rc.local /etc/rc.local
 
-    ## rancher
+    ## rawdns
 
-    if [ ! -f /usr/local/bin/rancher-compose ] ; then
-        RANCHER_VERSION="v0.5.3"
+    cp -rT ./src/system/etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/NetworkManager.conf
+    cp -rT ./src/system/etc/resolvconf/resolv.conf.d/head /etc/resolvconf/resolv.conf.d/head
 
-        curl -sLo /tmp/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz "https://github.com/rancher/rancher-compose/releases/download/$RANCHER_VERSION/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz"
-        tar -zxvf /tmp/rancher-compose-linux-amd64-$RANCHER_VERSION.tar.gz -C /tmp
-        mv /tmp/rancher-compose-$RANCHER_VERSION/rancher-compose /usr/local/bin/rancher-compose
-    fi
+    mkdir -p /srv/rawdns
+    cp -rT ./src/system/srv/rawdns/rawdns.json /srv/rawdns/rawdns.json
+
+    cp -rT ./src/system/etc/systemd/system/rawdns.service /etc/systemd/system/rawdns.service
+    systemctl daemon-reload
+    systemctl enable rawdns
 
     ## remmina
 

@@ -5,7 +5,7 @@ Requires=docker.socket
 
 [Service]
 Delegate=yes
-ExecStart=/usr/local/bin/docker daemon -H fd:// -s overlay
+ExecStart=/usr/local/bin/docker daemon -H fd:// --bip=172.17.42.1/16 --dns=172.17.42.1 -s overlay
 LimitCORE=infinity
 LimitNOFILE=1048576
 LimitNPROC=1048576

@@ -4,7 +4,7 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/local/bin/docker run --name mailcatcher --net=host timonier/mailcatcher:0.6.4 --ip 0.0.0.0
+ExecStart=/usr/local/bin/docker run --name mailcatcher timonier/mailcatcher:0.6.4 --ip 0.0.0.0
 ExecStop=/usr/local/bin/docker stop mailcatcher ; /usr/local/bin/docker rm -f mailcatcher
 
 [Install]

@@ -4,7 +4,7 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/local/bin/docker run --name postgresql --net host -v /srv/postgresql:/var/lib/postgresql/data postgres:9.4
+ExecStart=/usr/local/bin/docker run --name postgresql -v /srv/postgresql:/var/lib/postgresql/data postgres:9.4
 ExecStop=/usr/local/bin/docker stop postgresql ; /usr/local/bin/docker rm -fv postgresql
 
 [Install]

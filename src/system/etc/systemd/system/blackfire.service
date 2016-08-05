@@ -4,7 +4,7 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/local/bin/docker run --name blackfire --net host -e BLACKFIRE_SERVER_ID -e BLACKFIRE_SERVER_TOKEN blackfire/blackfire
+ExecStart=/usr/local/bin/docker run --name blackfire -e BLACKFIRE_SERVER_ID -e BLACKFIRE_SERVER_TOKEN blackfire/blackfire
 ExecStop=/usr/local/bin/docker stop blackfire ; /usr/bin/docker rm -fv blackfire
 
 [Install]

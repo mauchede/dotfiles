@@ -4,7 +4,7 @@ Requires=docker.service
 After=docker.service
 
 [Service]
-ExecStart=/usr/local/bin/docker run --name rabbitmq --net host rabbitmq:3.6.2-management
+ExecStart=/usr/local/bin/docker run --name rabbitmq rabbitmq:3.6.2-management
 ExecStop=/usr/local/bin/docker stop rabbitmq ; /usr/local/bin/docker rm -fv rabbitmq
 
 [Install]

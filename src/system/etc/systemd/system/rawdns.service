@@ -1,0 +1,11 @@
+[Unit]
+Description=rawdns container
+Requires=docker.service
+After=docker.service
+
+[Service]
+ExecStart=/usr/local/bin/docker run --name rawdns --restart always -p 172.17.42.1:53:53/udp -v /srv/rawdns:/srv/rawdns:ro -v /var/run/docker.sock:/var/run/docker.sock tianon/rawdns:1.4 rawdns /srv/rawdns/rawdns.json
+ExecStop=/usr/local/bin/docker stop rawdns ; /usr/local/bin/docker rm -fv rawdns
+
+[Install]
+WantedBy=multi-user.target

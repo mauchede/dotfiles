@@ -8,9 +8,14 @@ fail() {
     exit 1
 }
 
-[ $EUID != 0 ] && fail "Impossible to configure an user without root privileges."
-[ $# -lt 1 ] && fail "Invalid number of arguments"
-! $(id -u $1 > /dev/null 2>&1) && fail "User $1 does not exist."
+[ $EUID != 0 ] && \
+    fail "Impossible to configure an user without root privileges."
+
+[ $# -lt 1 ] && \
+    fail "Invalid number of arguments"
+
+! $(id -u $1 > /dev/null 2>&1) && \
+    fail "User $1 does not exist."
 
 # configure system
 
