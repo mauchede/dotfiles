@@ -45,6 +45,10 @@ fail() {
     systemctl daemon-reload
     systemctl restart docker
 
+    # configure root
+
+    cp -rT ./src/system/user/.bashrc /root/.bashrc
+
 # installation
 
     ## ansible
@@ -76,8 +80,7 @@ fail() {
 
     apt-get install -y --no-install-recommends \
         chromium-browser \
-        chromium-browser-l10n \
-        pepperflashplugin-nonfree
+        chromium-browser-l10n
 
     ## codecs
 
@@ -185,7 +188,20 @@ fail() {
 
     ## php
 
-    curl -sL "https://github.com/mauchede/php/raw/master/bin/installer" | sh -s install
+    apt-get install -y --no-install-recommends \
+        php-apcu \
+        php-bcmath \
+        php-cli \
+        php-curl \
+        php-intl \
+        php-gd \
+        php-mbstring \
+        php-mysql \
+        php-pgsql \
+        php-readline \
+        php-xdebug \
+        php-xml \
+        php-zip
 
     curl -sLo /usr/local/bin/composer "https://getcomposer.org/composer.phar"
     chmod +x /usr/local/bin/composer
