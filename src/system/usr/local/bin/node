@@ -1,18 +1,20 @@
 #!/bin/sh
 
-UID=$(/usr/bin/id -u)
-HOME=$(/usr/bin/getent passwd $UID | cut -d: -f6)
-
 docker run \
-    -i \
-    -t=$([ -t 0 ] && echo "true" || echo "false") \
-    -u $UID \
-    -v /etc/group:/etc/group:ro \
-    -v /etc/passwd:/etc/passwd:ro \
-    -v /etc/localtime:/etc/localtime:ro \
-    -v "$HOME:$HOME" \
-    -v "$PWD:$PWD" \
-    -w "$PWD" \
-    --net=host \
+    --entrypoint dumb-init \
+    $(env | cut -d= -f1 | awk '{print "--env", $1}') \
+    --interactive="$([ -t 0 ] && echo "true" || echo "false")" \
+    --net host \
     --rm \
-    ${IMAGE:-node}:${TAG:-5.9} /bin/bash -c "echo > /dev/null && /usr/local/bin/node $*"
+    --tty="$([ -t 0 ] && echo "true" || echo "false")" \
+    --volume /etc/group:/etc/group:ro \
+    --volume /etc/localtime:/etc/localtime:ro \
+    --volume /etc/passwd:/etc/passwd:ro \
+    --volume /etc/timezone:/etc/timezone:ro \
+    --volume /run:/run \
+    --volume /tmp:/tmp \
+    --volume /usr/local/sbin:/usr/local/sbin:ro \
+    --volume "$HOME:$HOME" \
+    --volume "$PWD:$PWD" \
+    --workdir "$PWD" \
+    "${IMAGE:-node}:${TAG:-latest}" dumb-entrypoint node "$@"

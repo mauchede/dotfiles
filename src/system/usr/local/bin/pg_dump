@@ -15,4 +15,4 @@ docker run \
     --volume /tmp:/tmp \
     --volume /usr/local/sbin:/usr/local/sbin:ro \
     --volume "$HOME:$HOME" \
-    "${IMAGE:-mysql}:${TAG:-latest}" dumb-entrypoint mysql "$@"
+    "${IMAGE:-postgres}:${TAG:-latest}" dumb-entrypoint pg_dump "$@"

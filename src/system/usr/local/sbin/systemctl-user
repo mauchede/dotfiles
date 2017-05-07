@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ "$#" -lt 2 ] ; then
+    echo "Invalid number of arguments." 1>&2
+    echo "Usage: $(basename "$0") [USER] [...]" 1>&2
+    exit 1
+fi
+
+sudo -u "$1" bash << EOF
+    export XDG_RUNTIME_DIR="/run/user/\${UID}"
+    export DBUS_SESSION_BUS_ADDRESS="unix:path=\${XDG_RUNTIME_DIR}/bus"
+
+    systemctl --user "${@:2}"
+EOF

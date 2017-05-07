@@ -1,20 +1,27 @@
 #!/bin/bash
 
+# Check arguments
+
+fail() {
+    echo "$1" 1>&2
+    echo "Usage: $(basename "$0") [ARCHIVE].<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>" 1>&2
+    exit 1
+}
+
+if [ -z "$1" ] ; then
+    fail "Argument ARCHIVE is missing."
+fi
+
+if [ ! -f "$1" ] ; then
+    fail "Archive $1 does not exist."
+fi
+
+# Extract archive
+
 create-folder() {
     mkdir "$1"
     cd "$1"
 }
-
-fail() {
-    echo $1 1>&2
-    echo "Usage: extract [ARCHIVE].<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>" 1>&2
-    exit 1
-}
-
-[ -z "$1" ] && \
-    fail "Argument ARCHIVE is missing."
-[ ! -f "$1" ] && \
-    fail "Archive $1 does not exist."
 
 case "$1" in
     *.7z)
@@ -24,12 +31,14 @@ case "$1" in
 
     *.tar.bz2)
         create-folder "${1::-8}"
-        tar xvjf "../$1"
+        tar --bzip2 --extract --file "../$1" --verbose
     ;;
 
     *.bz2)
         create-folder "${1::-4}"
-        bunzip2 "../$1"
+        mv "../$1" ./
+        bunzip2 --keep "$1"
+        mv "$1" ../
     ;;
 
     *.exe)
@@ -39,7 +48,7 @@ case "$1" in
 
     *.tar.gz)
         create-folder "${1::-7}"
-        tar xvzf "../$1"
+        tar --extract --file "../$1" --verbose --gzip
     ;;
 
     *.gz)
@@ -58,22 +67,22 @@ case "$1" in
 
     *.tar)
         create-folder "${1::-4}"
-        tar xvf "../$1"
+        tar --extract --file "../$1" --verbose
     ;;
 
     *.tbz2)
         create-folder "${1::-5}"
-        tar xvjf "../$1"
+        tar --bzip2 --extract --file "../$1" --verbose
     ;;
 
     *.tgz)
         create-folder "${1::-4}"
-        tar xvzf "../$1"
+        tar --extract --file "../$1" --gzip --verbose
     ;;
 
     *.tar.xz)
         create-folder "${1::-7}"
-        tar xvJf "../$1"
+        tar --extract --file "../$1" --verbose --xz
     ;;
 
     *.xz)
@@ -92,5 +101,5 @@ case "$1" in
     ;;
 
     *)
-        fail "Archive $1 is not supported by this script."
+        fail "Archive \"$1\" is not supported by this script."
 esac

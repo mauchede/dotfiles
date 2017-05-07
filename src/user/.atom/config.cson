@@ -8,7 +8,5 @@
     ]
   editor:
     showInvisibles: true
-  "exception-reporting":
-    userId: "358c6024-3633-565d-98df-c194cfa6d295"
   welcome:
     showOnStartup: false

@@ -1,17 +1,24 @@
-[Unit]
-After=network.target docker.socket
-Description=docker engine
-Requires=docker.socket
+[Install]
+WantedBy=multi-user.target
 
 [Service]
 Delegate=yes
-ExecStart=/usr/local/bin/docker daemon -H fd:// --bip=172.17.42.1/16 --dns=172.17.42.1 -s overlay
+KillMode=process
 LimitCORE=infinity
-LimitNOFILE=1048576
-LimitNPROC=1048576
-MountFlags=slave
+LimitNOFILE=infinity
+LimitNPROC=infinity
 TimeoutStartSec=0
 Type=notify
 
-[Install]
-WantedBy=multi-user.target
+ExecReload=/bin/kill \
+    --signal HUP \
+    "${MAINPID}"
+
+ExecStart=/usr/local/sbin/dockerd \
+    --bip 172.17.42.1/16 \
+    --dns 172.17.42.1 \
+    --host fd://
+
+[Unit]
+After=network.target
+Requires=docker.socket

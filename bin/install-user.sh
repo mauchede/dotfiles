@@ -1,119 +1,109 @@
 #!/bin/sh
-set -x
-cd "`dirname "$0"`/.."
+set -eux
+cd "$(dirname "$0")/.."
 
 fail() {
-    echo $1 1>&2
-    echo "Usage: $0 [USER]" 1>&2
+    echo "$1" 1>&2
+    echo "Usage: $(basename "$0") [USER]" 1>&2
     exit 1
 }
 
-[ $EUID != 0 ] && \
+if [ "$(id --user)" != 0 ] ; then
     fail "Impossible to configure an user without root privileges."
+fi
 
-[ $# -lt 1 ] && \
+if [ "$#" != 1 ] ; then
     fail "Invalid number of arguments"
+fi
 
-! $(id -u $1 > /dev/null 2>&1) && \
-    fail "User $1 does not exist."
+if ! id --user "$1" > /dev/null 2>&1 ; then
+    fail "User \"$1\" does not exist."
+fi
 
-# configure system
+# Configure system
 
-    ## docker
+    ## Add user to "docker" group
 
-    adduser $1 docker
+    adduser "$1" docker
 
-    ## video
+    ## Add user to "video" group
 
-    adduser $1 video
+    adduser "$1" video
 
-# configure user
+    ## Reload systemd
 
-sudo -u $1 -H -s -- <<"EOF"
-    set -ex
+    systemctl-user "$1" daemon-reload
 
-    ## base
+# Configure user
 
-    mkdir -p $HOME/bin
-    cp -rT ./src/user $HOME/
+sudo --set-home --shell --user "$1" -- <<"EOF"
+    set -eux
 
-    ## atom
+    ## Add specific files / folders
+
+    mkdir --parents "${HOME}/bin"
+
+    cp --no-target-directory --recursive ./src/user "${HOME}/"
+
+    if [ ! -f "${HOME}/.env" ] ; then
+        touch "${HOME}/.env" || :
+    fi
+
+    ## Configure atom
 
     apm install eclipse-keybindings
     apm install file-icons
     apm install language-docker
     apm install open-recent
 
-    ## gedit
+    ## Configure git
 
-    gsettings set org.gnome.gedit.preferences.editor create-backup-copy false
-    gsettings set org.gnome.gedit.preferences.editor display-line-numbers true
-    gsettings set org.gnome.gedit.preferences.editor highlight-current-line true
-    gsettings set org.gnome.gedit.preferences.editor insert-spaces true
-    gsettings set org.gnome.gedit.preferences.editor scheme oblivion
-    gsettings set org.gnome.gedit.preferences.editor wrap-mode none
+        ### Add aliases
 
-    ## unity
+        git config --global alias.amend "commit --amend"
+        git config --global alias.branches "branch --all"
+        git config --global alias.discard "checkout --"
+        git config --global alias.lg "log --abbrev-commit --date=relative --graph --pretty=tformat:\"%Cred%h%Creset -%C(cyan)%d %Creset%s %Cgreen(%an %cr)%Creset\""
+        git config --global alias.oops "commit -C HEAD --amend --reset-author"
+        git config --global alias.stashes "stash list"
+        git config --global alias.tags "tag"
+        git config --global alias.uncommit "reset --"
+        git config --global alias.unstage "reset --quiet HEAD --"
 
-        ### always show the integrated menus
+        ### Configure git
 
-        gsettings set com.canonical.Unity always-show-menus true
-        gsettings set com.canonical.Unity integrated-menus true
+        git config --global core.editor "vim"
+        git config --global core.excludesfile "~/.gitignore_global"
 
-        ### configure keyboard shortcuts
+        if [ ! -f "${HOME}/.gitignore_global" ] ; then
+            touch "${HOME}/.gitignore_global" || :
+        fi
 
-        gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
-        gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ name 'xfce4-terminal'
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command 'xfce4-terminal --drop-down'
-        gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding 'F12'
+        if ! grep --quiet "/.idea" "${HOME}/.env" ; then
+            echo '/.idea' >> "${HOME}/.gitignore_global" || :
+        fi
 
-        ### configure launcher
+    ## Configure phpstorm
 
-        dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 48
-        dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-hide-mode 1
-        gsettings set com.canonical.Unity.Launcher favorites "['unity://running-apps', 'unity://devices']"
+    if [ ! -d "${HOME}/.PhpStorm2017.1" ] ; then
+        mkdir "${HOME}/.PhpStorm2017.1"
+        git clone "https://github.com/mauchede/phpstorm-config" "${HOME}/.PhpStorm2017.1/config"
+    fi
+    git -C "${HOME}/.PhpStorm2017.1/config" up
 
-        ### configure workspaces
+    ## Install composer
 
-        gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ hsize 2
-        gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ vsize 1
+    curl --location --output "${HOME}/bin/composer" "https://getcomposer.org/composer.phar"
+    chmod +x "${HOME}/bin/composer"
 
-        ### disable automount
+    ## Install melody
 
-        gsettings set org.gnome.desktop.media-handling automount false
-        gsettings set org.gnome.desktop.media-handling automount-open false
+    curl --location --output "${HOME}/bin/melody" "http://get.sensiolabs.org/melody.phar"
+    chmod +x "${HOME}/bin/melody"
 
-        ### disable screen auto locking after inactivity
 
-        dconf write /org/gnome/desktop/screensaver/lock-enabled false
-        gsettings set org.gnome.desktop.session idle-delay 0
+    ## install symfony
 
-        ### disable sticky edges
-
-        dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-capture-mouse false
-
-        ### disable the remote lenses
-
-        gsettings set com.canonical.Unity.Lenses remote-content-search none
-
-        ### lock the screen with "Super + l"
-
-        gsettings set org.gnome.settings-daemon.plugins.media-keys screensaver '<Super>l'
-
-        ### minimize applications in launcher
-
-        dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-minimize-window true
-
-        ### show battery percentage
-
-        gsettings set com.canonical.indicator.power show-percentage true
-
-        ### use user background as lock-screen background
-
-        gsettings set com.canonical.unity-greeter draw-user-backgrounds true
-
-        ### use recursive search
-
-        gsettings set org.gnome.nautilus.preferences enable-interactive-search false
+    curl --location --output "${HOME}/bin/symfony" "http://symfony.com/installer"
+    chmod +x "${HOME}/bin/symfony"
 EOF

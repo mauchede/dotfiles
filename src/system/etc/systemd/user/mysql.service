@@ -1,0 +1,24 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+EnvironmentFile=%h/.env
+Environment="IMAGE=mysql:latest"
+Environment="NAME=mysql-%u"
+Restart=always
+TimeoutStartSec=0
+
+ExecStart=/usr/local/sbin/docker run \
+    --env MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+    --name "${NAME}" \
+    --volume /srv/user/%u/mysql:/var/lib/mysql \
+    "${IMAGE}" \
+        --sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+
+ExecStop=/usr/local/sbin/docker stop \
+    "${NAME}"
+
+ExecStopPost=/usr/local/sbin/docker rm \
+    --force \
+    --volumes \
+    "${NAME}"

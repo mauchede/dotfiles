@@ -1,0 +1,21 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+EnvironmentFile=%h/.env
+Environment="IMAGE=rabbitmq:management"
+Environment="NAME=rabbitmq-%u"
+Restart=always
+TimeoutStartSec=0
+
+ExecStart=/usr/local/sbin/docker run \
+    --name "${NAME}" \
+    "${IMAGE}"
+
+ExecStop=/usr/local/sbin/docker stop \
+    "${NAME}"
+
+ExecStopPost=/usr/local/sbin/docker rm \
+    --force \
+    --volumes \
+    "${NAME}"

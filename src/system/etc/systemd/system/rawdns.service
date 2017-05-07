@@ -1,11 +1,28 @@
-[Unit]
-Description=rawdns container
-Requires=docker.service
-After=docker.service
-
-[Service]
-ExecStart=/usr/local/bin/docker run -p 172.17.42.1:53:53/udp -v /srv/rawdns:/srv/rawdns:ro -v /var/run/docker.sock:/var/run/docker.sock --name rawdns tianon/rawdns:1.4 rawdns /srv/rawdns/rawdns.json
-ExecStop=/usr/local/bin/docker stop rawdns ; /usr/local/bin/docker rm -fv rawdns
-
 [Install]
 WantedBy=multi-user.target
+
+[Service]
+Environment="IMAGE=tianon/rawdns:latest"
+Environment="NAME=rawdns"
+Restart=always
+TimeoutStartSec=0
+
+ExecStart=/usr/local/sbin/docker run \
+    --log-opt max-size=5m \
+    --name "${NAME}" \
+    --publish 172.17.42.1:53:53/udp \
+    --volume /etc/rawdns:/etc/rawdns:ro \
+    --volume /var/run/docker.sock:/var/run/docker.sock \
+    "${IMAGE}" rawdns \
+        /etc/rawdns/rawdns.json
+
+ExecStop=/usr/local/sbin/docker stop \
+    "${NAME}"
+
+ExecStopPost=/usr/local/sbin/docker rm \
+    --force \
+    --volumes \
+    "${NAME}"
+
+[Unit]
+Requires=docker.service

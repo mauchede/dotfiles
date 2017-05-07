@@ -1,6 +1,10 @@
-# What kind of modifications are applied?
+# README
 
-## System modifications
+Files and scripts used to configure my Xubuntu computer
+
+## What kind of modifications are applied?
+
+### System modifications
 
 * Configure the system for intel hardware:
   - use `intel_pstate` governor.
@@ -9,54 +13,57 @@
   - use `thermald`.
 
 * Add applications/aliases/commands:
-  - [ansible](http://www.ansible.com/)
-  - [atom](https://atom.io/) ([dockerized](https://github.com/timonier/atom))
-  - [blackfire](https://blackfire.io/) (dockerized)
-  - [chromium-browser](https://www.chromium.org/)
-  - [composer](https://getcomposer.org/)
+  - [ansible](http://www.ansible.com)
+  - [atom](https://atom.io) ([dockerized](https://github.com/timonier/atom))
+  - [blackfire](https://blackfire.io) ([dockerized](https://hub.docker.com/r/blackfire/blackfire))
+  - [chromium-browser](https://www.chromium.org)
+  - [composer](https://getcomposer.org)
   - [docker](https://www.docker.com)
+  - [docker-clean](https://github.com/ZZROTDesign/docker-clean)
+  - [docker-compose](https://docs.docker.com/compose/overview)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
-  - [extract-xiso](http://sourceforge.net/projects/extract-xiso/) ([dockerized](https://github.com/timonier/extract-xiso))
+  - [extract-xiso](http://sourceforge.net/projects/extract-xiso) ([dockerized](https://github.com/timonier/extract-xiso))
+  - [fabric](http://www.fabfile.org) ([dockerized](https://github.com/timonier/fabric))
   - [filezilla](https://filezilla-project.org)
-  - [git](https://git-scm.com/)
+  - [git](https://git-scm.com)
   - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/timonier/git-up))
   - [homebank](http://homebank.free.fr) ([dockerized](https://github.com/timonier/homebank))
-  - [intellij](https://www.jetbrains.com/idea/)
+  - [intellij idea](https://www.jetbrains.com/idea)
   - [keepass](http://keepass.info)
-  - [libreoffice](https://www.libreoffice.org/)
-  - [license](https://github.com/nishanths/license)
-  - [melody](http://melody.sensiolabs.org/)
-  - [mnemosyne](http://mnemosyne-proj.org/) ([dockerized](https://github.com/timonier/mnemosyne))
-  - [mysql](http://www.mysql.com) (dockerized)
-  - [nodejs](https://nodejs.org) (dockerized)
+  - [libreoffice](https://www.libreoffice.org)
+  - [license](https://github.com/nishanths/license) ([dockerized](https://github.com/timonier/license))
+  - [melody](http://melody.sensiolabs.org)
+  - [mnemosyne](http://mnemosyne-proj.org) ([dockerized](https://github.com/timonier/mnemosyne))
+  - [mysql](http://www.mysql.com) ([dockerized](https://hub.docker.com/_/mysql))
+  - [nodejs](https://nodejs.org) ([dockerized](https://hub.docker.com/_/node))
   - [npm-proxy-cache](https://github.com/runk/npm-proxy-cache) ([dockerized](https://github.com/timonier/npm-proxy-cache))
-  - [php](http://www.php.net)
+  - [php](http://www.php.net) ([dockerized](https://github.com/timonier/php))
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [picard](https://picard.musicbrainz.org)
-  - [postgresql](http://www.postgresql.org) (dockerized)
-  - [rabbitmq](https://www.rabbitmq.com/) (dockerized)
+  - [postgresql](http://www.postgresql.org) ([dockerized](https://hub.docker.com/_/postgres))
+  - [rabbitmq](https://www.rabbitmq.com) ([dockerized](https://hub.docker.com/_/rabbitmq))
+  - [rambox](http://rambox.pro)
+  - [redis](https://redis.io) ([dockerized](https://hub.docker.com/_/redis))
   - [remmina](http://freerdp.github.io/Remmina/index.html)
-  - [rsync](https://rsync.samba.org/)
+  - [rsync](https://rsync.samba.org)
+  - [shellcheck](https://github.com/koalaman/shellcheck)
   - [soap-ui](http://www.soapui.org)
-  - [unity-tweak-tool](https://github.com/freyja-dev/unity-tweak-tool)
   - [vlc](http://www.videolan.org/vlc)
+  - [webstorm](https://www.jetbrains.com/webstorm/)
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
   - [xmllint](http://xmlsoft.org/xmllint.html)
 
-## User modifications
+### User modifications
 
 * Use `xfce4-terminal` as a dropdown terminal (open / hide it with `F12`).
 
-* Add applications/aliases/commands:
-  - [composer](https://getcomposer.org/)
-  - [docker-clean](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): remove stopped containers and dangling images
-  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L26): get a container IP
-  - [docker-rename](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L30): rename image
-  - [docker-stop](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L34): stop all containers
-  - [fuck](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L30): re-run the last command with root privileges
-  - [melody](http://melody.sensiolabs.org/)
-  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L48): run a ssh client without server key checking
+* Add applications/aliases/commands/shortcuts:
+  - [bower](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L38): shortcut for `node_modules/.bin/bower`.
+  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): get a container IP
+  - [docker-rename](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L24): rename image
+  - [gulp](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L39): shortcut for `node_modules/.bin/gulp`.
+  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L43): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.
@@ -68,33 +75,22 @@
   - ignore PhpStorm metadata (`.idea` folder).
   - add [aliases](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig)
 
-* Configure unity:
-  - always show the menu.
-  - configure launcher.
-  - disable automount.
-  - disable screen auto locking after inactivity.
-  - disable sticky edges.
-  - disable the remote lenses.
-  - lock the screen with `Super + l`.
-  - minimize applications in launcher.
-  - show battery percentage.
-  - use user background as lock-screen background.
-  - use recursive search.
-
-# Usage
+## Usage
 
 To configure the system:
-```bash
+
+```sh
 sudo bin/install-system.sh
 sudo powertop --calibrate
 ```
 
 To configure the user:
-```bash
+
+```sh
 sudo bin/install-user.sh [USER]
 ```
 
-# Contributing
+## Contributing
 
 1. Fork it.
 2. Create your branch: `git checkout -b my-new-feature`.
@@ -102,18 +98,10 @@ sudo bin/install-user.sh [USER]
 4. Push to the branch: `git push origin my-new-feature`.
 5. Submit a pull request.
 
-# Links
+## Links
 
+* [creating a .desktop file for a new application](http://askubuntu.com/questions/281293/creating-a-desktop-file-for-a-new-application)
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
-* [docker-clean](https://github.com/ZZROTDesign/docker-clean)
-* [files disappears from the launcher Ubuntu 16.04](http://ubuntuforums.org/showthread.php?t=2321285&p=13487098#post13487098)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
 * [human git aliases](http://gggritso.com/human-git-aliases)
-* [npm-proxy-cache](https://github.com/runk/npm-proxy-cache)
-* [timonier/atom](https://github.com/timonier/atom)
-* [timonier/drive](https://github.com/timonier/drive)
-* [timonier/extract-xiso](https://github.com/timonier/extract-xiso)
-* [timonier/git-up](https://github.com/timonier/git-up)
-* [timonier/homebank](https://github.com/timonier/homebank)
-* [timonier/mnemosyne](https://github.com/timonier/mnemosyne)
-* [timonier/npm-proxy-cache](https://github.com/timonier/npm-proxy-cache)
+* [timonier/dumb-entrypoint](https://github.com/timonier/dumb-entrypoint)

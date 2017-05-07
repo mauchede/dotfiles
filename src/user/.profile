@@ -4,4 +4,4 @@
 
 # include user's bin
 
-[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
+[ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH" || :
