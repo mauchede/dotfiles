@@ -25,10 +25,6 @@ docker-rename() {
     docker tag "$1" "$2" && docker rmi "$1" > /dev/null 2>&1
 }
 
-# php
-
-alias php="php -dzend_extension=xdebug.so"
-
 # history
 
 alias history-clean="echo > ~/.bash_history ; history -c"

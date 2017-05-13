@@ -3,7 +3,7 @@
 docker run \
     --entrypoint dumb-init \
     $(env | cut -d= -f1 | awk '{print "--env", $1}') \
-    --interactive="$([ -t 0 ] && echo "true" || echo "false")" \
+    --interactive \
     --net host \
     --rm \
     --tty="$([ -t 0 ] && echo "true" || echo "false")" \

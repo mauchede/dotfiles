@@ -9,7 +9,7 @@ fail() {
 }
 
 if [ "$(id --user)" != 0 ] ; then
-    fail "Impossible to configure an user without root privileges."
+    fail "Impossible to configure a user without root privileges."
 fi
 
 if [ "$#" != 1 ] ; then

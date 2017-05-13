@@ -54,14 +54,14 @@ fi
 
         ### Install docker-clean
 
-        DOCKER_CLEAN_VERSION="2.0.4"
+        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker-clean/latest" | xargs)
 
         curl --location --output /usr/local/sbin/docker-clean "https://raw.githubusercontent.com/ZZROTDesign/docker-clean/v${DOCKER_CLEAN_VERSION}/docker-clean"
         chmod +x /usr/local/sbin/docker-clean
 
         ### Install docker-compose
 
-        DOCKER_COMPOSE_VERSION="1.9.0"
+        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker-compose/latest" | xargs)
 
         curl --location --output /usr/local/sbin/docker-compose "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64"
         chmod +x /usr/local/sbin/docker-compose
@@ -285,7 +285,7 @@ fi
 
     ## Install rambox
 
-    RAMBOX_VERSION="0.5.3"
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/rambox/latest" | xargs)
 
     apt-get install --no-install-recommends --yes \
         libappindicator1
@@ -341,14 +341,6 @@ fi
 
         cp --no-target-directory ./src/system/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
 
-    ## Install soapui
-
-    SOAPUI_VERSION="5.1.3"
-
-    rm --force --recursive /opt/soapui
-    curl --location "http://smartbearsoftware.com/distrib/soapui/${SOAPUI_VERSION}/SoapUI-${SOAPUI_VERSION}-linux-bin.tar.gz" | tar --directory /opt --extract --gzip || :
-    mv "/opt/SoapUI-${SOAPUI_VERSION}" /opt/soapui
-
     ## Install sshpass
 
     apt-get install --no-install-recommends --yes \
@@ -371,6 +363,11 @@ fi
 
     apt-get install --no-install-recommends --yes \
         transcode
+
+    ## Install usb-creator
+
+    apt-get install --no-install-recommends --yes \
+        usb-creator-gtk
 
     ## Install vlc
 

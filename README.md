@@ -48,7 +48,6 @@ Files and scripts used to configure my Xubuntu computer
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [rsync](https://rsync.samba.org)
   - [shellcheck](https://github.com/koalaman/shellcheck)
-  - [soap-ui](http://www.soapui.org)
   - [vlc](http://www.videolan.org/vlc)
   - [webstorm](https://www.jetbrains.com/webstorm/)
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
