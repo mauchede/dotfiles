@@ -221,6 +221,11 @@ fi
 
         cp --no-target-directory ./src/system/etc/systemd/user/mysql.service /etc/systemd/user/mysql.service
 
+    ## Install mysql-workbench
+
+    apt-get install --no-install-recommends --yes \
+        mysql-workbench
+
     ## Install nodejs
 
     cp --no-target-directory ./src/system/usr/local/bin/node /usr/local/bin/node
@@ -300,7 +305,9 @@ fi
     ## Install rawdns
 
     cp --no-target-directory ./src/system/etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/NetworkManager.conf
+    cp --no-target-directory ./src/system/etc/NetworkManager/dispatcher.d/99rawdns /etc/NetworkManager/dispatcher.d/99rawdns
     cp --no-target-directory ./src/system/etc/resolvconf/resolv.conf.d/head /etc/resolvconf/resolv.conf.d/head
+    cp --no-target-directory ./src/system/usr/local/sbin/rawdns-update /usr/local/sbin/rawdns-update
 
     mkdir --parents /etc/rawdns
     cp --no-target-directory ./src/system/etc/rawdns/rawdns.json /etc/rawdns/rawdns.json
@@ -329,6 +336,13 @@ fi
 
     apt-get install --no-install-recommends --yes \
         rsync
+
+    ## Install selenium
+
+        ### Install services
+
+        cp --no-target-directory ./src/system/etc/systemd/user/selenium-chrome.service /etc/systemd/user/selenium-chrome.service
+        cp --no-target-directory ./src/system/etc/systemd/user/selenium-firefox.service /etc/systemd/user/selenium-firefox.service
 
     ## Install shellcheck
 

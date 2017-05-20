@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+# Check environment
+
+NAMESERVERS="$(grep nameserver /etc/resolv.conf | tail --lines +2 | cut --delimiter " "  --field 2)"
+if [ -z "${NAMESERVERS}" ] ; then
+    NAMESERVERS="8.8.8.8 8.8.4.4"
+fi
+
+# Configure RawDNS
+
+CONFIG=$(jq '.["."].nameservers |= []' < /etc/rawdns/rawdns.json)
+for NAMESERVER in ${NAMESERVERS} ; do
+    CONFIG=$(echo "${CONFIG}" | jq '.["."].nameservers |= .+ ["'"${NAMESERVER}"'"]')
+done
+
+echo "${CONFIG}" | jq --unbuffered '.' > /etc/rawdns/rawdns.json

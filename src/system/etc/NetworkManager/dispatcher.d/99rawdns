@@ -1,0 +1,8 @@
+#!/bin/bash
+
+IF="$1"
+STATUS="$2"
+
+if [[ ! "${IF}" =~ veth* ]] && ( [[ "${STATUS}" == "down" ]] || [[ "${STATUS}" == "up" ]] ) ; then
+    systemctl restart rawdns
+fi

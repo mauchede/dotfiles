@@ -7,6 +7,8 @@ Environment="NAME=rawdns"
 Restart=always
 TimeoutStartSec=0
 
+ExecStartPre=/usr/local/sbin/rawdns-update
+
 ExecStart=/usr/local/sbin/docker run \
     --log-opt max-size=5m \
     --name "${NAME}" \
