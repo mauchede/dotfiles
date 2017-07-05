@@ -2,7 +2,7 @@
 set -e
 
 for IMAGE in $(docker images | tail -n +2 | grep "$2/\|/$2 \| $2 \|$2 \|$2-\|$2_" | awk '{print $1 ":" $2}') ; do
-    if echo "$IMAGE" | grep -qv ":<none>" ; then
-        docker pull "$IMAGE" || :
+    if echo "${IMAGE}" | grep -qv ":<none>" ; then
+        docker pull "${IMAGE}" || :
     fi
 done

@@ -32,6 +32,7 @@ alias history-clean="echo > ~/.bash_history ; history -c"
 # nodejs
 
 alias bower="node_modules/.bin/bower"
+alias eslint="node_modules/.bin/eslint"
 alias gulp="node_modules/.bin/gulp"
 
 # ssh

@@ -36,7 +36,7 @@ fi
 
 # Configure user
 
-sudo --set-home --shell --user "$1" -- <<"EOF"
+sudo --set-home --shell --user "$1" -- sh <<"EOF"
     set -eux
 
     ## Add specific files / folders
@@ -83,6 +83,10 @@ sudo --set-home --shell --user "$1" -- <<"EOF"
             echo '/.idea' >> "${HOME}/.gitignore_global" || :
         fi
 
+    ## Configure npm
+
+    npm config set progress false
+
     ## Configure phpstorm
 
     if [ ! -d "${HOME}/.PhpStorm2017.1" ] ; then
@@ -90,6 +94,18 @@ sudo --set-home --shell --user "$1" -- <<"EOF"
         git clone "https://github.com/mauchede/phpstorm-config" "${HOME}/.PhpStorm2017.1/config"
     fi
     git -C "${HOME}/.PhpStorm2017.1/config" up
+
+    ## Configure webstorm
+
+    if [ ! -d "${HOME}/.WebStorm2017.1" ] ; then
+        mkdir "${HOME}/.WebStorm2017.1"
+        git clone "https://github.com/mauchede/webstorm-config" "${HOME}/.WebStorm2017.1/config"
+    fi
+    git -C "${HOME}/.WebStorm2017.1/config" up
+
+    ## Configure yarn
+
+    yarn config set "strict-ssl" false
 
     ## Install composer
 
@@ -100,7 +116,6 @@ sudo --set-home --shell --user "$1" -- <<"EOF"
 
     curl --location --output "${HOME}/bin/melody" "http://get.sensiolabs.org/melody.phar"
     chmod +x "${HOME}/bin/melody"
-
 
     ## install symfony
 

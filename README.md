@@ -37,8 +37,7 @@ Files and scripts used to configure my Xubuntu computer
   - [mnemosyne](http://mnemosyne-proj.org) ([dockerized](https://github.com/timonier/mnemosyne))
   - [mysql](http://www.mysql.com) ([dockerized](https://hub.docker.com/_/mysql))
   - [mysql-workbench](https://www.mysql.com/fr/products/workbench/)
-  - [nodejs](https://nodejs.org) ([dockerized](https://hub.docker.com/_/node))
-  - [npm-proxy-cache](https://github.com/runk/npm-proxy-cache) ([dockerized](https://github.com/timonier/npm-proxy-cache))
+  - [nodejs](https://nodejs.org) ([dockerized](https://github.com/timonier/node))
   - [php](http://www.php.net) ([dockerized](https://github.com/timonier/php))
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [picard](https://picard.musicbrainz.org)
@@ -60,11 +59,12 @@ Files and scripts used to configure my Xubuntu computer
 * Use `xfce4-terminal` as a dropdown terminal (open / hide it with `F12`).
 
 * Add applications/aliases/commands/shortcuts:
-  - [bower](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L38): shortcut for `node_modules/.bin/bower`.
+  - [bower](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L34): shortcut for `node_modules/.bin/bower`.
   - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): get a container IP
   - [docker-rename](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L24): rename image
-  - [gulp](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L39): shortcut for `node_modules/.bin/gulp`.
-  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L43): run a ssh client without server key checking
+  - [eslint](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L35): shortcut for `node_modules/.bin/eslint`.
+  - [gulp](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L36): shortcut for `node_modules/.bin/gulp`.
+  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L40): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.

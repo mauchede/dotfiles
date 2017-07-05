@@ -12,7 +12,7 @@ ExecStartPre=/usr/local/sbin/rawdns-update
 ExecStart=/usr/local/sbin/docker run \
     --log-opt max-size=5m \
     --name "${NAME}" \
-    --publish 172.17.42.1:53:53/udp \
+    --net host \
     --volume /etc/rawdns:/etc/rawdns:ro \
     --volume /var/run/docker.sock:/var/run/docker.sock \
     "${IMAGE}" rawdns \

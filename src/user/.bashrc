@@ -65,49 +65,49 @@ __set_prompt () {
 
     # exit status
 
-    PS1+="$WHITE\$? "
-    if [ "$EXIT_CODE" == 0 ] ; then
-        PS1+="$GREEN$CHECKMARK "
+    PS1+="${WHITE}\$? "
+    if [ "${EXIT_CODE}" == 0 ] ; then
+        PS1+="${GREEN}${CHECKMARK} "
     else
-        PS1+="$RED$FANCYX "
+        PS1+="${RED}${FANCYX} "
     fi
 
     # time
 
-    PS1+="$RESET[\\t] "
+    PS1+="${RESET}[\\t] "
 
     # user
 
-    if [ "$EUID" == 0 ] ; then
-        PS1+="$RED\\h "
+    if [ "${EUID}" == 0 ] ; then
+        PS1+="${RED}\\h "
     else
-        PS1+="$GREEN\\u@\\h "
+        PS1+="${GREEN}\\u@\\h "
     fi
 
     # working directory
 
-    PS1+="$BLUE\\w "
+    PS1+="${BLUE}\\w "
 
     # vcs
 
     if [ "$(declare -Ff __git_ps1)" ] && [ -n "$(__git_ps1)" ] ; then
         # yellow: branch is not up to date
-        GIT_COLOR="$YELLOW"
+        GIT_COLOR="${YELLOW}"
 
         # purple: no upstream configured for branch
-        [ ! "$(git rev-parse "@{u}" 2> /dev/null)" ] && GIT_COLOR="$PURPLE"
+        [ ! "$(git rev-parse "@{u}" 2> /dev/null)" ] && GIT_COLOR="${PURPLE}"
 
         # green: branch is up to date
-        [ "$(git rev-parse @ 2> /dev/null)" == "$(git rev-parse "@{u}" 2> /dev/null)" ] && GIT_COLOR="$GREEN"
+        [ "$(git rev-parse @ 2> /dev/null)" == "$(git rev-parse "@{u}" 2> /dev/null)" ] && GIT_COLOR="${GREEN}"
 
         # red: changes not staged
-        [ -n "$(git status -s)" ] && GIT_COLOR="$RED"
+        [ -n "$(git status -s)" ] && GIT_COLOR="${RED}"
 
-        PS1+="$(__git_ps1 "$GIT_COLOR(%s) ")"
+        PS1+="$(__git_ps1 "${GIT_COLOR}(%s) ")"
     fi
 
     # command prompt
 
-    PS1+="\n$RESET\\\$ "
+    PS1+="\n${RESET}\\\$ "
 }
 PROMPT_COMMAND="__set_prompt"

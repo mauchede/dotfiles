@@ -14,5 +14,5 @@ docker run \
     --volume /run:/run \
     --volume /tmp:/tmp \
     --volume /usr/local/sbin:/usr/local/sbin:ro \
-    --volume "$HOME:$HOME" \
+    --volume "${HOME}:${HOME}" \
     "${IMAGE:-mysql}:${TAG:-latest}" dumb-entrypoint mysql "$@"

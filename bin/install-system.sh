@@ -31,26 +31,26 @@ fi
 
     ## Install docker
 
-        ### Install docker
-
-        DOCKER_VERSION="1.13.1"
+        ### Stop previous docker
 
         if [ -f /etc/systemd/system/docker.service ] ; then
+            systemctl list-dependencies --reverse --plain docker.service | tail --lines +2 | xargs --max-lines=1 --no-run-if-empty systemctl stop
+            docker-clean stop
+
             systemctl stop docker
         fi
-        rm --force /usr/local/sbin/docker*
 
-        curl --location --output /tmp/docker.tgz "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz"
+        ### Install docker
+
+        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker/latest" | xargs)
+
+        curl --location --output /tmp/docker.tgz "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}-ce.tgz"
         tar --directory /tmp --extract --file /tmp/docker.tgz
+        rm --force /usr/local/sbin/docker*
         mv /tmp/docker/docker* /usr/local/sbin/
         rm --force --recursive /tmp/docker*
 
         groupadd --gid 999 docker || :
-
-        cp --no-target-directory ./src/system/etc/systemd/system/docker.service /etc/systemd/system/docker.service
-        cp --no-target-directory ./src/system/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
-        systemctl daemon-reload
-        systemctl restart docker
 
         ### Install docker-clean
 
@@ -72,7 +72,14 @@ fi
 
         ### Install dumb-entrypoint
 
-        curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/bin/installer" | sh -s install
+        curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/bin/installer" | sh -s -- install
+
+        ### Install service
+
+        cp --no-target-directory ./src/system/etc/systemd/system/docker.service /etc/systemd/system/docker.service
+        cp --no-target-directory ./src/system/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
+        systemctl daemon-reload
+        systemctl restart docker
 
     ## Configure group "sudo"
 
@@ -105,7 +112,7 @@ fi
 
     ## Install atom
 
-    curl --location "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s install
+    curl --location "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s -- install
 
     ## Install blackfire
 
@@ -113,11 +120,19 @@ fi
 
         cp --no-target-directory ./src/system/etc/systemd/user/blackfire.service /etc/systemd/user/blackfire.service
 
-    ## Install chromium-browser
+    ## Install chrome
 
-    apt-get install --no-install-recommends --yes \
-        chromium-browser \
-        chromium-browser-l10n
+        ### Install ppa
+
+        if [ -f /etc/apt/sources.list.d/google-chrome.list ] ; then
+            wget --output-document - --quiet "https://dl-ssl.google.com/linux/linux_signing_key.pub" | apt-key add -
+            echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+        fi
+
+        ### Install chrome
+
+        apt-get install --no-install-recommends --yes \
+            google-chrome-stable
 
     ## Install codecs
 
@@ -126,15 +141,15 @@ fi
 
     ## Install drive
 
-    curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s install
+    curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
 
     ## Install extract-xiso
 
-    curl --location "https://github.com/timonier/extract-xiso/raw/master/bin/installer" | sh -s install
+    curl --location "https://github.com/timonier/extract-xiso/raw/master/bin/installer" | sh -s -- install
 
     ## Install fabric
 
-    curl --location "https://github.com/timonier/fabric/raw/master/bin/installer" | sh -s install
+    curl --location "https://github.com/timonier/fabric/raw/master/bin/installer" | sh -s -- install
 
     ## Install filezilla
 
@@ -143,7 +158,7 @@ fi
 
     ## Install git-up
 
-    curl --location "https://github.com/timonier/git-up/raw/master/bin/installer" | sh -s install
+    curl --location "https://github.com/timonier/git-up/raw/master/bin/installer" | sh -s -- install
 
     ## Install gparted
 
@@ -153,16 +168,15 @@ fi
 
     ## Install homebank
 
-    curl --location "https://github.com/timonier/homebank/raw/master/bin/installer" | sh -s install
+    curl --location "https://github.com/timonier/homebank/raw/master/bin/installer" | sh -s -- install
 
     ## Install intellij
 
-    INTELLIJ_VERSION="2017.1"
-    INTELLIJ_BUILD="171.3780.107"
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/intellij-idea/latest" | xargs)
 
     rm --force --recursive /opt/intellij
-    curl --location "https://download.jetbrains.com/idea/ideaIC-${INTELLIJ_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
-    mv "/opt/idea-IC-${INTELLIJ_BUILD}" /opt/intellij
+    curl --location "https://download.jetbrains.com/idea/ideaIC-${INTELLIJ_IDEA_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
+    mv "/opt/idea-IC-${INTELLIJ_IDEA_BUILD}" /opt/intellij
 
     ## Install java
 
@@ -189,13 +203,13 @@ fi
 
     ## Install license
 
-    curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s install
+    curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s -- install
 
     ## Install mailcatcher
 
         ### Install cli
 
-        curl --location "https://github.com/timonier/mailcatcher/raw/master/bin/installer" | sh -s install
+        curl --location "https://github.com/timonier/mailcatcher/raw/master/bin/installer" | sh -s -- install
 
         ### Install service
 
@@ -228,32 +242,19 @@ fi
 
     ## Install nodejs
 
-    cp --no-target-directory ./src/system/usr/local/bin/node /usr/local/bin/node
-    cp --no-target-directory ./src/system/usr/local/bin/npm /usr/local/bin/npm
-
-    ## Install npm-proxy-cache
-
         ### Install cli
 
-        curl --location "https://github.com/timonier/npm-proxy-cache/raw/master/bin/installer" | sh -s install
-
-        ### Install service
-
-        cp --no-target-directory ./src/system/etc/systemd/system/npm-proxy-cache.service /etc/systemd/system/npm-proxy-cache.service
-        systemctl daemon-reload
-        systemctl enable npm-proxy-cache
-        systemctl start npm-proxy-cache
+        curl --location "https://github.com/timonier/node/raw/master/bin/installer" | sh -s -- install
 
     ## Install php
 
         ### Install cli
 
-        curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh -s install
+        curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh -s -- install
 
     ## Install phpstorm
 
-    PHPSTORM_VERSION="2017.1"
-    PHPSTORM_BUILD="171.3780.104"
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/phpstorm/latest" | xargs)
 
     rm --force --recursive /opt/phpstorm
     curl --location "https://download.jetbrains.com/webide/PhpStorm-${PHPSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
@@ -304,18 +305,31 @@ fi
 
     ## Install rawdns
 
-    cp --no-target-directory ./src/system/etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/NetworkManager.conf
-    cp --no-target-directory ./src/system/etc/NetworkManager/dispatcher.d/99rawdns /etc/NetworkManager/dispatcher.d/99rawdns
-    cp --no-target-directory ./src/system/etc/resolvconf/resolv.conf.d/head /etc/resolvconf/resolv.conf.d/head
-    cp --no-target-directory ./src/system/usr/local/sbin/rawdns-update /usr/local/sbin/rawdns-update
+        ### Configure network-manager
 
-    mkdir --parents /etc/rawdns
-    cp --no-target-directory ./src/system/etc/rawdns/rawdns.json /etc/rawdns/rawdns.json
+        cp --no-target-directory ./src/system/etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/NetworkManager.conf
+        cp --no-target-directory ./src/system/etc/NetworkManager/dispatcher.d/99rawdns /etc/NetworkManager/dispatcher.d/99rawdns
 
-    cp --no-target-directory ./src/system/etc/systemd/system/rawdns.service /etc/systemd/system/rawdns.service
-    systemctl daemon-reload
-    systemctl enable rawdns
-    systemctl start rawdns
+        ### Configure resolvconf
+
+        cp --no-target-directory ./src/system/etc/resolvconf/resolv.conf.d/head /etc/resolvconf/resolv.conf.d/head
+        resolvconf -u
+
+        ### Install rawdns-update
+
+        cp --no-target-directory ./src/system/usr/local/sbin/rawdns-update /usr/local/sbin/rawdns-update
+
+        ### Install rawdns configuration
+
+        mkdir --parents /etc/rawdns
+        cp --no-target-directory ./src/system/etc/rawdns/rawdns.json /etc/rawdns/rawdns.json
+
+        ### Install service
+
+        cp --no-target-directory ./src/system/etc/systemd/system/rawdns.service /etc/systemd/system/rawdns.service
+        systemctl daemon-reload
+        systemctl enable rawdns
+        systemctl start rawdns
 
     ## Install redis
 
@@ -362,7 +376,7 @@ fi
 
     ## Install sshuttle
 
-    curl --location "https://github.com/timonier/sshuttle/raw/master/bin/installer" | sudo sh -s install
+    curl --location "https://github.com/timonier/sshuttle/raw/master/bin/installer" | sh -s -- install
 
     ## Install systemd-user
 
@@ -391,8 +405,7 @@ fi
 
     ## Install webstorm
 
-    WEBSTORM_VERSION="2017.1.1"
-    WEBSTORM_BUILD="171.4073.40"
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/webstorm/latest" | xargs)
 
     rm --force --recursive /opt/webstorm
     curl --location "https://download.jetbrains.com/webstorm/WebStorm-${WEBSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :

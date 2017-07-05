@@ -6,9 +6,9 @@ if [ "$#" -lt 2 ] ; then
     exit 1
 fi
 
-sudo -u "$1" bash << EOF
+sudo --user "$1" -- bash << EOF
     export XDG_RUNTIME_DIR="/run/user/\${UID}"
     export DBUS_SESSION_BUS_ADDRESS="unix:path=\${XDG_RUNTIME_DIR}/bus"
 
-    systemctl --user "${@:2}"
+    systemctl --user ${@:2}
 EOF

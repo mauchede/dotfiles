@@ -5,8 +5,11 @@ WantedBy=multi-user.target
 Delegate=yes
 KillMode=process
 LimitCORE=infinity
-LimitNOFILE=infinity
+LimitNOFILE=1048576
 LimitNPROC=infinity
+Restart=on-failure
+StartLimitBurst=3
+StartLimitInterval=60s
 TimeoutStartSec=0
 Type=notify
 
@@ -20,5 +23,6 @@ ExecStart=/usr/local/sbin/dockerd \
     --host fd://
 
 [Unit]
-After=network.target
+After=network-online.target docker.socket firewalld.service
 Requires=docker.socket
+Wants=network-online.target
