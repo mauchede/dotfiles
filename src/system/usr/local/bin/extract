@@ -3,8 +3,8 @@
 # Check arguments
 
 fail() {
-    echo "$1" 1>&2
-    echo "Usage: $(basename "$0") [ARCHIVE].<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>" 1>&2
+    echo 1>&2 "$1"
+    echo 1>&2 "Usage: $(basename "$0") [ARCHIVE].<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>"
     exit 1
 }
 

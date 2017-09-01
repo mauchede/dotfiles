@@ -1,9 +1,10 @@
 #!/bin/sh
-set -eux
+set -ex
 cd "$(dirname "$0")/.."
 
 fail() {
-    echo "$1" 1>&2
+    echo 1>&2 "$1"
+    echo 1>&2 "Usage: $(basename "$0")"
     exit 1
 }
 
@@ -120,20 +121,6 @@ fi
 
         cp --no-target-directory ./src/system/etc/systemd/user/blackfire.service /etc/systemd/user/blackfire.service
 
-    ## Install chrome
-
-        ### Install ppa
-
-        if [ -f /etc/apt/sources.list.d/google-chrome.list ] ; then
-            wget --output-document - --quiet "https://dl-ssl.google.com/linux/linux_signing_key.pub" | apt-key add -
-            echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-        fi
-
-        ### Install chrome
-
-        apt-get install --no-install-recommends --yes \
-            google-chrome-stable
-
     ## Install codecs
 
     apt-get install --yes \
@@ -159,6 +146,37 @@ fi
     ## Install git-up
 
     curl --location "https://github.com/timonier/git-up/raw/master/bin/installer" | sh -s -- install
+
+    ## Install google-chrome
+
+        ### Install ppa
+
+        if [ ! -f /etc/apt/sources.list.d/google-chrome.list ] ; then
+            wget --output-document - --quiet "https://dl-ssl.google.com/linux/linux_signing_key.pub" | apt-key add -
+            echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+            apt-get update
+        fi
+
+        ### Install google-chrome
+
+        apt-get install --no-install-recommends --yes \
+            google-chrome-stable
+
+    ## Install google-cloud-sdk
+
+        ### Install ppa
+
+        if [ -f /etc/apt/sources.list.d/google-cloud-sdk ] ; then
+            curl "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | apt-key add -
+            echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" > /etc/apt/sources.list.d/google-cloud-sdk.list
+            apt-get update
+        fi
+
+        ### Install google-cloud-sdk
+
+        apt-get install --no-install-recommends --yes \
+            google-cloud-sdk \
+            kubectl
 
     ## Install gparted
 
@@ -391,11 +409,6 @@ fi
 
     apt-get install --no-install-recommends --yes \
         transcode
-
-    ## Install usb-creator
-
-    apt-get install --no-install-recommends --yes \
-        usb-creator-gtk
 
     ## Install vlc
 

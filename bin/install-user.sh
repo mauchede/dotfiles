@@ -1,10 +1,10 @@
 #!/bin/sh
-set -eux
+set -ex
 cd "$(dirname "$0")/.."
 
 fail() {
-    echo "$1" 1>&2
-    echo "Usage: $(basename "$0") [USER]" 1>&2
+    echo 1>&2 "$1"
+    echo 1>&2 "Usage: $(basename "$0") [USER]"
     exit 1
 }
 
@@ -37,7 +37,7 @@ fi
 # Configure user
 
 sudo --set-home --shell --user "$1" -- sh <<"EOF"
-    set -eux
+    set -ex
 
     ## Add specific files / folders
 
