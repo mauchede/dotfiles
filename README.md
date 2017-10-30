@@ -13,7 +13,6 @@ Files and scripts used to configure my Xubuntu computer
   - use `thermald`.
 
 * Add applications/aliases/commands:
-  - [ansible](http://www.ansible.com)
   - [atom](https://atom.io) ([dockerized](https://github.com/timonier/atom))
   - [blackfire](https://blackfire.io) ([dockerized](https://hub.docker.com/r/blackfire/blackfire))
   - [composer](https://getcomposer.org)
@@ -21,12 +20,12 @@ Files and scripts used to configure my Xubuntu computer
   - [docker-clean](https://github.com/ZZROTDesign/docker-clean)
   - [docker-compose](https://docs.docker.com/compose/overview)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
+  - [etcher](https://etcher.io/)
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [extract-xiso](http://sourceforge.net/projects/extract-xiso) ([dockerized](https://github.com/timonier/extract-xiso))
   - [fabric](http://www.fabfile.org) ([dockerized](https://github.com/timonier/fabric))
   - [filezilla](https://filezilla-project.org)
   - [git](https://git-scm.com)
-  - [git-up](https://github.com/aanand/git-up) ([dockerized](https://github.com/timonier/git-up))
   - [google chrome](https://www.google.fr/chrome/browser/desktop/index.html)
   - [google cloud sdk](https://cloud.google.com/sdk/?hl=en)
   - [homebank](http://homebank.free.fr) ([dockerized](https://github.com/timonier/homebank))
@@ -48,7 +47,7 @@ Files and scripts used to configure my Xubuntu computer
   - [redis](https://redis.io) ([dockerized](https://hub.docker.com/_/redis))
   - [remmina](http://freerdp.github.io/Remmina/index.html)
   - [rsync](https://rsync.samba.org)
-  - [selenium](http://www.seleniumhq.org/)
+  - [selenium](http://www.seleniumhq.org/) ([dockerized](https://hub.docker.com/r/selenium/standalone-chrome/))
   - [shellcheck](https://github.com/koalaman/shellcheck)
   - [vlc](http://www.videolan.org/vlc)
   - [webstorm](https://www.jetbrains.com/webstorm/)
@@ -75,7 +74,7 @@ Files and scripts used to configure my Xubuntu computer
 
 * Configure git:
   - ignore PhpStorm metadata (`.idea` folder).
-  - add [aliases](https://github.com/mauchede/dotfiles/blob/master/src/user/.gitconfig)
+  - add [aliases](https://github.com/mauchede/dotfiles/blob/master/bin/install-user.sh#L63)
 
 ## Usage
 

@@ -25,55 +25,44 @@ fi
     apt-get install --no-install-recommends --yes \
         ca-certificates \
         curl \
+        default-jdk \
+        default-jre \
         git \
         htop \
+        libappindicator1 \
+        libxml2-utils \
+        p7zip-full \
+        rar \
+        rsync \
+        unrar \
+        unzip \
         vim \
-        wget
+        wget \
+        zip
 
-    ## Install docker
+    apt-get install --yes \
+        xubuntu-restricted-extras \
 
-        ### Stop previous docker
+    ## Install docker-ce
+
+        ### Stop previous instance
 
         if [ -f /etc/systemd/system/docker.service ] ; then
             systemctl list-dependencies --reverse --plain docker.service | tail --lines +2 | xargs --max-lines=1 --no-run-if-empty systemctl stop
-            docker-clean stop
-
             systemctl stop docker
         fi
 
-        ### Install docker
+        ### Install docker-ce
 
-        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker/latest" | xargs)
+        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker/docker-ce/latest" | xargs)
 
-        curl --location --output /tmp/docker.tgz "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}-ce.tgz"
+        curl --location --output /tmp/docker.tgz "https://download.docker.com/linux/static/edge/x86_64/docker-${DOCKER_CE_VERSION}-ce.tgz"
         tar --directory /tmp --extract --file /tmp/docker.tgz
         rm --force /usr/local/sbin/docker*
         mv /tmp/docker/docker* /usr/local/sbin/
         rm --force --recursive /tmp/docker*
 
         groupadd --gid 999 docker || :
-
-        ### Install docker-clean
-
-        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker-clean/latest" | xargs)
-
-        curl --location --output /usr/local/sbin/docker-clean "https://raw.githubusercontent.com/ZZROTDesign/docker-clean/v${DOCKER_CLEAN_VERSION}/docker-clean"
-        chmod +x /usr/local/sbin/docker-clean
-
-        ### Install docker-compose
-
-        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker-compose/latest" | xargs)
-
-        curl --location --output /usr/local/sbin/docker-compose "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64"
-        chmod +x /usr/local/sbin/docker-compose
-
-        ### Install docker-update
-
-        cp --no-target-directory ./src/system/usr/local/sbin/docker-update /usr/local/sbin/docker-update
-
-        ### Install dumb-entrypoint
-
-        curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/bin/installer" | sh -s -- install
 
         ### Install service
 
@@ -95,22 +84,6 @@ fi
 
 # Installation
 
-    ## Install ansible
-
-    apt-get install --no-install-recommends --yes \
-        ansible
-
-    ## Install archive tools
-
-    apt-get install --no-install-recommends --yes \
-        p7zip-full \
-        rar \
-        unrar \
-        unzip \
-        zip
-
-    cp --no-target-directory ./src/system/usr/local/bin/extract /usr/local/bin/extract
-
     ## Install atom
 
     curl --location "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s -- install
@@ -121,14 +94,49 @@ fi
 
         cp --no-target-directory ./src/system/etc/systemd/user/blackfire.service /etc/systemd/user/blackfire.service
 
-    ## Install codecs
+    ## Install docker-clean
 
-    apt-get install --yes \
-        xubuntu-restricted-extras
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/zzrotdesign/docker-clean/latest" | xargs)
+
+    curl --location --output /usr/local/sbin/docker-clean "https://raw.githubusercontent.com/zzrotdesign/docker-clean/v${DOCKER_CLEAN_VERSION}/docker-clean"
+    chmod +x /usr/local/sbin/docker-clean
+
+    ## Install docker-compose
+
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker/compose/latest" | xargs)
+
+    curl --location --output /usr/local/sbin/docker-compose "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64"
+    chmod +x /usr/local/sbin/docker-compose
+
+    ## Install docker-update
+
+    cp --no-target-directory ./src/system/usr/local/sbin/docker-update /usr/local/sbin/docker-update
 
     ## Install drive
 
     curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
+
+    ## Install dumb-entrypoint
+
+    curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-entrypoint/installer" | sh -s -- install
+
+    ## Install dumb-init
+
+    curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-init/installer" | sh -s -- install
+
+    ## Install etcher
+
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/resin-io/etcher/latest" | xargs)
+
+    rm --force --recursive /opt/etcher
+    curl --location --output /tmp/etcher.zip "https://github.com/resin-io/etcher/releases/download/v${ETCHER_VERSION}/etcher-${ETCHER_VERSION}-linux-x86_64.zip"
+    mkdir --parents /opt/etcher
+    sh -c 'cd /opt/etcher && unzip /tmp/etcher.zip'
+    mv /opt/etcher/etcher-1.1.2-x86_64.AppImage /opt/etcher/etcher
+
+    ## Install extract
+
+    cp --no-target-directory ./src/system/usr/local/bin/extract /usr/local/bin/extract
 
     ## Install extract-xiso
 
@@ -142,10 +150,6 @@ fi
 
     apt-get install --no-install-recommends --yes \
         filezilla
-
-    ## Install git-up
-
-    curl --location "https://github.com/timonier/git-up/raw/master/bin/installer" | sh -s -- install
 
     ## Install google-chrome
 
@@ -178,6 +182,10 @@ fi
             google-cloud-sdk \
             kubectl
 
+    ## Install gosu
+
+    curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/gosu/installer" | sh -s -- install
+
     ## Install gparted
 
     apt-get install --no-install-recommends --yes \
@@ -190,17 +198,11 @@ fi
 
     ## Install intellij
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/intellij-idea/latest" | xargs)
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/_/intellij-idea/latest" | xargs)
 
     rm --force --recursive /opt/intellij
     curl --location "https://download.jetbrains.com/idea/ideaIC-${INTELLIJ_IDEA_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
     mv "/opt/idea-IC-${INTELLIJ_IDEA_BUILD}" /opt/intellij
-
-    ## Install java
-
-    apt-get install --no-install-recommends --yes \
-        default-jdk \
-        default-jre
 
     ## Install jq
 
@@ -272,7 +274,7 @@ fi
 
     ## Install phpstorm
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/phpstorm/latest" | xargs)
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/_/phpstorm/latest" | xargs)
 
     rm --force --recursive /opt/phpstorm
     curl --location "https://download.jetbrains.com/webide/PhpStorm-${PHPSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
@@ -309,10 +311,7 @@ fi
 
     ## Install rambox
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/rambox/latest" | xargs)
-
-    apt-get install --no-install-recommends --yes \
-        libappindicator1
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/saenzramiro/rambox/latest" | xargs)
 
     rm --force --recursive /opt/rambox
     curl --location "https://github.com/saenzramiro/rambox/releases/download/${RAMBOX_VERSION}/Rambox-${RAMBOX_VERSION}-x64.tar.gz" | tar --directory /opt --extract --gzip || :
@@ -364,11 +363,6 @@ fi
     apt-get install --no-install-recommends --yes \
         remmina
 
-    ## Install rsync
-
-    apt-get install --no-install-recommends --yes \
-        rsync
-
     ## Install selenium
 
         ### Install services
@@ -418,7 +412,7 @@ fi
 
     ## Install webstorm
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/webstorm/latest" | xargs)
+    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/_/webstorm/latest" | xargs)
 
     rm --force --recursive /opt/webstorm
     curl --location "https://download.jetbrains.com/webstorm/WebStorm-${WEBSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
@@ -428,11 +422,6 @@ fi
 
     apt-get install --no-install-recommends --yes \
         xfce4-terminal
-
-    ## Install xmllint
-
-    apt-get install --no-install-recommends --yes \
-        libxml2-utils
 
 # Optimization
 

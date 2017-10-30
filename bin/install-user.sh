@@ -69,6 +69,7 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
         git config --global alias.tags "tag"
         git config --global alias.uncommit "reset --"
         git config --global alias.unstage "reset --quiet HEAD --"
+        #git config --global alias.up "pull --rebase --autostash"
 
         ### Configure git
 
@@ -78,9 +79,14 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
         if [ ! -f "${HOME}/.gitignore_global" ] ; then
             touch "${HOME}/.gitignore_global" || :
         fi
-
         if ! grep --quiet "/.idea" "${HOME}/.env" ; then
-            echo '/.idea' >> "${HOME}/.gitignore_global" || :
+            echo "/.idea" >> "${HOME}/.gitignore_global" || :
+        fi
+        if ! grep --quiet "/.npm-*.log" "${HOME}/.env" ; then
+            echo "/.npm-*.log" >> "${HOME}/.gitignore_global" || :
+        fi
+        if ! grep --quiet "/.yarn-*.log" "${HOME}/.env" ; then
+            echo "/.yarn-*.log" >> "${HOME}/.gitignore_global" || :
         fi
 
     ## Configure npm
@@ -105,7 +111,8 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
 
     ## Configure yarn
 
-    yarn config set "strict-ssl" false
+    yarn config set version-git-tag true
+    yarn config set version-sign-git-tag true
 
     ## Install composer
 
