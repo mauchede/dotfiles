@@ -3,20 +3,24 @@ WantedBy=default.target
 
 [Service]
 EnvironmentFile=%h/.env
-Environment="IMAGE=postgres:latest"
+Environment="IMAGE=timonier/postgresql:latest"
 Environment="NAME=postgresql-%u"
 Restart=always
 TimeoutStartSec=0
 
-ExecStart=/usr/local/sbin/docker run \
+ExecStart=/usr/local/sbin/docker \
+    run \
     --name "${NAME}" \
     --volume /srv/user/%u/postgresql:/var/lib/postgresql/data \
-    "${IMAGE}"
+    "${IMAGE}" \
+    postgres
 
-ExecStop=/usr/local/sbin/docker stop \
+ExecStop=/usr/local/sbin/docker \
+    stop \
     "${NAME}"
 
-ExecStopPost=/usr/local/sbin/docker rm \
+ExecStopPost=/usr/local/sbin/docker \
+    rm \
     --force \
     --volumes \
     "${NAME}"

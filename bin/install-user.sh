@@ -42,9 +42,7 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
     ## Add specific files / folders
 
     mkdir --parents "${HOME}/bin"
-
     cp --no-target-directory --recursive ./src/user "${HOME}/"
-
     if [ ! -f "${HOME}/.env" ] ; then
         touch "${HOME}/.env" || :
     fi
@@ -69,13 +67,13 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
         git config --global alias.tags "tag"
         git config --global alias.uncommit "reset --"
         git config --global alias.unstage "reset --quiet HEAD --"
-        #git config --global alias.up "pull --rebase --autostash"
+        git config --global alias.up "pull --autostash --rebase"
+        git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
 
         ### Configure git
 
         git config --global core.editor "vim"
         git config --global core.excludesfile "~/.gitignore_global"
-
         if [ ! -f "${HOME}/.gitignore_global" ] ; then
             touch "${HOME}/.gitignore_global" || :
         fi
@@ -95,19 +93,11 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
 
     ## Configure phpstorm
 
-    if [ ! -d "${HOME}/.PhpStorm2017.1" ] ; then
-        mkdir "${HOME}/.PhpStorm2017.1"
-        git clone "https://github.com/mauchede/phpstorm-config" "${HOME}/.PhpStorm2017.1/config"
-    fi
-    git -C "${HOME}/.PhpStorm2017.1/config" up
+    curl --location "https://github.com/mauchede/phpstorm-config/raw/master/bin/installer" | sh -s -- install
 
     ## Configure webstorm
 
-    if [ ! -d "${HOME}/.WebStorm2017.1" ] ; then
-        mkdir "${HOME}/.WebStorm2017.1"
-        git clone "https://github.com/mauchede/webstorm-config" "${HOME}/.WebStorm2017.1/config"
-    fi
-    git -C "${HOME}/.WebStorm2017.1/config" up
+
 
     ## Configure yarn
 

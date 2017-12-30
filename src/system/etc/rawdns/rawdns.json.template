@@ -1,0 +1,10 @@
+{
+  "docker.": {
+    "socket": "unix:///var/run/docker.sock",
+    "type": "containers"
+  },
+  ".": {
+    "nameservers": [],
+    "type": "forwarding"
+  }
+}

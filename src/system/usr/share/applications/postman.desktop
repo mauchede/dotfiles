@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Utility;Development;
+Exec=/opt/postman/Postman
+Icon=/usr/share/icons/postman.png
+Name=Postman
+Path=/opt/postman/
+Terminal=false
+Type=Application

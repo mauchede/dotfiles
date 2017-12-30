@@ -10,7 +10,7 @@ fi
 
 # Configure RawDNS
 
-CONFIG=$(jq '.["."].nameservers |= []' < /etc/rawdns/rawdns.json)
+CONFIG=$(jq '.["."].nameservers |= []' < /etc/rawdns/rawdns.json.template)
 for NAMESERVER in ${NAMESERVERS} ; do
     CONFIG=$(echo "${CONFIG}" | jq '.["."].nameservers |= .+ ["'"${NAMESERVER}"'"]')
 done

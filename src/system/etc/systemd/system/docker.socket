@@ -8,5 +8,4 @@ SocketMode=0660
 SocketUser=root
 
 [Unit]
-Description=docker socket
 PartOf=docker.service

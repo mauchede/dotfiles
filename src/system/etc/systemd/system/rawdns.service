@@ -9,7 +9,8 @@ TimeoutStartSec=0
 
 ExecStartPre=/usr/local/sbin/rawdns-update
 
-ExecStart=/usr/local/sbin/docker run \
+ExecStart=/usr/local/sbin/docker \
+    run \
     --log-opt max-size=5m \
     --name "${NAME}" \
     --net host \
@@ -18,10 +19,12 @@ ExecStart=/usr/local/sbin/docker run \
     "${IMAGE}" rawdns \
         /etc/rawdns/rawdns.json
 
-ExecStop=/usr/local/sbin/docker stop \
+ExecStop=/usr/local/sbin/docker \
+    stop \
     "${NAME}"
 
-ExecStopPost=/usr/local/sbin/docker rm \
+ExecStopPost=/usr/local/sbin/docker \
+    rm \
     --force \
     --volumes \
     "${NAME}"

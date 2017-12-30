@@ -27,7 +27,7 @@ fi
         curl \
         default-jdk \
         default-jre \
-        git \
+        dos2unix \
         htop \
         libappindicator1 \
         libxml2-utils \
@@ -39,7 +39,6 @@ fi
         vim \
         wget \
         zip
-
     apt-get install --yes \
         xubuntu-restricted-extras \
 
@@ -48,20 +47,25 @@ fi
         ### Stop previous instance
 
         if [ -f /etc/systemd/system/docker.service ] ; then
-            systemctl list-dependencies --reverse --plain docker.service | tail --lines +2 | xargs --max-lines=1 --no-run-if-empty systemctl stop
+            for TARGET in $(systemctl list-unit-files | cut --delimiter " " --field 1 | grep ".service" | grep -v "@" | head --lines -2 | tail --lines +2) ; do
+                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl disable "$(echo "${TARGET}" | sed "s@.service@.timer@g")" || :
+                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl disable "${TARGET}" || :
+            done
+            for TARGET in $(systemctl list-unit-files | cut --delimiter " " --field 1 | grep ".service" | grep -v "@" | head --lines -2 | tail --lines +2) ; do
+                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl stop "$(echo "${TARGET}" | sed "s@.service@.timer@g")" || :
+                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl stop "${TARGET}" || :
+            done
             systemctl stop docker
         fi
 
         ### Install docker-ce
 
-        export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker/docker-ce/latest" | xargs)
-
+        export $(curl --location "https://github.com/timonier/version-lister/raw/generated/docker/docker-ce/latest" | xargs)
         curl --location --output /tmp/docker.tgz "https://download.docker.com/linux/static/edge/x86_64/docker-${DOCKER_CE_VERSION}-ce.tgz"
         tar --directory /tmp --extract --file /tmp/docker.tgz
         rm --force /usr/local/sbin/docker*
         mv /tmp/docker/docker* /usr/local/sbin/
         rm --force --recursive /tmp/docker*
-
         groupadd --gid 999 docker || :
 
         ### Install service
@@ -96,43 +100,29 @@ fi
 
     ## Install docker-clean
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/zzrotdesign/docker-clean/latest" | xargs)
-
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/zzrotdesign/docker-clean/latest" | xargs)
     curl --location --output /usr/local/sbin/docker-clean "https://raw.githubusercontent.com/zzrotdesign/docker-clean/v${DOCKER_CLEAN_VERSION}/docker-clean"
     chmod +x /usr/local/sbin/docker-clean
 
     ## Install docker-compose
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/docker/compose/latest" | xargs)
-
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/docker/compose/latest" | xargs)
     curl --location --output /usr/local/sbin/docker-compose "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64"
     chmod +x /usr/local/sbin/docker-compose
-
-    ## Install docker-update
-
-    cp --no-target-directory ./src/system/usr/local/sbin/docker-update /usr/local/sbin/docker-update
 
     ## Install drive
 
     curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
 
-    ## Install dumb-entrypoint
-
-    curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-entrypoint/installer" | sh -s -- install
-
-    ## Install dumb-init
-
-    curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/dumb-init/installer" | sh -s -- install
-
     ## Install etcher
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/resin-io/etcher/latest" | xargs)
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/resin-io/etcher/latest" | xargs)
 
     rm --force --recursive /opt/etcher
     curl --location --output /tmp/etcher.zip "https://github.com/resin-io/etcher/releases/download/v${ETCHER_VERSION}/etcher-${ETCHER_VERSION}-linux-x86_64.zip"
     mkdir --parents /opt/etcher
     sh -c 'cd /opt/etcher && unzip /tmp/etcher.zip'
-    mv /opt/etcher/etcher-1.1.2-x86_64.AppImage /opt/etcher/etcher
+    mv "/opt/etcher/etcher-${ETCHER_VERSION}-x86_64.AppImage" /opt/etcher/etcher
 
     ## Install extract
 
@@ -150,6 +140,20 @@ fi
 
     apt-get install --no-install-recommends --yes \
         filezilla
+
+    ## Install git
+
+        ### Install git
+
+        apt-get install --no-install-recommends --yes \
+            git
+
+        ### Install git-credential-gnome-keyring
+
+        apt-get install --no-install-recommends --yes \
+            libgnome-keyring-dev
+
+        sh -c 'cd /usr/share/doc/git/contrib/credential/gnome-keyring && make'
 
     ## Install google-chrome
 
@@ -172,7 +176,7 @@ fi
 
         if [ -f /etc/apt/sources.list.d/google-cloud-sdk ] ; then
             curl "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | apt-key add -
-            echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" > /etc/apt/sources.list.d/google-cloud-sdk.list
+            echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release --codename --short) main" > /etc/apt/sources.list.d/google-cloud-sdk.list
             apt-get update
         fi
 
@@ -181,10 +185,6 @@ fi
         apt-get install --no-install-recommends --yes \
             google-cloud-sdk \
             kubectl
-
-    ## Install gosu
-
-    curl --location "https://github.com/timonier/dumb-entrypoint/raw/master/src/gosu/installer" | sh -s -- install
 
     ## Install gparted
 
@@ -198,11 +198,17 @@ fi
 
     ## Install intellij
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/_/intellij-idea/latest" | xargs)
-
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/_/intellij-idea/latest" | xargs)
     rm --force --recursive /opt/intellij
     curl --location "https://download.jetbrains.com/idea/ideaIC-${INTELLIJ_IDEA_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
     mv "/opt/idea-IC-${INTELLIJ_IDEA_BUILD}" /opt/intellij
+
+    ## Install joplin
+
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/laurent22/joplin/latest" | xargs)
+    mkdir --parent /opt/joplin
+    curl --location --output /opt/joplin/joplin "https://github.com/laurent22/joplin/releases/download/v${JOPLIN_VERSION}/Joplin-${JOPLIN_VERSION}-x86_64.AppImage"
+    chmod +x /opt/joplin/joplin
 
     ## Install jq
 
@@ -249,7 +255,7 @@ fi
 
         ### Install cli
 
-        cp --no-target-directory ./src/system/usr/local/bin/mysql /usr/local/bin/mysql
+        curl --location "https://github.com/timonier/mysql/raw/master/bin/installer" | sh -s -- install
 
         ### Install service
 
@@ -274,8 +280,7 @@ fi
 
     ## Install phpstorm
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/_/phpstorm/latest" | xargs)
-
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/_/phpstorm/latest" | xargs)
     rm --force --recursive /opt/phpstorm
     curl --location "https://download.jetbrains.com/webide/PhpStorm-${PHPSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
     mv "/opt/PhpStorm-${PHPSTORM_BUILD}" /opt/phpstorm
@@ -289,19 +294,33 @@ fi
 
         ### Install cli
 
-        cp --no-target-directory ./src/system/usr/local/bin/pg_dump /usr/local/bin/pg_dump
-        cp --no-target-directory ./src/system/usr/local/bin/psql /usr/local/bin/psql
+        curl --location "https://github.com/timonier/postgresql/raw/master/bin/installer" | sh -s -- install
 
         ### Install service
 
         cp --no-target-directory ./src/system/etc/systemd/user/postgresql.service /etc/systemd/user/postgresql.service
 
+    ## Install postman
+
+    rm --force --recursive /opt/postman
+    curl --location --output /tmp/postman.tar.gz "https://dl.pstmn.io/download/latest/linux64"
+    tar --directory /tmp --extract --file /tmp/postman.tar.gz --gzip
+    mv /tmp/Postman /opt/postman
+    cp --no-target-directory ./src/system/usr/share/applications/postman.desktop /usr/share/applications/postman.desktop
+    cp --no-target-directory ./src/system/usr/share/icons/postman.png /usr/share/icons/postman.png
+
     ## Install powertop
 
-    apt-get install --no-install-recommends --yes \
-        powertop
+        ### Install cli
 
-    cp --no-target-directory ./src/system/etc/rc.local /etc/rc.local
+        apt-get install --no-install-recommends --yes \
+            powertop
+
+        ### Install service
+
+        cp --no-target-directory ./src/system/etc/systemd/system/powertop.service /etc/systemd/system/powertop.service
+        systemctl daemon-reload
+        systemctl enable powertop
 
     ## Install rabbitmq
 
@@ -311,8 +330,7 @@ fi
 
     ## Install rambox
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/saenzramiro/rambox/latest" | xargs)
-
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/saenzramiro/rambox/latest" | xargs)
     rm --force --recursive /opt/rambox
     curl --location "https://github.com/saenzramiro/rambox/releases/download/${RAMBOX_VERSION}/Rambox-${RAMBOX_VERSION}-x64.tar.gz" | tar --directory /opt --extract --gzip || :
     mv "/opt/Rambox-${RAMBOX_VERSION}" /opt/rambox
@@ -339,7 +357,7 @@ fi
         ### Install rawdns configuration
 
         mkdir --parents /etc/rawdns
-        cp --no-target-directory ./src/system/etc/rawdns/rawdns.json /etc/rawdns/rawdns.json
+        cp --no-target-directory ./src/system/etc/rawdns/rawdns.json.template /etc/rawdns/rawdns.json.template
 
         ### Install service
 
@@ -352,7 +370,7 @@ fi
 
         ### Install cli
 
-        cp --no-target-directory ./src/system/usr/local/bin/redis-cli /usr/local/bin/redis-cli
+        curl --location "https://github.com/timonier/redis/raw/master/bin/installer" | sh -s -- install
 
         ### Install service
 
@@ -362,6 +380,15 @@ fi
 
     apt-get install --no-install-recommends --yes \
         remmina
+
+    ## Install restic
+
+    curl --location "https://github.com/timonier/restic/raw/master/bin/installer" | sh -s -- install restic
+
+    ## Install seahorse
+
+    apt-get install --no-install-recommends --yes \
+        seahorse
 
     ## Install selenium
 
@@ -412,8 +439,7 @@ fi
 
     ## Install webstorm
 
-    export $(curl "https://raw.githubusercontent.com/timonier/version-lister/release/generated/_/webstorm/latest" | xargs)
-
+    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/_/webstorm/latest" | xargs)
     rm --force --recursive /opt/webstorm
     curl --location "https://download.jetbrains.com/webstorm/WebStorm-${WEBSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
     mv "/opt/WebStorm-${WEBSTORM_BUILD}" /opt/webstorm
@@ -431,7 +457,6 @@ fi
         sed --in-place "s/quiet splash/quiet splash intel_pstate=enable/" /etc/default/grub
         update-grub
     fi
-
     cp --no-target-directory ./src/system/usr/share/X11/xorg.conf.d/20-intel.conf /usr/share/X11/xorg.conf.d/20-intel.conf
 
     ## Optimize kernel

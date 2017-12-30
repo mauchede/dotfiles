@@ -3,19 +3,23 @@ WantedBy=default.target
 
 [Service]
 EnvironmentFile=%h/.env
-Environment="IMAGE=redis:latest"
+Environment="IMAGE=timonier/redis:latest"
 Environment="NAME=redis-%u"
 Restart=always
 TimeoutStartSec=0
 
-ExecStart=/usr/local/sbin/docker run \
+ExecStart=/usr/local/sbin/docker \
+    run \
     --name "${NAME}" \
-    "${IMAGE}"
+    "${IMAGE}" \
+    redis-server
 
-ExecStop=/usr/local/sbin/docker stop \
+ExecStop=/usr/local/sbin/docker \
+    stop \
     "${NAME}"
 
-ExecStopPost=/usr/local/sbin/docker rm \
+ExecStopPost=/usr/local/sbin/docker \
+    rm \
     --force \
     --volumes \
     "${NAME}"

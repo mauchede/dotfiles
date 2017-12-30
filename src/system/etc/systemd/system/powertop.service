@@ -1,0 +1,9 @@
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+RemainAfterExit=true
+Type=oneshot
+
+ExecStart=/usr/bin/powertop \
+    --auto-tune

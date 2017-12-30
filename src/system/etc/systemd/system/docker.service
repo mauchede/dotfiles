@@ -20,7 +20,8 @@ ExecReload=/bin/kill \
 ExecStart=/usr/local/sbin/dockerd \
     --bip 172.17.42.1/16 \
     --dns 172.17.42.1 \
-    --host fd://
+    --host fd:// \
+    --storage-driver overlay2
 
 [Unit]
 After=network-online.target docker.socket firewalld.service
