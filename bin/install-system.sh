@@ -98,11 +98,9 @@ fi
 
         cp --no-target-directory ./src/system/etc/systemd/user/blackfire.service /etc/systemd/user/blackfire.service
 
-    ## Install docker-clean
+    ## Install docker-certificate
 
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/zzrotdesign/docker-clean/latest" | xargs)
-    curl --location --output /usr/local/sbin/docker-clean "https://raw.githubusercontent.com/zzrotdesign/docker-clean/v${DOCKER_CLEAN_VERSION}/docker-clean"
-    chmod +x /usr/local/sbin/docker-clean
+    curl --location "https://github.com/mauchede/docker-certificate/raw/master/bin/installer" | sh -s -- install
 
     ## Install docker-compose
 

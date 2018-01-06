@@ -17,7 +17,6 @@ Files and scripts used to configure my Xubuntu computer
   - [blackfire](https://blackfire.io) ([dockerized](https://hub.docker.com/r/blackfire/blackfire))
   - [composer](https://getcomposer.org)
   - [docker](https://www.docker.com)
-  - [docker-clean](https://github.com/ZZROTDesign/docker-clean)
   - [docker-compose](https://docs.docker.com/compose/overview)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
   - [etcher](https://etcher.io/)
