@@ -97,7 +97,7 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
 
     ## Configure webstorm
 
-
+    curl --location "https://github.com/mauchede/webstorm-config/raw/master/bin/installer" | sh -s -- install
 
     ## Configure yarn
 
