@@ -68,23 +68,26 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
         git config --global alias.uncommit "reset --"
         git config --global alias.unstage "reset --quiet HEAD --"
         git config --global alias.up "pull --autostash --rebase"
-        git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
 
         ### Configure git
 
+        git config --global commit.gpgsign true
         git config --global core.editor "vim"
+        git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+
         git config --global core.excludesfile "~/.gitignore_global"
-        if [ ! -f "${HOME}/.gitignore_global" ] ; then
-            touch "${HOME}/.gitignore_global" || :
+        touch "${HOME}/.gitignore_global"
+        if ! grep --fixed-regexp --quiet "/.idea" "${HOME}/.gitignore_global" ; then
+            echo "/.idea" >> "${HOME}/.gitignore_global"
         fi
-        if ! grep --quiet "/.idea" "${HOME}/.env" ; then
-            echo "/.idea" >> "${HOME}/.gitignore_global" || :
+        if ! grep --fixed-regexp --quiet "/.php_cs.cache" "${HOME}/.gitignore_global" ; then
+            echo "/.php_cs.cache" >> "${HOME}/.gitignore_global"
         fi
-        if ! grep --quiet "/.npm-*.log" "${HOME}/.env" ; then
-            echo "/.npm-*.log" >> "${HOME}/.gitignore_global" || :
+        if ! grep --fixed-regexp --quiet "/.npm-*.log" "${HOME}/.env" ; then
+            echo "/.npm-*.log" >> "${HOME}/.gitignore_global"
         fi
-        if ! grep --quiet "/.yarn-*.log" "${HOME}/.env" ; then
-            echo "/.yarn-*.log" >> "${HOME}/.gitignore_global" || :
+        if ! grep --fixed-regexp --quiet "/.yarn-*.log" "${HOME}/.env" ; then
+            echo "/.yarn-*.log" >> "${HOME}/.gitignore_global"
         fi
 
     ## Configure npm
@@ -113,6 +116,11 @@ sudo --set-home --shell --user "$1" -- sh <<"EOF"
 
     curl --location --output "${HOME}/bin/melody" "http://get.sensiolabs.org/melody.phar"
     chmod +x "${HOME}/bin/melody"
+
+    ## Install php-cs-fixer
+
+    curl --location --output "${HOME}/bin/php-cs-fixer" "http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar"
+    chmod +x "${HOME}/bin/php-cs-fixer"
 
     ## install symfony
 

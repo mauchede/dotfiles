@@ -32,6 +32,7 @@ fi
         libappindicator1 \
         libxml2-utils \
         p7zip-full \
+        printer-driver-escpr \
         rar \
         rsync \
         unrar \
