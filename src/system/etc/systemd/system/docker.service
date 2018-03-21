@@ -3,6 +3,7 @@ WantedBy=multi-user.target
 
 [Service]
 Delegate=yes
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 KillMode=process
 LimitCORE=infinity
 LimitNOFILE=1048576

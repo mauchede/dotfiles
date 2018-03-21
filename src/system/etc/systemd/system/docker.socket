@@ -1,6 +1,9 @@
 [Install]
 WantedBy=sockets.target
 
+[Service]
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
 [Socket]
 ListenStream=/var/run/docker.sock
 SocketGroup=docker

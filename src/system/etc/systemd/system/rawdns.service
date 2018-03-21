@@ -4,6 +4,7 @@ WantedBy=multi-user.target
 [Service]
 Environment="IMAGE=tianon/rawdns:latest"
 Environment="NAME=rawdns"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 Restart=always
 TimeoutStartSec=0
 

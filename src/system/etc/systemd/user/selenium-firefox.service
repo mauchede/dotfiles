@@ -5,6 +5,7 @@ WantedBy=default.target
 EnvironmentFile=%h/.env
 Environment="IMAGE=selenium/standalone-firefox:latest"
 Environment="NAME=selenium-firefox-%u"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 Restart=always
 TimeoutStartSec=0
 

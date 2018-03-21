@@ -1,8 +1,0 @@
-[Desktop Entry]
-Categories=Network;InstantMessaging;
-Exec=/opt/rambox/rambox --without-update
-Icon=/usr/share/icons/rambox.png
-Name=Rambox
-Path=/opt/rambox/
-Terminal=false
-Type=Application

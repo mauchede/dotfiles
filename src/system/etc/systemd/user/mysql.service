@@ -5,6 +5,7 @@ WantedBy=default.target
 EnvironmentFile=%h/.env
 Environment="IMAGE=timonier/mysql:latest"
 Environment="NAME=mysql-%u"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 Restart=always
 TimeoutStartSec=0
 

@@ -19,6 +19,7 @@ fi
     apt-get update
     apt-get upgrade --yes
     apt-get dist-upgrade --yes
+    snap refresh --list
 
     ## Install base
 
@@ -91,13 +92,19 @@ fi
 
     ## Install atom
 
-    curl --location "https://github.com/timonier/atom/raw/master/bin/installer" | sh -s -- install
+    snap install --classic \
+        atom
 
     ## Install blackfire
 
         ### Install service
 
         cp --no-target-directory ./src/system/etc/systemd/user/blackfire.service /etc/systemd/user/blackfire.service
+
+    ## Install datagrip
+
+    snap install --classic \
+        datagrip
 
     ## Install docker-certificate
 
@@ -115,12 +122,11 @@ fi
 
     ## Install etcher
 
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/resin-io/etcher/latest" | xargs)
-
+    export ETCHER_VERSION="$(curl --silent "https://github.com/resin-io/etcher/releases" | grep --only-matching --perl-regexp "(?<=etcher-)[0-9\.]+(?=-x86_64\.AppImage)" | head --lines 1)"
     rm --force --recursive /opt/etcher
     curl --location --output /tmp/etcher.zip "https://github.com/resin-io/etcher/releases/download/v${ETCHER_VERSION}/etcher-${ETCHER_VERSION}-linux-x86_64.zip"
     mkdir --parents /opt/etcher
-    sh -c 'cd /opt/etcher && unzip /tmp/etcher.zip'
+    sh -c "cd /opt/etcher && unzip /tmp/etcher.zip"
     mv "/opt/etcher/etcher-${ETCHER_VERSION}-x86_64.AppImage" /opt/etcher/etcher
 
     ## Install extract
@@ -140,6 +146,11 @@ fi
     apt-get install --no-install-recommends --yes \
         filezilla
 
+    ## Install firefox
+
+    snap install --classic \
+        firefox
+
     ## Install git
 
         ### Install git
@@ -152,7 +163,7 @@ fi
         apt-get install --no-install-recommends --yes \
             libgnome-keyring-dev
 
-        sh -c 'cd /usr/share/doc/git/contrib/credential/gnome-keyring && make'
+        sh -c "cd /usr/share/doc/git/contrib/credential/gnome-keyring && make"
 
     ## Install google-chrome
 
@@ -182,8 +193,7 @@ fi
         ### Install google-cloud-sdk
 
         apt-get install --no-install-recommends --yes \
-            google-cloud-sdk \
-            kubectl
+            google-cloud-sdk
 
     ## Install gparted
 
@@ -197,14 +207,13 @@ fi
 
     ## Install intellij
 
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/_/intellij-idea/latest" | xargs)
-    rm --force --recursive /opt/intellij
-    curl --location "https://download.jetbrains.com/idea/ideaIC-${INTELLIJ_IDEA_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
-    mv "/opt/idea-IC-${INTELLIJ_IDEA_BUILD}" /opt/intellij
+    snap install --classic \
+        intellij-idea-community
 
     ## Install joplin
 
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/laurent22/joplin/latest" | xargs)
+    export JOPLIN_VERSION="$(curl --silent "https://github.com/laurent22/joplin/releases" | grep --only-matching --perl-regexp "(?<=Joplin-)[0-9\.]+(?=-x86_64\.AppImage)" | head --lines 1)"
+    rm --force --recursive /opt/joplin
     mkdir --parent /opt/joplin
     curl --location --output /opt/joplin/joplin "https://github.com/laurent22/joplin/releases/download/v${JOPLIN_VERSION}/Joplin-${JOPLIN_VERSION}-x86_64.AppImage"
     chmod +x /opt/joplin/joplin
@@ -214,17 +223,20 @@ fi
     apt-get install --no-install-recommends --yes \
         jq
 
-    ## Install keepass
+    ## Install keepassxc
 
-    apt-get install --no-install-recommends --yes \
-        keepass2
+    snap install --classic \
+        keepassxc
+
+    ## Install kubectl
+
+    snap install --classic \
+        kubectl
 
     ## Install libreoffice
 
-    apt-get install --no-install-recommends --yes \
-        libreoffice \
-        libreoffice-l10n-fr \
-        libreoffice-style-sifr
+    snap install --classic \
+        libreoffice
 
     ## Install license
 
@@ -260,11 +272,6 @@ fi
 
         cp --no-target-directory ./src/system/etc/systemd/user/mysql.service /etc/systemd/user/mysql.service
 
-    ## Install mysql-workbench
-
-    apt-get install --no-install-recommends --yes \
-        mysql-workbench
-
     ## Install nodejs
 
         ### Install cli
@@ -279,10 +286,8 @@ fi
 
     ## Install phpstorm
 
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/_/phpstorm/latest" | xargs)
-    rm --force --recursive /opt/phpstorm
-    curl --location "https://download.jetbrains.com/webide/PhpStorm-${PHPSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
-    mv "/opt/PhpStorm-${PHPSTORM_BUILD}" /opt/phpstorm
+    snap install --classic \
+        phpstorm
 
     ## Install picard
 
@@ -327,16 +332,6 @@ fi
 
         cp --no-target-directory ./src/system/etc/systemd/user/rabbitmq.service /etc/systemd/user/rabbitmq.service
 
-    ## Install rambox
-
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/saenzramiro/rambox/latest" | xargs)
-    rm --force --recursive /opt/rambox
-    curl --location "https://github.com/saenzramiro/rambox/releases/download/${RAMBOX_VERSION}/Rambox-${RAMBOX_VERSION}-x64.tar.gz" | tar --directory /opt --extract --gzip || :
-    mv "/opt/Rambox-${RAMBOX_VERSION}" /opt/rambox
-
-    cp --no-target-directory ./src/system/usr/share/applications/rambox.desktop /usr/share/applications/rambox.desktop
-    cp --no-target-directory ./src/system/usr/share/icons/rambox.png /usr/share/icons/rambox.png
-
     ## Install rawdns
 
         ### Configure network-manager
@@ -377,7 +372,7 @@ fi
 
     ## Install remmina
 
-    apt-get install --no-install-recommends --yes \
+    snap install --classic \
         remmina
 
     ## Install restic
@@ -407,6 +402,16 @@ fi
 
         cp --no-target-directory ./src/system/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
 
+    ## Install skype
+
+    snap install --classic \
+        skype
+
+    ## Install slack
+
+    snap install --classic \
+        slack
+
     ## Install sshpass
 
     apt-get install --no-install-recommends --yes \
@@ -432,16 +437,13 @@ fi
 
     ## Install vlc
 
-    apt-get install --no-install-recommends --yes \
-        browser-plugin-vlc \
+    snap install --classic \
         vlc
 
     ## Install webstorm
 
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/_/webstorm/latest" | xargs)
-    rm --force --recursive /opt/webstorm
-    curl --location "https://download.jetbrains.com/webstorm/WebStorm-${WEBSTORM_VERSION}.tar.gz" | tar --directory /opt --extract --gzip || :
-    mv "/opt/WebStorm-${WEBSTORM_BUILD}" /opt/webstorm
+    snap install --classic \
+        webstorm
 
     ## Install xfce4-terminal
 
