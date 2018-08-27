@@ -1,0 +1,9 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+EnvironmentFile=%h/.env
+Environment="IMAGE=timonier/redis:latest"
+Environment="NAME=redis-%u"
+ExecStart=/usr/local/sbin/docker run --init --name "${NAME}" --rm "${IMAGE}" redis-server
+TimeoutStartSec=0

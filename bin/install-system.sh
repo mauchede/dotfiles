@@ -1,474 +1,330 @@
 #!/bin/sh
-set -ex
-cd "$(dirname "$0")/.."
+set -e -u -x
+cd "$(dirname "$0")"/..
 
 fail() {
     echo 1>&2 "$1"
     echo 1>&2 "Usage: $(basename "$0")"
-    exit 1
+    exit 255
 }
 
-if [ "$(id --user)" != 0 ] ; then
-    fail "Impossible to prepare the system without root privileges."
+if [ "$(id --user)" != 0 ]; then
+    fail "Impossible to execute this script without root privileges."
 fi
 
-# Preparation
+# Update system
 
-    ## Update system
+cp --no-target-directory ./src/system/rootfs/etc/apt/sources.list /etc/apt/sources.list
+apt-get update
+apt-get upgrade --yes
+apt-get dist-upgrade --yes
+snap refresh --list
 
-    apt-get update
-    apt-get upgrade --yes
-    apt-get dist-upgrade --yes
-    snap refresh --list
+# Install base
 
-    ## Install base
+apt-get install --no-install-recommends --yes ca-certificates curl dos2unix gcc htop jq libappindicator1 libxml2-utils p7zip-full printer-driver-escpr rar rsync unrar unzip vim wget zip
+apt-get install --yes xubuntu-restricted-extras
+apt-get remove --purge --yes firefox firefox-locale-* libreoffice-* pidgin pidgin-* thunderbird thunderbird-locale-*
+cp --no-target-directory ./src/system/rootfs/usr/local/sbin/systemctl-user /usr/local/sbin/systemctl-user
 
-    apt-get install --no-install-recommends --yes \
-        ca-certificates \
-        curl \
-        default-jdk \
-        default-jre \
-        dos2unix \
-        htop \
-        libappindicator1 \
-        libxml2-utils \
-        p7zip-full \
-        printer-driver-escpr \
-        rar \
-        rsync \
-        unrar \
-        unzip \
-        vim \
-        wget \
-        zip
-    apt-get install --yes \
-        xubuntu-restricted-extras \
+# Install docker-ce
 
-    ## Install docker-ce
+if [ -f /etc/systemd/system/docker.service ]; then
+    systemctl stop docker
+fi
 
-        ### Stop previous instance
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/docker/docker-ce/latest" | xargs)
+rm -f -r /tmp/docker* /usr/local/sbin/docker*
+curl --location --output /tmp/docker.tgz "${DOCKER_CE_RELEASE}"
+tar --directory /tmp --extract --file /tmp/docker.tgz
+mv /tmp/docker/docker* /usr/local/sbin/
+groupadd --gid 999 --non-unique docker || :
 
-        if [ -f /etc/systemd/system/docker.service ] ; then
-            for TARGET in $(systemctl list-unit-files | cut --delimiter " " --field 1 | grep ".service" | grep -v "@" | head --lines -2 | tail --lines +2) ; do
-                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl disable "$(echo "${TARGET}" | sed "s@.service@.timer@g")" || :
-                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl disable "${TARGET}" || :
-            done
-            for TARGET in $(systemctl list-unit-files | cut --delimiter " " --field 1 | grep ".service" | grep -v "@" | head --lines -2 | tail --lines +2) ; do
-                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl stop "$(echo "${TARGET}" | sed "s@.service@.timer@g")" || :
-                systemctl show -p Requires "${TARGET}" | grep --quiet "docker.service" && systemctl stop "${TARGET}" || :
-            done
-            systemctl stop docker
-        fi
+cp --no-target-directory ./src/system/rootfs/etc/systemd/system/docker.service /etc/systemd/system/docker.service
+cp --no-target-directory ./src/system/rootfs/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
+systemctl daemon-reload
+systemctl restart docker
 
-        ### Install docker-ce
+# Configure group "sudo"
 
-        export $(curl --location "https://github.com/timonier/version-lister/raw/generated/docker/docker-ce/latest" | xargs)
-        curl --location --output /tmp/docker.tgz "https://download.docker.com/linux/static/edge/x86_64/docker-${DOCKER_CE_VERSION}-ce.tgz"
-        tar --directory /tmp --extract --file /tmp/docker.tgz
-        rm --force /usr/local/sbin/docker*
-        mv /tmp/docker/docker* /usr/local/sbin/
-        rm --force --recursive /tmp/docker*
-        groupadd --gid 999 docker || :
+cp --no-target-directory ./src/system/rootfs/etc/sudoers.d/sudo /etc/sudoers.d/sudo
 
-        ### Install service
+# Configure user "root"
 
-        cp --no-target-directory ./src/system/etc/systemd/system/docker.service /etc/systemd/system/docker.service
-        cp --no-target-directory ./src/system/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
-        systemctl daemon-reload
-        systemctl restart docker
+mkdir -p /root/.bin
+cp --no-target-directory ./src/user/rootfs/.bash_aliases /root/.bash_aliases
+cp --no-target-directory ./src/user/rootfs/.bashrc /root/.bashrc
+cp --no-target-directory ./src/user/rootfs/.profile /root/.profile
 
-    ## Configure group "sudo"
+# Install arc-theme
 
-    cp --no-target-directory ./src/system/etc/sudoers.d/sudo /etc/sudoers.d/sudo
+apt-get install --no-install-recommends --yes arc-theme
 
-    ## Configure user "root"
+# Install atom
 
-    mkdir --parents /root/bin
-    cp --no-target-directory ./src/user/.bash_aliases /root/.bash_aliases
-    cp --no-target-directory ./src/user/.bashrc /root/.bashrc
-    cp --no-target-directory ./src/user/.profile /root/.profile
+apt-get install --no-install-recommends --yes gvfs-bin
+snap install --classic atom
 
-# Installation
+# Install blackfire
 
-    ## Install atom
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/blackfire.service /etc/systemd/user/blackfire.service
 
-    snap install --classic \
-        atom
+# Install cheese
 
-    ## Install blackfire
+apt-get install --no-install-recommends --yes cheese
 
-        ### Install service
+# Install chromium
 
-        cp --no-target-directory ./src/system/etc/systemd/user/blackfire.service /etc/systemd/user/blackfire.service
+snap install --classic chromium
 
-    ## Install datagrip
+# Install docker-certificates
 
-    snap install --classic \
-        datagrip
+curl --location "https://github.com/mauchede/docker-certificates/raw/master/bin/installer" | sh -s -- install
 
-    ## Install docker-certificate
+# Install docker-compose
 
-    curl --location "https://github.com/mauchede/docker-certificate/raw/master/bin/installer" | sh -s -- install
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/docker/compose/latest" | xargs)
+curl --location --output /usr/local/sbin/docker-compose "${COMPOSE_RELEASE}"
+chmod +x /usr/local/sbin/docker-compose
 
-    ## Install docker-compose
+# Install drive
 
-    export $(curl --location "https://github.com/timonier/version-lister/raw/generated/docker/compose/latest" | xargs)
-    curl --location --output /usr/local/sbin/docker-compose "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-linux-x86_64"
-    chmod +x /usr/local/sbin/docker-compose
+curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
 
-    ## Install drive
+# Install etcher
 
-    curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/resin-io/etcher/latest" | xargs)
+rm -f -r /opt/etcher
+mkdir -p /opt/etcher
+curl --location --output /opt/etcher/etcher "${ETCHER_RELEASE}"
+chmod +x /opt/etcher/etcher
 
-    ## Install etcher
+# Install extract
 
-    export ETCHER_VERSION="$(curl --silent "https://github.com/resin-io/etcher/releases" | grep --only-matching --perl-regexp "(?<=etcher-)[0-9\.]+(?=-x86_64\.AppImage)" | head --lines 1)"
-    rm --force --recursive /opt/etcher
-    curl --location --output /tmp/etcher.zip "https://github.com/resin-io/etcher/releases/download/v${ETCHER_VERSION}/etcher-${ETCHER_VERSION}-linux-x86_64.zip"
-    mkdir --parents /opt/etcher
-    sh -c "cd /opt/etcher && unzip /tmp/etcher.zip"
-    mv "/opt/etcher/etcher-${ETCHER_VERSION}-x86_64.AppImage" /opt/etcher/etcher
+cp --no-target-directory ./src/system/rootfs/usr/local/bin/extract /usr/local/bin/extract
 
-    ## Install extract
+# Install filezilla
 
-    cp --no-target-directory ./src/system/usr/local/bin/extract /usr/local/bin/extract
+apt-get install --no-install-recommends --yes filezilla
 
-    ## Install extract-xiso
+# Install firefox
 
-    curl --location "https://github.com/timonier/extract-xiso/raw/master/bin/installer" | sh -s -- install
+snap install --classic firefox
 
-    ## Install fabric
+# Install git
 
-    curl --location "https://github.com/timonier/fabric/raw/master/bin/installer" | sh -s -- install
+apt-get install --no-install-recommends --yes git
+apt-get install --no-install-recommends --yes libgnome-keyring-dev
+sh -c "cd /usr/share/doc/git/contrib/credential/gnome-keyring && make"
 
-    ## Install filezilla
+# Install google-cloud-sdk
 
-    apt-get install --no-install-recommends --yes \
-        filezilla
+apt-get install --no-install-recommends --yes google-cloud-sdk
 
-    ## Install firefox
+# Install gparted
 
-    snap install --classic \
-        firefox
+apt-get install --no-install-recommends --yes gpart gparted
 
-    ## Install git
+# Install homebank
 
-        ### Install git
+add-apt-repository ppa:mdoyen/homebank --remove --yes
+add-apt-repository ppa:mdoyen/homebank --yes
+apt-get install --no-install-recommends --yes homebank
 
-        apt-get install --no-install-recommends --yes \
-            git
+# Install insomnia
 
-        ### Install git-credential-gnome-keyring
+snap install --classic insomnia
 
-        apt-get install --no-install-recommends --yes \
-            libgnome-keyring-dev
+# Install intellij
 
-        sh -c "cd /usr/share/doc/git/contrib/credential/gnome-keyring && make"
+snap install --classic intellij-idea-community
 
-    ## Install google-chrome
+# Install joplin
 
-        ### Install ppa
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/laurent22/joplin/latest" | xargs)
+rm -f -r /opt/joplin
+mkdir -p /opt/joplin
+curl --location --output /opt/joplin/joplin "${JOPLIN_RELEASE}"
+chmod +x /opt/joplin/joplin
 
-        if [ ! -f /etc/apt/sources.list.d/google-chrome.list ] ; then
-            wget --output-document - --quiet "https://dl-ssl.google.com/linux/linux_signing_key.pub" | apt-key add -
-            echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-            apt-get update
-        fi
+# Install keepassxc
 
-        ### Install google-chrome
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/keepassxreboot/keepassxc/latest" | xargs)
+rm -f -r /opt/keepassxc
+mkdir -p /opt/keepassxc
+curl --location --output /opt/keepassxc/keepassxc "${KEEPASSXC_RELEASE}"
+chmod +x /opt/keepassxc/keepassxc
 
-        apt-get install --no-install-recommends --yes \
-            google-chrome-stable
+# Install kubectl
 
-    ## Install google-cloud-sdk
+snap install --classic kubectl
 
-        ### Install ppa
+# Install libreoffice
 
-        if [ -f /etc/apt/sources.list.d/google-cloud-sdk ] ; then
-            curl "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | apt-key add -
-            echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release --codename --short) main" > /etc/apt/sources.list.d/google-cloud-sdk.list
-            apt-get update
-        fi
+snap install --classic libreoffice
 
-        ### Install google-cloud-sdk
+# Install license
 
-        apt-get install --no-install-recommends --yes \
-            google-cloud-sdk
+curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s -- install
 
-    ## Install gparted
+# Install mailcatcher
 
-    apt-get install --no-install-recommends --yes \
-        gpart \
-        gparted
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/mailcatcher.service /etc/systemd/user/mailcatcher.service
 
-    ## Install homebank
+# Install moka-icon-theme
 
-    curl --location "https://github.com/timonier/homebank/raw/master/bin/installer" | sh -s -- install
+apt-get install --no-install-recommends --yes moka-icon-theme
 
-    ## Install intellij
+# Install myspell
 
-    snap install --classic \
-        intellij-idea-community
+apt-get install --no-install-recommends --yes myspell-fr
 
-    ## Install joplin
+# Install mysql
 
-    export JOPLIN_VERSION="$(curl --silent "https://github.com/laurent22/joplin/releases" | grep --only-matching --perl-regexp "(?<=Joplin-)[0-9\.]+(?=-x86_64\.AppImage)" | head --lines 1)"
-    rm --force --recursive /opt/joplin
-    mkdir --parent /opt/joplin
-    curl --location --output /opt/joplin/joplin "https://github.com/laurent22/joplin/releases/download/v${JOPLIN_VERSION}/Joplin-${JOPLIN_VERSION}-x86_64.AppImage"
-    chmod +x /opt/joplin/joplin
+curl --location "https://github.com/timonier/mysql/raw/master/bin/installer" | sh -s -- install
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/mysql.service /etc/systemd/user/mysql.service
 
-    ## Install jq
+# Install nodejs
 
-    apt-get install --no-install-recommends --yes \
-        jq
+curl --location "https://github.com/timonier/node/raw/master/bin/installer" | sh -s -- install
 
-    ## Install keepassxc
+# Install php
 
-    snap install --classic \
-        keepassxc
+curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh -s -- install
 
-    ## Install kubectl
+# Install phpstorm
 
-    snap install --classic \
-        kubectl
+snap install --classic phpstorm
 
-    ## Install libreoffice
+# Install postgresql
 
-    snap install --classic \
-        libreoffice
+curl --location "https://github.com/timonier/postgresql/raw/master/bin/installer" | sh -s -- install
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/postgresql.service /etc/systemd/user/postgresql.service
 
-    ## Install license
+# Install postman
 
-    curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s -- install
+apt-get install --no-install-recommends --yes libgconf2-4
+rm -f -r /opt/postman
+curl --location --output /tmp/postman.tar.gz "https://dl.pstmn.io/download/latest/linux64"
+tar --directory /tmp --extract --file /tmp/postman.tar.gz --gzip
+mv /tmp/Postman /opt/postman
+cp --no-target-directory ./src/system/rootfs/usr/share/applications/postman.desktop /usr/share/applications/postman.desktop
+cp --no-target-directory ./src/system/rootfs/usr/share/icons/postman.png /usr/share/icons/postman.png
 
-    ## Install mailcatcher
+# Install rabbitmq
 
-        ### Install cli
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/rabbitmq.service /etc/systemd/user/rabbitmq.service
 
-        curl --location "https://github.com/timonier/mailcatcher/raw/master/bin/installer" | sh -s -- install
+# Install rawdns
 
-        ### Install service
+mkdir -p /etc/rawdns
+cp --no-target-directory ./src/system/rootfs/etc/rawdns/config.json.template /etc/rawdns/config.json.template
 
-        cp --no-target-directory ./src/system/etc/systemd/user/mailcatcher.service /etc/systemd/user/mailcatcher.service
+mkdir -p /etc/rawdns/scripts
+cp --no-target-directory ./src/system/rootfs/etc/rawdns/scripts/generate-configuration /etc/rawdns/scripts/generate-configuration
+cp --no-target-directory ./src/system/rootfs/etc/rawdns/scripts/if-up /etc/rawdns/scripts/if-up
+chmod +x /etc/rawdns/scripts/generate-configuration /etc/rawdns/scripts/if-up
 
-    ## Install mnemosyne
+rm -f /etc/network/if-up.d/rawdns
+ln --symbolic /etc/rawdns/scripts/if-up /etc/network/if-up.d/rawdns
 
-    apt-get install --no-install-recommends --yes \
-        mnemosyne
+rm -f /etc/resolv.conf
+ln --symbolic /run/systemd/resolve/resolv.conf /etc/resolv.conf
+mkdir -p /etc/systemd/resolved.conf.d
+cp --no-target-directory ./src/system/rootfs/etc/systemd/resolved.conf.d/rawdns.conf /etc/systemd/resolved.conf.d/rawdns.conf
 
-    ## Install myspell
+cp --no-target-directory ./src/system/rootfs/etc/systemd/system/rawdns.service /etc/systemd/system/rawdns.service
+systemctl daemon-reload
+systemctl enable rawdns
+systemctl restart rawdns
+systemctl restart systemd-resolved
 
-    apt-get install --no-install-recommends --yes \
-        myspell-fr
+# Install redis
 
-    ## Install mysql
+curl --location "https://github.com/timonier/redis/raw/master/bin/installer" | sh -s -- install
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/redis.service /etc/systemd/user/redis.service
 
-        ### Install cli
+# Install remmina
 
-        curl --location "https://github.com/timonier/mysql/raw/master/bin/installer" | sh -s -- install
+snap install --classic remmina
 
-        ### Install service
+# Install seahorse
 
-        cp --no-target-directory ./src/system/etc/systemd/user/mysql.service /etc/systemd/user/mysql.service
+apt-get install --no-install-recommends --yes seahorse
 
-    ## Install nodejs
+# Install selenium
 
-        ### Install cli
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/selenium-chrome.service /etc/systemd/user/selenium-chrome.service
+cp --no-target-directory ./src/system/rootfs/etc/systemd/user/selenium-firefox.service /etc/systemd/user/selenium-firefox.service
 
-        curl --location "https://github.com/timonier/node/raw/master/bin/installer" | sh -s -- install
+# Install shellcheck
 
-    ## Install php
+apt-get install --no-install-recommends --yes shellcheck
+cp --no-target-directory ./src/system/rootfs/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
 
-        ### Install cli
+# Install shfmt
 
-        curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh -s -- install
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/mvdan/sh/latest" | xargs)
+curl --location --output /usr/local/bin/shfmt "${SH_RELEASE}"
+chmod +x /usr/local/bin/shfmt
 
-    ## Install phpstorm
+# Install skype
 
-    snap install --classic \
-        phpstorm
+snap install --classic skype
 
-    ## Install picard
+# Install slack
 
-    apt-get install --no-install-recommends --yes \
-        picard
+snap install --classic slack
 
-    ## Install postgresql
+# Install spotify
 
-        ### Install cli
+snap install --classic spotify
 
-        curl --location "https://github.com/timonier/postgresql/raw/master/bin/installer" | sh -s -- install
+# Install sshpass
 
-        ### Install service
+apt-get install --no-install-recommends --yes sshpass
 
-        cp --no-target-directory ./src/system/etc/systemd/user/postgresql.service /etc/systemd/user/postgresql.service
+# Install sshuttle
 
-    ## Install postman
+curl --location "https://github.com/timonier/sshuttle/raw/master/bin/installer" | sh -s -- install
 
-    rm --force --recursive /opt/postman
-    curl --location --output /tmp/postman.tar.gz "https://dl.pstmn.io/download/latest/linux64"
-    tar --directory /tmp --extract --file /tmp/postman.tar.gz --gzip
-    mv /tmp/Postman /opt/postman
-    cp --no-target-directory ./src/system/usr/share/applications/postman.desktop /usr/share/applications/postman.desktop
-    cp --no-target-directory ./src/system/usr/share/icons/postman.png /usr/share/icons/postman.png
+# Install sup
 
-    ## Install powertop
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/pressly/sup/latest" | xargs)
+curl --location --output /usr/local/bin/sup "${SUP_RELEASE}"
+chmod +x /usr/local/bin/sup
 
-        ### Install cli
+# Install thermald
 
-        apt-get install --no-install-recommends --yes \
-            powertop
+apt-get install --no-install-recommends --yes thermald
 
-        ### Install service
+# Install transcode
 
-        cp --no-target-directory ./src/system/etc/systemd/system/powertop.service /etc/systemd/system/powertop.service
-        systemctl daemon-reload
-        systemctl enable powertop
+apt-get install --no-install-recommends --yes transcode
 
-    ## Install rabbitmq
+# Install vlc
 
-        ### Install service
+snap install --classic vlc
 
-        cp --no-target-directory ./src/system/etc/systemd/user/rabbitmq.service /etc/systemd/user/rabbitmq.service
+# Install webstorm
 
-    ## Install rawdns
+snap install --classic webstorm
 
-        ### Configure network-manager
+# Optimize intel hardware
 
-        cp --no-target-directory ./src/system/etc/NetworkManager/NetworkManager.conf /etc/NetworkManager/NetworkManager.conf
-        cp --no-target-directory ./src/system/etc/NetworkManager/dispatcher.d/99rawdns /etc/NetworkManager/dispatcher.d/99rawdns
+apt-get install --no-install-recommends --yes intel-microcode
+if ! grep -q "intel_pstate=enable" /etc/default/grub; then
+    sed --in-place "s@quiet splash@quiet splash intel_pstate=enable@" /etc/default/grub
+    update-grub
+fi
 
-        ### Configure resolvconf
+# Optimize kernel
 
-        cp --no-target-directory ./src/system/etc/resolvconf/resolv.conf.d/head /etc/resolvconf/resolv.conf.d/head
-        resolvconf -u
-
-        ### Install rawdns-update
-
-        cp --no-target-directory ./src/system/usr/local/sbin/rawdns-update /usr/local/sbin/rawdns-update
-
-        ### Install rawdns configuration
-
-        mkdir --parents /etc/rawdns
-        cp --no-target-directory ./src/system/etc/rawdns/rawdns.json.template /etc/rawdns/rawdns.json.template
-
-        ### Install service
-
-        cp --no-target-directory ./src/system/etc/systemd/system/rawdns.service /etc/systemd/system/rawdns.service
-        systemctl daemon-reload
-        systemctl enable rawdns
-        systemctl start rawdns
-
-    ## Install redis
-
-        ### Install cli
-
-        curl --location "https://github.com/timonier/redis/raw/master/bin/installer" | sh -s -- install
-
-        ### Install service
-
-        cp --no-target-directory ./src/system/etc/systemd/user/redis.service /etc/systemd/user/redis.service
-
-    ## Install remmina
-
-    snap install --classic \
-        remmina
-
-    ## Install restic
-
-    curl --location "https://github.com/timonier/restic/raw/master/bin/installer" | sh -s -- install restic
-
-    ## Install seahorse
-
-    apt-get install --no-install-recommends --yes \
-        seahorse
-
-    ## Install selenium
-
-        ### Install services
-
-        cp --no-target-directory ./src/system/etc/systemd/user/selenium-chrome.service /etc/systemd/user/selenium-chrome.service
-        cp --no-target-directory ./src/system/etc/systemd/user/selenium-firefox.service /etc/systemd/user/selenium-firefox.service
-
-    ## Install shellcheck
-
-        ### Install shellcheck
-
-        apt-get install --no-install-recommends --yes \
-            shellcheck
-
-        ### Install shellcheck-folder
-
-        cp --no-target-directory ./src/system/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
-
-    ## Install skype
-
-    snap install --classic \
-        skype
-
-    ## Install slack
-
-    snap install --classic \
-        slack
-
-    ## Install sshpass
-
-    apt-get install --no-install-recommends --yes \
-        sshpass
-
-    ## Install sshuttle
-
-    curl --location "https://github.com/timonier/sshuttle/raw/master/bin/installer" | sh -s -- install
-
-    ## Install systemd-user
-
-    cp --no-target-directory ./src/system/usr/local/sbin/systemctl-user /usr/local/sbin/systemctl-user
-
-    ## Install thermald
-
-    apt-get install --no-install-recommends --yes \
-        thermald
-
-    ## Install transcode
-
-    apt-get install --no-install-recommends --yes \
-        transcode
-
-    ## Install vlc
-
-    snap install --classic \
-        vlc
-
-    ## Install webstorm
-
-    snap install --classic \
-        webstorm
-
-    ## Install xfce4-terminal
-
-    apt-get install --no-install-recommends --yes \
-        xfce4-terminal
-
-# Optimization
-
-    ## Optimize intel hardware
-
-    if ! grep --quiet "intel_pstate=enable" /etc/default/grub ; then
-        sed --in-place "s/quiet splash/quiet splash intel_pstate=enable/" /etc/default/grub
-        update-grub
-    fi
-    cp --no-target-directory ./src/system/usr/share/X11/xorg.conf.d/20-intel.conf /usr/share/X11/xorg.conf.d/20-intel.conf
-
-    ## Optimize kernel
-
-    if ! grep --quiet "fs.inotify.max_user_watches" /etc/sysctl.conf ; then
-        echo "fs.inotify.max_user_watches=524288" | tee --append /etc/sysctl.conf
-    fi
+if ! grep -q "fs.inotify.max_user_watches" /etc/sysctl.conf; then
+    echo "fs.inotify.max_user_watches=524288" | tee --append /etc/sysctl.conf
+fi
 
 # Clean
 
-    ## Clean packages
-
-    apt-get autoremove --purge --yes
-    apt-get clean
+apt-get autoremove --purge --yes
+apt-get clean

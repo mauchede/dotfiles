@@ -1,0 +1,11 @@
+[Install]
+WantedBy=sockets.target
+
+[Socket]
+ListenStream=/var/run/docker.sock
+SocketGroup=docker
+SocketMode=0660
+SocketUser=root
+
+[Unit]
+PartOf=docker.service

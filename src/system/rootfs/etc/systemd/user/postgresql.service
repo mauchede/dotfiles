@@ -1,0 +1,9 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+EnvironmentFile=%h/.env
+Environment="IMAGE=timonier/postgresql:latest"
+Environment="NAME=postgresql-%u"
+ExecStart=/usr/local/sbin/docker run --init --name "${NAME}" --rm "${IMAGE}" postgres
+TimeoutStartSec=0

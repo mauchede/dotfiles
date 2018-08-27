@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e -u
+
+docker run $(compgen -A variable | grep -v "PATH" | awk '{print "--env", $1}') --init --interactive --net host --rm --tty="$([ -t 0 ] && echo "true" || echo "false")" "${IMAGE:-blackfire/blackfire}":"${TAG:-latest}" "$(basename "$0")" "$@"

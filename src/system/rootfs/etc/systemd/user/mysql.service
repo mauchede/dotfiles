@@ -1,0 +1,9 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+EnvironmentFile=%h/.env
+Environment="IMAGE=timonier/mysql:latest"
+Environment="NAME=mysql-%u"
+ExecStart=/usr/local/sbin/docker run --env MYSQL_ALLOW_EMPTY_PASSWORD=yes --init --name "${NAME}" --rm "${IMAGE}" mysqld --sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+TimeoutStartSec=0

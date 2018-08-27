@@ -1,0 +1,9 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+EnvironmentFile=%h/.env
+Environment="IMAGE=blackfire/blackfire:latest"
+Environment="NAME=blackfire-%u"
+ExecStart=/usr/local/sbin/docker run --env BLACKFIRE_SERVER_ID --env BLACKFIRE_SERVER_TOKEN --init --name "${NAME}" --rm "${IMAGE}"
+TimeoutStartSec=0

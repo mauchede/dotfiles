@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e -u
+
+CONFIG="$(jq '.["."].nameservers |= []' < /etc/rawdns/config.json.template)"
+NAMESERVERS="$(grep "nameserver" /run/systemd/resolve/resolv.conf | tail -n +2 | cut -d " " -f 2 | head -n 1)"
+
+if [ -z "${NAMESERVERS}" ]; then
+    CONFIG="$(echo "${CONFIG}" | jq 'del(.["."])')"
+else
+    for NAMESERVER in ${NAMESERVERS}; do
+        CONFIG="$(echo "${CONFIG}" | jq '.["."].nameservers |= .+ ["'"${NAMESERVER}"'"]')"
+    done
+fi
+
+echo "${CONFIG}" | jq --unbuffered '.' > /etc/rawdns/config.json

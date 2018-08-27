@@ -1,0 +1,15 @@
+"*":
+  core:
+    allowPendingPaneItems: false
+    automaticallyUpdate: false
+    closeDeletedFileTabs: true
+    disabledPackages: [
+      "dev-live-reload"
+      "open-on-github"
+      "package-generator"
+    ]
+    telemetryConsent: "no"
+  editor:
+    showInvisibles: true
+  welcome:
+    showOnStartup: false

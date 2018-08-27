@@ -8,52 +8,50 @@ Files and scripts used to configure my Xubuntu computer
 
 * Configure the system for intel hardware:
   - use `intel_pstate` governor.
-  - use `powertop`.
-  - use `intel_backlight`.
   - use `thermald`.
 
 * Add applications/aliases/commands:
-  - [atom](https://atom.io) ([dockerized](https://github.com/timonier/atom))
+  - [adminer](https://www.adminer.org/) ([dockerized](https://hub.docker.com/_/adminer/))
+  - [atom](https://atom.io)
   - [blackfire](https://blackfire.io) ([dockerized](https://hub.docker.com/r/blackfire/blackfire))
-  - [composer](https://getcomposer.org)
-  - [datagrip](https://www.jetbrains.com/datagrip/)
+  - [cheese](https://wiki.gnome.org/Apps/Cheese)
+  - [chromium](https://www.chromium.org/)
   - [docker](https://www.docker.com)
   - [docker-compose](https://docs.docker.com/compose/overview)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
   - [etcher](https://etcher.io/)
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
-  - [extract-xiso](http://sourceforge.net/projects/extract-xiso) ([dockerized](https://github.com/timonier/extract-xiso))
-  - [fabric](http://www.fabfile.org) ([dockerized](https://github.com/timonier/fabric))
   - [filezilla](https://filezilla-project.org)
   - [firefox](https://www.mozilla.org/en/firefox/)
   - [git](https://git-scm.com)
-  - [google chrome](https://www.google.fr/chrome/browser/desktop/index.html)
   - [google cloud sdk](https://cloud.google.com/sdk/?hl=en)
-  - [homebank](http://homebank.free.fr) ([dockerized](https://github.com/timonier/homebank))
+  - [homebank](http://homebank.free.fr)
+  - [insomnia](https://insomnia.rest)
   - [intellij idea](https://www.jetbrains.com/idea)
   - [joplin](https://github.com/laurent22/joplin)
   - [keepassxc](https://keepassxc.org/)
   - [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
   - [libreoffice](https://www.libreoffice.org)
   - [license](https://github.com/nishanths/license) ([dockerized](https://github.com/timonier/license))
-  - [melody](http://melody.sensiolabs.org)
-  - [mnemosyne](http://mnemosyne-proj.org) ([dockerized](https://github.com/timonier/mnemosyne))
-  - [mysql](http://www.mysql.com) ([dockerized](https://hub.docker.com/_/mysql))
+  - [mailcatcher](https://github.com/sj26/mailcatcher) ([dockerized](https://hub.docker.com/r/timonier/mailcatcher))
+  - [mysql](http://www.mysql.com) ([dockerized](https://hub.docker.com/r/timonier/mysql))
   - [nodejs](https://nodejs.org) ([dockerized](https://github.com/timonier/node))
   - [php](http://www.php.net) ([dockerized](https://github.com/timonier/php))
   - [phpstorm](https://www.jetbrains.com/phpstorm)
-  - [picard](https://picard.musicbrainz.org)
-  - [postgresql](http://www.postgresql.org) ([dockerized](https://hub.docker.com/_/postgres))
+  - [postgresql](http://www.postgresql.org) ([dockerized](https://hub.docker.com/r/timonier/postgresql))
   - [postman](https://www.getpostman.com/)
   - [rabbitmq](https://www.rabbitmq.com) ([dockerized](https://hub.docker.com/_/rabbitmq))
-  - [redis](https://redis.io) ([dockerized](https://hub.docker.com/_/redis))
+  - [redis](https://redis.io) ([dockerized](https://hub.docker.com/r/timonier/redis))
   - [remmina](http://freerdp.github.io/Remmina/index.html)
+  - [rawdns](https://github.com/tianon/rawdns) ([dockerized](https://hub.docker.com/r/tianon/rawdns/))
   - [rsync](https://rsync.samba.org)
   - [seahorse](https://wiki.gnome.org/Apps/Seahorse)
   - [selenium](http://www.seleniumhq.org/) ([dockerized](https://hub.docker.com/r/selenium/standalone-chrome/))
   - [shellcheck](https://github.com/koalaman/shellcheck)
+  - [shfmt](https://github.com/mvdan/sh/releases)
   - [skype](https://www.skype.com/en/)
   - [slack](https://slack.com)
+  - [sup](https://github.com/pressly/sup)
   - [vlc](http://www.videolan.org/vlc)
   - [webstorm](https://www.jetbrains.com/webstorm/)
   - [xfce4-terminal](http://docs.xfce.org/apps/terminal/start)
@@ -87,7 +85,6 @@ To configure the system:
 
 ```sh
 sudo bin/install-system.sh
-sudo powertop --calibrate
 ```
 
 To configure the user:
@@ -104,12 +101,18 @@ sudo bin/install-user.sh [USER]
 4. Push to the branch: `git push origin my-new-feature`.
 5. Submit a pull request.
 
+If you like / use this project, please let me known by adding a [★](https://help.github.com/articles/about-stars/) on the [GitHub repository](https://github.com/mauchede/dotfiles).
+
 ## Links
 
 * [creating a .desktop file for a new application](http://askubuntu.com/questions/281293/creating-a-desktop-file-for-a-new-application)
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
+* [fix joplin app-icon on linux](https://github.com/laurent22/joplin/issues/86#issuecomment-376811132)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
+* [how to change dns on a minimal networking setup](https://superuser.com/questions/912272/how-to-change-dns-on-a-minimal-networking-setup)
 * [human git aliases](http://gggritso.com/human-git-aliases)
+* [mauchede/version-lister](https://github.com/mauchede/version-lister)
+* [set environment variables from file](https://stackoverflow.com/questions/19331497/set-environment-variables-from-file)
+* [snap creates redundant duplicate directories in home folder](https://bugs.launchpad.net/ubuntu/+source/snapcraft/+bug/1746710)
 * [start shell script on network manager successful connection](http://www.techytalk.info/start-script-on-network-manager-successful-connection/)
-* [timonier/version-lister](https://github.com/timonier/version-lister)
 * [using gnome keyring as git credential helper](https://blog.scottlowe.org/2016/11/21/gnome-keyring-git-credential-helper/)

@@ -1,0 +1,9 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+EnvironmentFile=%h/.env
+Environment="IMAGE=adminer:standalone"
+Environment="NAME=adminer-%u"
+ExecStart=/usr/local/sbin/docker run --name "${NAME}" --rm "${IMAGE}"
+TimeoutStartSec=0

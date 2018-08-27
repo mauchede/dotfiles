@@ -1,0 +1,14 @@
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Environment="IMAGE=tianon/rawdns:latest"
+Environment="NAME=rawdns"
+ExecStart=/usr/local/sbin/docker run --init --log-opt max-size=5m --name "${NAME}" --publish 172.17.42.1:53:53/tcp --publish 172.17.42.1:53:53/udp --rm --volume /etc/rawdns:/etc/rawdns:ro --volume /var/run/docker.sock:/var/run/docker.sock:ro "${IMAGE}" rawdns /etc/rawdns/config.json
+ExecStartPost=/bin/systemctl restart systemd-resolved
+ExecStartPre=/etc/rawdns/scripts/generate-configuration
+ExecStartPre=-/usr/local/sbin/docker rm --force --volumes "${NAME}"
+TimeoutStartSec=0
+
+[Unit]
+Requires=docker.service
