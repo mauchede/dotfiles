@@ -1,6 +1,6 @@
 # README
 
-Files and scripts used to configure my Xubuntu computer
+Files and scripts used to configure my computer
 
 ## What kind of modifications are applied?
 

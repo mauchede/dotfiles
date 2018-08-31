@@ -35,7 +35,7 @@ fi
 
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/docker/docker-ce/latest" | xargs)
 rm -f -r /tmp/docker* /usr/local/sbin/docker*
-curl --location --output /tmp/docker.tgz "${DOCKER_CE_RELEASE}"
+curl --location --output /tmp/docker.tgz "${DOCKER_CE_LINUX_RELEASE}"
 tar --directory /tmp --extract --file /tmp/docker.tgz
 mv /tmp/docker/docker* /usr/local/sbin/
 groupadd --gid 999 --non-unique docker || :
@@ -84,7 +84,7 @@ curl --location "https://github.com/mauchede/docker-certificates/raw/master/bin/
 # Install docker-compose
 
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/docker/compose/latest" | xargs)
-curl --location --output /usr/local/sbin/docker-compose "${COMPOSE_RELEASE}"
+curl --location --output /usr/local/sbin/docker-compose "${COMPOSE_LINUX_RELEASE}"
 chmod +x /usr/local/sbin/docker-compose
 
 # Install drive
@@ -96,7 +96,7 @@ curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | s
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/resin-io/etcher/latest" | xargs)
 rm -f -r /opt/etcher
 mkdir -p /opt/etcher
-curl --location --output /opt/etcher/etcher "${ETCHER_RELEASE}"
+curl --location --output /opt/etcher/etcher "${ETCHER_LINUX_RELEASE}"
 chmod +x /opt/etcher/etcher
 
 # Install extract
@@ -144,7 +144,7 @@ snap install --classic intellij-idea-community
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/laurent22/joplin/latest" | xargs)
 rm -f -r /opt/joplin
 mkdir -p /opt/joplin
-curl --location --output /opt/joplin/joplin "${JOPLIN_RELEASE}"
+curl --location --output /opt/joplin/joplin "${JOPLIN_LINUX_RELEASE}"
 chmod +x /opt/joplin/joplin
 
 # Install keepassxc
@@ -152,7 +152,7 @@ chmod +x /opt/joplin/joplin
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/keepassxreboot/keepassxc/latest" | xargs)
 rm -f -r /opt/keepassxc
 mkdir -p /opt/keepassxc
-curl --location --output /opt/keepassxc/keepassxc "${KEEPASSXC_RELEASE}"
+curl --location --output /opt/keepassxc/keepassxc "${KEEPASSXC_LINUX_RELEASE}"
 chmod +x /opt/keepassxc/keepassxc
 
 # Install kubectl
@@ -265,7 +265,7 @@ cp --no-target-directory ./src/system/rootfs/usr/local/bin/shellcheck-folder /us
 # Install shfmt
 
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/mvdan/sh/latest" | xargs)
-curl --location --output /usr/local/bin/shfmt "${SH_RELEASE}"
+curl --location --output /usr/local/bin/shfmt "${SH_LINUX_RELEASE}"
 chmod +x /usr/local/bin/shfmt
 
 # Install skype
@@ -291,7 +291,7 @@ curl --location "https://github.com/timonier/sshuttle/raw/master/bin/installer" 
 # Install sup
 
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/pressly/sup/latest" | xargs)
-curl --location --output /usr/local/bin/sup "${SUP_RELEASE}"
+curl --location --output /usr/local/bin/sup "${SUP_LINUX_RELEASE}"
 chmod +x /usr/local/bin/sup
 
 # Install thermald
