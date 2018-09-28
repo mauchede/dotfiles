@@ -65,11 +65,11 @@ npm config set progress false
 
 # Configure phpstorm
 
-#curl --location "https://github.com/mauchede/phpstorm-config/raw/master/bin/installer" | sh -s -- install
+curl --location "https://github.com/mauchede/phpstorm-config/raw/mac-os/darwin/bin/installer" | sh -s -- install
 
 # Configure webstorm
 
-#curl --location "https://github.com/mauchede/webstorm-config/raw/master/bin/installer" | sh -s -- install
+curl --location "https://github.com/mauchede/webstorm-config/raw/mac-os/darwin/bin/installer" | sh -s -- install
 
 # Configure yarn
 

@@ -51,7 +51,24 @@ brew cask install firefox
 
 # Install filezilla
 
-brew cask install filezilla
+if [ -d /Applications/FileZilla.app ] ; then
+    brew cask reinstall filezilla
+else
+    brew cask install filezilla
+fi
+
+# Install gatling
+
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/_/gatling/latest" | xargs)
+brew cask install caskroom/versions/java8
+rm -f -r /usr/local/opt/gatling
+curl --location --output /tmp/gatling.zip "${GATLING_RELEASE}"
+sh -c "cd /tmp && unzip /tmp/gatling.zip"
+mv /tmp/gatling-charts-highcharts-bundle-"${GATLING_VERSION}" /usr/local/opt/gatling
+xattr -r -d com.apple.quarantine /usr/local/opt/gatling
+cp ./src/system/rootfs/usr/local/bin/gatling /usr/local/bin/gatling
+cp ./src/system/rootfs/usr/local/bin/gatling-recorder /usr/local/bin/gatling-recorder
+rm -f -r /tmp/gatling*
 
 # Install git
 
@@ -61,13 +78,25 @@ brew install git
 
 brew cask install google-chrome
 
+# Install google-cloud-sdk
+
+brew cask install google-cloud-sdk
+
 # Install homebank
 
 brew install homebank
 
 # Install iterm2
 
-brew cask install iterm2
+if [ -d /Applications/iTerms.app ]; then
+    brew cask reinstall iterm2
+else
+    brew cask install iterm2
+fi
+
+# Install java
+
+brew cask install java
 
 # Install jq
 
@@ -112,7 +141,11 @@ curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh 
 
 # Install phpstorm
 
-brew cask install phpstorm
+if [ -d /Applications/PhpStorm.app ] ; then
+    brew cask reinstall phpstorm
+else
+    brew cask install phpstorm
+fi
 
 # Install postgresql
 
@@ -166,7 +199,11 @@ chmod +x /usr/local/bin/sup
 
 # Install webstorm
 
-brew cask install webstorm
+if [ -d /Applications/WebStorm.app ] ; then
+    brew cask reinstall webstorm
+else
+    brew cask install webstorm
+fi
 
 # Clean
 

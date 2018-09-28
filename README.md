@@ -14,9 +14,13 @@ Files and scripts used to configure my computer
   - [etcher](https://etcher.io/)
   - [filezilla](https://filezilla-project.org)
   - [firefox](https://www.mozilla.org/en/firefox/)
+  - [gatling](https://gatling.io)
   - [git](https://git-scm.com)
+  - [google cloud sdk](https://cloud.google.com/sdk/)
   - [homebank](http://homebank.free.fr)
-  - [keepassxc](https://keepassxc.org/)
+  - [iterm2](https://www.iterm2.com/)
+  - [java](https://www.java.com)
+  - [keepassxc](https://keepassxc.org)
   - [libreoffice](https://www.libreoffice.org)
   - [license](https://github.com/nishanths/license) ([dockerized](https://github.com/timonier/license))
   - [mysql](http://www.mysql.com) ([dockerized](https://hub.docker.com/r/timonier/mysql))
@@ -32,7 +36,7 @@ Files and scripts used to configure my computer
   - [skype](https://www.skype.com/en/)
   - [slack](https://slack.com)
   - [sup](https://github.com/pressly/sup)
-  - [webstorm](https://www.jetbrains.com/webstorm/)
+  - [webstorm](https://www.jetbrains.com/webstorm)
 
 ### User modifications
 
@@ -80,7 +84,10 @@ If you like / use this project, please let me known by adding a [★](https://he
 ## Links
 
 * [human git aliases](http://gggritso.com/human-git-aliases)
+* [gatling does not support java > 8](https://github.com/gatling/gatling/issues/3359)
+* [install java8 on os x](https://gist.github.com/JeOam/a926dbb5145c4d0789c1)
 * [if file is exists and is not empty. Always gives me the false value](https://stackoverflow.com/questions/30080997/if-file-is-exists-and-is-not-empty-always-gives-me-the-false-value)
 * [recursive cp copies folder contents instead of folder on os x](https://serverfault.com/questions/11518/recursive-cp-copies-folder-contents-instead-of-folder-on-os-x)
 * [set environment variables from file](https://stackoverflow.com/questions/19331497/set-environment-variables-from-file)
 * [set up docker for mac with native NFS](https://medium.com/@sean.handley/how-to-set-up-docker-for-mac-with-native-nfs-145151458adc)
+* [where is java_home on macos](https://stackoverflow.com/questions/6588390/where-is-java-home-on-macos-sierra-10-12-el-capitan-10-11-yosemite-10-10)
