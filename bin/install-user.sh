@@ -36,6 +36,7 @@ git config --global alias.unstage "reset --quiet HEAD --"
 git config --global alias.up "pull --autostash --rebase"
 git config --global commit.gpgsign true
 git config --global core.editor vim
+git config --global fetch.prune true
 
 git config --global core.excludesfile "${HOME}"/.gitignore_global
 touch "${HOME}"/.gitignore_global
@@ -73,5 +74,8 @@ curl --location "https://github.com/mauchede/webstorm-config/raw/mac-os/darwin/b
 
 # Configure yarn
 
+if ! grep -F --quiet "YARN_CACHE_FOLDER=" "${HOME}"/.env ; then
+    echo "YARN_CACHE_FOLDER=${HOME}/.yarn/cache" >> "${HOME}"/.env
+fi
 yarn config set version-git-tag true
 yarn config set version-sign-git-tag true

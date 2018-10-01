@@ -2,6 +2,13 @@
 
 export JAVA_HOME="$(/usr/libexec/java_home)"
 
+# fix accentuated characters
+
+stty cs8 -istrip -parenb
+bind "set convert-meta off"
+bind "set meta-flag on"
+bind "set output-meta on"
+
 # initialize bash
 
 if [ -n "${BASH_VERSION}" ] && [ -f "${HOME}"/.bashrc ]; then

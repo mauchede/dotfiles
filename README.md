@@ -83,6 +83,7 @@ If you like / use this project, please let me known by adding a [★](https://he
 
 ## Links
 
+* [caractere accentue sous iterm (fr)](https://forums.macg.co/threads/caractere-accentue-sous-iterm-xterm.201706/)
 * [human git aliases](http://gggritso.com/human-git-aliases)
 * [gatling does not support java > 8](https://github.com/gatling/gatling/issues/3359)
 * [install java8 on os x](https://gist.github.com/JeOam/a926dbb5145c4d0789c1)
