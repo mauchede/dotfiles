@@ -25,7 +25,12 @@ brew install bash-completion coreutils
 
 # Install atom
 
-brew cask install atom
+if [ -d /Applications/Atom.app ]; then
+    brew cask reinstall atom
+else
+    brew cask install atom
+fi
+xattr -d com.apple.quarantine /Applications/Atom.app
 
 # Install bash
 
@@ -43,7 +48,12 @@ curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | s
 
 # Install etcher
 
-brew cask install etcher
+if [ -d /Applications/Etcher.app ] ; then
+    brew cask reinstall etcher
+else
+    brew cask install etcher
+fi
+xattr -d com.apple.quarantine /Applications/Etcher.app
 
 # Install firefox
 
@@ -53,9 +63,11 @@ brew cask install firefox
 
 if [ -d /Applications/FileZilla.app ] ; then
     brew cask reinstall filezilla
+    rm -f "${HOME}"/Downloads/FileZilla_*
 else
     brew cask install filezilla
 fi
+xattr -d com.apple.quarantine /Applications/FileZilla.app
 
 # Install gatling
 
@@ -88,11 +100,12 @@ brew install homebank
 
 # Install iterm2
 
-if [ -d /Applications/iTerms.app ]; then
+if [ -d /Applications/iTerm.app ]; then
     brew cask reinstall iterm2
 else
     brew cask install iterm2
 fi
+xattr -d com.apple.quarantine /Applications/iTerm.app
 
 # Install java
 
@@ -104,19 +117,47 @@ brew install jq
 
 # Install keepassxc
 
-brew cask install keepassxc
+if [ -d /Applications/KeePassXC.app ] ; then
+    brew cask reinstall keepassxc
+else
+    brew cask install keepassxc
+fi
+xattr -d com.apple.quarantine /Applications/KeePassXC.app
 
 # Install keka
 
-brew cask install keka
+if [ -d /Applications/Keka.app ] ; then
+    brew cask reinstall keka
+else
+    brew cask install keka
+fi
+xattr -d com.apple.quarantine /Applications/Keka.app
+
+# kubernetes-completion
+
+brew install kubernetes-cli
 
 # Install libreoffice
 
-brew cask install libreoffice
+if [ -d /Applications/LibreOffice.app ] ; then
+    brew cask reinstall libreoffice
+else
+    brew cask install libreoffice
+fi
+xattr -d com.apple.quarantine /Applications/LibreOffice.app
 
 # Install license
 
 curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s -- install
+
+# Install macs-fan-control
+
+if [ -d "/Applications/Macs Fan Control.app" ] ; then
+    brew cask reinstall macs-fan-control
+else
+    brew cask install macs-fan-control
+fi
+xattr -d com.apple.quarantine "/Applications/Macs Fan Control.app"
 
 # Install make
 
@@ -146,6 +187,7 @@ if [ -d /Applications/PhpStorm.app ] ; then
 else
     brew cask install phpstorm
 fi
+xattr -d com.apple.quarantine /Applications/PhpStorm.app
 
 # Install postgresql
 
@@ -153,7 +195,12 @@ curl --location "https://github.com/timonier/postgresql/raw/master/bin/installer
 
 # Install postman
 
-brew cask install postman
+if [ -d /Applications/Postman.app ] ; then
+    brew cask reinstall postman
+else
+    brew cask install postman
+fi
+xattr -d com.apple.quarantine /Applications/Postman.app
 
 # Install redis
 
@@ -173,7 +220,12 @@ chmod +x /usr/local/bin/shfmt
 
 # Install skype
 
-brew cask install skype
+if [ -d /Applications/Skype.app ] ; then
+    brew cask reinstall skype
+else
+    brew cask install skype
+fi
+xattr -d com.apple.quarantine /Applications/Skype.app
 
 # Install sshuttle
 
@@ -181,21 +233,30 @@ brew install sshuttle
 
 # Install slack
 
-brew cask install slack
+if [ -d /Applications/Slack.app ] ; then
+    brew cask reinstall slack
+else
+    brew cask install slack
+fi
+xattr -d com.apple.quarantine /Applications/Slack.app
 
 # Install spectacle
 
-brew cask install spectacle
+if [ -d /Applications/Spectacle.app ] ; then
+    brew cask reinstall spectacle
+else
+    brew cask install spectacle
+fi
+xattr -d com.apple.quarantine /Applications/Spectacle.app
 
 # Install spotify
 
-brew cask install spotify
-
-# Install sup
-
-export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/pressly/sup/latest" | xargs)
-curl --location --output /usr/local/bin/sup "${SUP_DARWIN_RELEASE}"
-chmod +x /usr/local/bin/sup
+if [ -d /Applications/Spotify.app ] ; then
+    brew cask reinstall spotify
+else
+    brew cask install spotify
+fi
+xattr -d com.apple.quarantine /Applications/Spotify.app
 
 # Install webstorm
 
@@ -204,6 +265,7 @@ if [ -d /Applications/WebStorm.app ] ; then
 else
     brew cask install webstorm
 fi
+xattr -d com.apple.quarantine /Applications/WebStorm.app
 
 # Clean
 
