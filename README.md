@@ -38,6 +38,7 @@ Files and scripts used to configure my computer
   - [skype](https://www.skype.com/en/)
   - [slack](https://slack.com)
   - [sup](https://github.com/pressly/sup)
+  - [vlc](https://www.videolan.org/vlc/)
   - [webstorm](https://www.jetbrains.com/webstorm)
 
 ### User modifications

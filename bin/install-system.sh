@@ -32,6 +32,10 @@ else
 fi
 xattr -d com.apple.quarantine /Applications/Atom.app
 
+# Install aws-cli
+
+brew install awscli
+
 # Install bash
 
 brew install bash
@@ -257,6 +261,15 @@ else
     brew cask install spotify
 fi
 xattr -d com.apple.quarantine /Applications/Spotify.app
+
+# Install vlc
+
+if [ -d /Applications/VLC.app ] ; then
+    brew cask reinstall vlc
+else
+    brew cask install vlc
+fi
+xattr -d com.apple.quarantine /Applications/VLC.app
 
 # Install webstorm
 
