@@ -2,15 +2,9 @@
 set -e -u -x
 cd "$(dirname "$0")"/..
 
-fail() {
-    echo 1>&2 "$1"
-    echo 1>&2 "Usage: $(basename "$0")"
-    exit 255
-}
-
 # Install brew
 
-if ! command -v brew ; then
+if ! command -v brew; then
     /usr/bin/ruby -e "$(curl --fail --location --silent --show-error "https://raw.githubusercontent.com/Homebrew/install/master/install")"
 fi
 
@@ -43,7 +37,7 @@ brew install bash
 # Install docker-ce
 
 brew cask install docker
-sudo cp ./src/system/rootfs/etc/nfs.conf /etc/nfs.conf
+sudo cp src/system/rootfs/etc/nfs.conf /etc/nfs.conf
 sudo nfsd restart
 
 # Install drive
@@ -52,7 +46,7 @@ curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | s
 
 # Install etcher
 
-if [ -d /Applications/Etcher.app ] ; then
+if [ -d /Applications/Etcher.app ]; then
     brew cask reinstall etcher
 else
     brew cask install etcher
@@ -65,7 +59,7 @@ brew cask install firefox
 
 # Install filezilla
 
-if [ -d /Applications/FileZilla.app ] ; then
+if [ -d /Applications/FileZilla.app ]; then
     brew cask reinstall filezilla
     rm -f "${HOME}"/Downloads/FileZilla_*
 else
@@ -82,8 +76,8 @@ curl --location --output /tmp/gatling.zip "${GATLING_RELEASE}"
 sh -c "cd /tmp && unzip /tmp/gatling.zip"
 mv /tmp/gatling-charts-highcharts-bundle-"${GATLING_VERSION}" /usr/local/opt/gatling
 xattr -r -d com.apple.quarantine /usr/local/opt/gatling
-cp ./src/system/rootfs/usr/local/bin/gatling /usr/local/bin/gatling
-cp ./src/system/rootfs/usr/local/bin/gatling-recorder /usr/local/bin/gatling-recorder
+cp src/system/rootfs/usr/local/bin/gatling /usr/local/bin/gatling
+cp src/system/rootfs/usr/local/bin/gatling-recorder /usr/local/bin/gatling-recorder
 rm -f -r /tmp/gatling*
 
 # Install git
@@ -121,7 +115,7 @@ brew install jq
 
 # Install keepassxc
 
-if [ -d /Applications/KeePassXC.app ] ; then
+if [ -d /Applications/KeePassXC.app ]; then
     brew cask reinstall keepassxc
 else
     brew cask install keepassxc
@@ -130,7 +124,7 @@ xattr -d com.apple.quarantine /Applications/KeePassXC.app
 
 # Install keka
 
-if [ -d /Applications/Keka.app ] ; then
+if [ -d /Applications/Keka.app ]; then
     brew cask reinstall keka
 else
     brew cask install keka
@@ -143,7 +137,7 @@ brew install kubernetes-cli
 
 # Install libreoffice
 
-if [ -d /Applications/LibreOffice.app ] ; then
+if [ -d /Applications/LibreOffice.app ]; then
     brew cask reinstall libreoffice
 else
     brew cask install libreoffice
@@ -156,7 +150,7 @@ curl --location "https://github.com/timonier/license/raw/master/bin/installer" |
 
 # Install macs-fan-control
 
-if [ -d "/Applications/Macs Fan Control.app" ] ; then
+if [ -d "/Applications/Macs Fan Control.app" ]; then
     brew cask reinstall macs-fan-control
 else
     brew cask install macs-fan-control
@@ -186,7 +180,7 @@ curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh 
 
 # Install phpstorm
 
-if [ -d /Applications/PhpStorm.app ] ; then
+if [ -d /Applications/PhpStorm.app ]; then
     brew cask reinstall phpstorm
 else
     brew cask install phpstorm
@@ -199,7 +193,7 @@ curl --location "https://github.com/timonier/postgresql/raw/master/bin/installer
 
 # Install postman
 
-if [ -d /Applications/Postman.app ] ; then
+if [ -d /Applications/Postman.app ]; then
     brew cask reinstall postman
 else
     brew cask install postman
@@ -213,7 +207,7 @@ curl --location "https://github.com/timonier/redis/raw/master/bin/installer" | s
 # Install shellcheck
 
 brew install shellcheck
-cp ./src/system/rootfs/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
+cp src/system/rootfs/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
 chmod +x /usr/local/bin/shellcheck-folder
 
 # Install shfmt
@@ -221,10 +215,12 @@ chmod +x /usr/local/bin/shellcheck-folder
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/mvdan/sh/latest" | xargs)
 curl --location --output /usr/local/bin/shfmt "${SH_DARWIN_RELEASE}"
 chmod +x /usr/local/bin/shfmt
+cp src/system/rootfs/usr/local/bin/shell-cs-fixer /usr/local/bin/shell-cs-fixer
+chmod +x /usr/local/bin/shell-cs-fixer
 
 # Install skype
 
-if [ -d /Applications/Skype.app ] ; then
+if [ -d /Applications/Skype.app ]; then
     brew cask reinstall skype
 else
     brew cask install skype
@@ -237,7 +233,7 @@ brew install sshuttle
 
 # Install slack
 
-if [ -d /Applications/Slack.app ] ; then
+if [ -d /Applications/Slack.app ]; then
     brew cask reinstall slack
 else
     brew cask install slack
@@ -246,7 +242,7 @@ xattr -d com.apple.quarantine /Applications/Slack.app
 
 # Install spectacle
 
-if [ -d /Applications/Spectacle.app ] ; then
+if [ -d /Applications/Spectacle.app ]; then
     brew cask reinstall spectacle
 else
     brew cask install spectacle
@@ -255,7 +251,7 @@ xattr -d com.apple.quarantine /Applications/Spectacle.app
 
 # Install spotify
 
-if [ -d /Applications/Spotify.app ] ; then
+if [ -d /Applications/Spotify.app ]; then
     brew cask reinstall spotify
 else
     brew cask install spotify
@@ -264,7 +260,7 @@ xattr -d com.apple.quarantine /Applications/Spotify.app
 
 # Install vlc
 
-if [ -d /Applications/VLC.app ] ; then
+if [ -d /Applications/VLC.app ]; then
     brew cask reinstall vlc
 else
     brew cask install vlc
@@ -273,7 +269,7 @@ xattr -d com.apple.quarantine /Applications/VLC.app
 
 # Install webstorm
 
-if [ -d /Applications/WebStorm.app ] ; then
+if [ -d /Applications/WebStorm.app ]; then
     brew cask reinstall webstorm
 else
     brew cask install webstorm

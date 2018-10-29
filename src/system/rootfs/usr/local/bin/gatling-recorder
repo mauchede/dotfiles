@@ -4,4 +4,4 @@ set -e -u
 # Gatling does not support Java > 8 (see https://github.com/gatling/gatling/issues/3359)
 export JAVA_HOME="$(/usr/libexec/java_home -v 1.8)"
 
-/usr/local/opt/gatling/bin/recorder.sh "$@"
+exec /usr/local/opt/gatling/bin/recorder.sh "$@"
