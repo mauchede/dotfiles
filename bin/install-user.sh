@@ -15,6 +15,7 @@ fi
 apm install file-icons
 apm install language-docker
 apm install open-recent
+apm install quit-control
 
 # Configure git
 

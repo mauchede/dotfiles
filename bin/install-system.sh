@@ -15,7 +15,7 @@ brew upgrade
 
 # Install base
 
-brew install bash-completion coreutils
+brew install coreutils
 
 # Install atom
 
@@ -33,10 +33,17 @@ brew install awscli
 # Install bash
 
 brew install bash
+brew install bash-completion
+brew install bashful
 
 # Install docker-ce
 
-brew cask install docker
+if [ -d /Applications/Docker.app ]; then
+    brew cask reinstall docker
+else
+    brew cask install docker
+fi
+xattr -d com.apple.quarantine /Applications/Docker.app
 sudo cp src/system/rootfs/etc/nfs.conf /etc/nfs.conf
 sudo nfsd restart
 
@@ -46,12 +53,12 @@ curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | s
 
 # Install etcher
 
-if [ -d /Applications/Etcher.app ]; then
-    brew cask reinstall etcher
+if [ -d /Applications/balenaEtcher.app ]; then
+    brew cask reinstall balenaetcher
 else
-    brew cask install etcher
+    brew cask install balenaetcher
 fi
-xattr -d com.apple.quarantine /Applications/Etcher.app
+xattr -d com.apple.quarantine /Applications/balenaEtcher.app
 
 # Install firefox
 
@@ -70,7 +77,6 @@ xattr -d com.apple.quarantine /Applications/FileZilla.app
 # Install gatling
 
 export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/_/gatling/latest" | xargs)
-brew cask install caskroom/versions/java8
 rm -f -r /usr/local/opt/gatling
 curl --location --output /tmp/gatling.zip "${GATLING_RELEASE}"
 sh -c "cd /tmp && unzip /tmp/gatling.zip"
@@ -92,9 +98,13 @@ brew cask install google-chrome
 
 brew cask install google-cloud-sdk
 
-# Install homebank
+# Install gnupg
 
-brew install homebank
+brew install gpg
+
+# Install htop
+
+brew install htop
 
 # Install iterm2
 
@@ -275,6 +285,10 @@ else
     brew cask install webstorm
 fi
 xattr -d com.apple.quarantine /Applications/WebStorm.app
+
+# Install wget
+
+brew install wget
 
 # Clean
 
