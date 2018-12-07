@@ -36,6 +36,15 @@ brew install bash
 brew install bash-completion
 brew install bashful
 
+# Install cyberduck
+
+if [ -d /Applications/Cyberduck.app ]; then
+    brew cask reinstall cyberduck
+else
+    brew cask install cyberduck
+fi
+xattr -d com.apple.quarantine /Applications/Cyberduck.app
+
 # Install docker-ce
 
 if [ -d /Applications/Docker.app ]; then
@@ -63,16 +72,6 @@ xattr -d com.apple.quarantine /Applications/balenaEtcher.app
 # Install firefox
 
 brew cask install firefox
-
-# Install filezilla
-
-if [ -d /Applications/FileZilla.app ]; then
-    brew cask reinstall filezilla
-    rm -f "${HOME}"/Downloads/FileZilla_*
-else
-    brew cask install filezilla
-fi
-xattr -d com.apple.quarantine /Applications/FileZilla.app
 
 # Install gatling
 

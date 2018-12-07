@@ -8,11 +8,11 @@ Files and scripts used to configure my computer
 
 * Add applications/aliases/commands:
   - [atom](https://atom.io)
+  - [cyberduck](https://cyberduck.io)
   - [docker](https://www.docker.com)
   - [docker-compose](https://docs.docker.com/compose/overview)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
   - [etcher](https://www.balena.io/etcher/)
-  - [filezilla](https://filezilla-project.org)
   - [firefox](https://www.mozilla.org/en/firefox/)
   - [gatling](https://gatling.io)
   - [git](https://git-scm.com)
