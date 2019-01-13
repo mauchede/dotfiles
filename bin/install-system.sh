@@ -101,6 +101,12 @@ brew cask install google-cloud-sdk
 
 brew install gpg
 
+# Install hostess
+
+export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/cbednarski/hostess/latest" | xargs)
+curl --location --output /usr/local/bin/hostess "${HOSTESS_DARWIN_RELEASE}"
+chmod +x /usr/local/bin/hostess
+
 # Install htop
 
 brew install htop

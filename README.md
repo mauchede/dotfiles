@@ -18,6 +18,7 @@ Files and scripts used to configure my computer
   - [git](https://git-scm.com)
   - [google cloud sdk](https://cloud.google.com/sdk/)
   - [gnupg](https://www.gnupg.org/)
+  - [hostess](https://github.com/cbednarski/hostess)
   - [iterm2](https://www.iterm2.com/)
   - [java](https://www.java.com)
   - [keepassxc](https://keepassxc.org)
