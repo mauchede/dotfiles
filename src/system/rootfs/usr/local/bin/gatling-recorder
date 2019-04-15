@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e -u
 
 exec /usr/local/opt/gatling/bin/recorder.sh "$@"

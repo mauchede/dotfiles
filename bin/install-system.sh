@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e -u -x
 cd "$(dirname "$0")"/..
 
@@ -24,7 +24,7 @@ if [ -d /Applications/Atom.app ]; then
 else
     brew cask install atom
 fi
-xattr -d com.apple.quarantine /Applications/Atom.app
+xattr -d com.apple.quarantine /Applications/Atom.app || :
 
 # Install aws-cli
 
@@ -43,7 +43,7 @@ if [ -d /Applications/Cyberduck.app ]; then
 else
     brew cask install cyberduck
 fi
-xattr -d com.apple.quarantine /Applications/Cyberduck.app
+xattr -d com.apple.quarantine /Applications/Cyberduck.app || :
 
 # Install docker-ce
 
@@ -52,7 +52,7 @@ if [ -d /Applications/Docker.app ]; then
 else
     brew cask install docker
 fi
-xattr -d com.apple.quarantine /Applications/Docker.app
+xattr -d com.apple.quarantine /Applications/Docker.app || :
 sudo cp src/system/rootfs/etc/nfs.conf /etc/nfs.conf
 sudo nfsd restart
 
@@ -67,7 +67,7 @@ if [ -d /Applications/balenaEtcher.app ]; then
 else
     brew cask install balenaetcher
 fi
-xattr -d com.apple.quarantine /Applications/balenaEtcher.app
+xattr -d com.apple.quarantine /Applications/balenaEtcher.app || :
 
 # Install firefox
 
@@ -118,7 +118,7 @@ if [ -d /Applications/iTerm.app ]; then
 else
     brew cask install iterm2
 fi
-xattr -d com.apple.quarantine /Applications/iTerm.app
+xattr -d com.apple.quarantine /Applications/iTerm.app || :
 
 # Install java
 
@@ -135,7 +135,7 @@ if [ -d /Applications/KeePassXC.app ]; then
 else
     brew cask install keepassxc
 fi
-xattr -d com.apple.quarantine /Applications/KeePassXC.app
+xattr -d com.apple.quarantine /Applications/KeePassXC.app || :
 
 # Install keka
 
@@ -144,7 +144,7 @@ if [ -d /Applications/Keka.app ]; then
 else
     brew cask install keka
 fi
-xattr -d com.apple.quarantine /Applications/Keka.app
+xattr -d com.apple.quarantine /Applications/Keka.app || :
 
 # kubernetes-completion
 
@@ -157,7 +157,7 @@ if [ -d /Applications/LibreOffice.app ]; then
 else
     brew cask install libreoffice
 fi
-xattr -d com.apple.quarantine /Applications/LibreOffice.app
+xattr -d com.apple.quarantine /Applications/LibreOffice.app || :
 
 # Install license
 
@@ -170,7 +170,7 @@ if [ -d "/Applications/Macs Fan Control.app" ]; then
 else
     brew cask install macs-fan-control
 fi
-xattr -d com.apple.quarantine "/Applications/Macs Fan Control.app"
+xattr -d com.apple.quarantine "/Applications/Macs Fan Control.app" || :
 
 # Install make
 
@@ -195,12 +195,10 @@ curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh 
 
 # Install phpstorm
 
-if [ -d /Applications/PhpStorm.app ]; then
-    brew cask reinstall phpstorm
-else
+if [ ! -d /Applications/PhpStorm.app ]; then
     brew cask install phpstorm
 fi
-xattr -d com.apple.quarantine /Applications/PhpStorm.app
+xattr -d com.apple.quarantine /Applications/PhpStorm.app || :
 
 # Install postgresql
 
@@ -213,7 +211,7 @@ if [ -d /Applications/Postman.app ]; then
 else
     brew cask install postman
 fi
-xattr -d com.apple.quarantine /Applications/Postman.app
+xattr -d com.apple.quarantine /Applications/Postman.app || :
 
 # Install redis
 
@@ -240,7 +238,7 @@ if [ -d /Applications/Skype.app ]; then
 else
     brew cask install skype
 fi
-xattr -d com.apple.quarantine /Applications/Skype.app
+xattr -d com.apple.quarantine /Applications/Skype.app || :
 
 # Install sshuttle
 
@@ -253,7 +251,7 @@ if [ -d /Applications/Slack.app ]; then
 else
     brew cask install slack
 fi
-xattr -d com.apple.quarantine /Applications/Slack.app
+xattr -d com.apple.quarantine /Applications/Slack.app || :
 
 # Install spectacle
 
@@ -262,7 +260,7 @@ if [ -d /Applications/Spectacle.app ]; then
 else
     brew cask install spectacle
 fi
-xattr -d com.apple.quarantine /Applications/Spectacle.app
+xattr -d com.apple.quarantine /Applications/Spectacle.app || :
 
 # Install spotify
 
@@ -271,7 +269,7 @@ if [ -d /Applications/Spotify.app ]; then
 else
     brew cask install spotify
 fi
-xattr -d com.apple.quarantine /Applications/Spotify.app
+xattr -d com.apple.quarantine /Applications/Spotify.app || :
 
 # Install vlc
 
@@ -280,16 +278,14 @@ if [ -d /Applications/VLC.app ]; then
 else
     brew cask install vlc
 fi
-xattr -d com.apple.quarantine /Applications/VLC.app
+xattr -d com.apple.quarantine /Applications/VLC.app || :
 
 # Install webstorm
 
-if [ -d /Applications/WebStorm.app ]; then
-    brew cask reinstall webstorm
-else
+if [ ! -d /Applications/WebStorm.app ]; then
     brew cask install webstorm
 fi
-xattr -d com.apple.quarantine /Applications/WebStorm.app
+xattr -d com.apple.quarantine /Applications/WebStorm.app || :
 
 # Install wget
 

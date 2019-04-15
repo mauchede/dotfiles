@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e -u -x
 
 exec shfmt -ci -i 4 -kp -sr -w ./
