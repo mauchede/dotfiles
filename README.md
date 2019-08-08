@@ -11,11 +11,12 @@ Files and scripts used to configure my computer
   - [cyberduck](https://cyberduck.io)
   - [docker](https://www.docker.com)
   - [docker-compose](https://docs.docker.com/compose/overview)
-  - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
+  - [drive](https://github.com/odeke-em/drive) ([dockerized](https://gitlab.com/timonier/drive))
   - [etcher](https://www.balena.io/etcher/)
   - [firefox](https://www.mozilla.org/en/firefox/)
   - [gatling](https://gatling.io)
   - [git](https://git-scm.com)
+  - [git-remote-gcrypt](https://github.com/spwhitton/git-remote-gcrypt)
   - [google cloud sdk](https://cloud.google.com/sdk/)
   - [gnupg](https://www.gnupg.org/)
   - [hostess](https://github.com/cbednarski/hostess)
@@ -24,11 +25,11 @@ Files and scripts used to configure my computer
   - [keepassxc](https://keepassxc.org)
   - [kubernetes-cli](https://kubernetes.io/)
   - [libreoffice](https://www.libreoffice.org)
-  - [license](https://github.com/nishanths/license) ([dockerized](https://github.com/timonier/license))
+  - [license](https://github.com/nishanths/license) ([dockerized](https://gitlab.com/timonier/license))
   - [macs fan control](https://www.crystalidea.com/macs-fan-control)
   - [mysql](http://www.mysql.com) ([dockerized](https://hub.docker.com/r/timonier/mysql))
-  - [nodejs](https://nodejs.org) ([dockerized](https://github.com/timonier/node))
-  - [php](http://www.php.net) ([dockerized](https://github.com/timonier/php))
+  - [nodejs](https://nodejs.org) ([dockerized](https://gitlab.com/timonier/node))
+  - [php](http://www.php.net) ([dockerized](https://gitlab.com/timonier/php))
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [postgresql](http://www.postgresql.org) ([dockerized](https://hub.docker.com/r/timonier/postgresql))
   - [postman](https://www.getpostman.com/)
@@ -45,7 +46,7 @@ Files and scripts used to configure my computer
 ### User modifications
 
 * Add applications/aliases/commands/shortcuts:
-  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases): run a ssh client without server key checking
+  - [ssh-unsafe](https://gitlab.com/mauchede/dotfiles/blob/mac-os/darwin/src/user/rootfs/.bash_aliases): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.
@@ -74,16 +75,6 @@ To configure the user:
 ```sh
 bin/install-user.sh
 ```
-
-## Contributing
-
-1. Fork it.
-2. Create your branch: `git checkout -b my-new-feature`.
-3. Commit your changes: `git commit -am 'Add some feature'`.
-4. Push to the branch: `git push origin my-new-feature`.
-5. Submit a pull request.
-
-If you like / use this project, please let me known by adding a [★](https://help.github.com/articles/about-stars/) on the [GitHub repository](https://github.com/mauchede/dotfiles).
 
 ## Links
 

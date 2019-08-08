@@ -58,7 +58,7 @@ sudo nfsd restart
 
 # Install drive
 
-curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
+curl --location "https://gitlab.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
 
 # Install etcher
 
@@ -75,7 +75,7 @@ brew cask install firefox
 
 # Install gatling
 
-export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/_/gatling/latest" | xargs)
+export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/_/gatling/latest" | xargs)
 rm -f -r /usr/local/opt/gatling
 curl --location --output /tmp/gatling.zip "${GATLING_RELEASE}"
 sh -c "cd /tmp && unzip /tmp/gatling.zip"
@@ -88,6 +88,11 @@ rm -f -r /tmp/gatling*
 # Install git
 
 brew install git
+
+# Install git-remote-gcrypt
+
+curl --location --output /usr/local/bin/git-remote-gcrypt "https://github.com/spwhitton/git-remote-gcrypt/raw/master/git-remote-gcrypt"
+chmod +x /usr/local/bin/git-remote-gcrypt
 
 # Install google-chrome
 
@@ -103,7 +108,7 @@ brew install gpg
 
 # Install hostess
 
-export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/cbednarski/hostess/latest" | xargs)
+export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/cbednarski/hostess/latest" | xargs)
 curl --location --output /usr/local/bin/hostess "${HOSTESS_DARWIN_RELEASE}"
 chmod +x /usr/local/bin/hostess
 
@@ -161,7 +166,7 @@ xattr -d com.apple.quarantine /Applications/LibreOffice.app || :
 
 # Install license
 
-curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s -- install
+curl --location "https://gitlab.com/timonier/license/raw/master/bin/installer" | sh -s -- install
 
 # Install macs-fan-control
 
@@ -178,11 +183,11 @@ brew install make
 
 # Install mysql
 
-curl --location "https://github.com/timonier/mysql/raw/master/bin/installer" | sh -s -- install
+curl --location "https://gitlab.com/timonier/mysql/raw/master/bin/installer" | sh -s -- install
 
 # Install nodejs
 
-curl --location "https://github.com/timonier/node/raw/master/bin/installer" | sh -s -- install
+curl --location "https://gitlab.com/timonier/node/raw/master/bin/installer" | sh -s -- install
 
 # Install osxfuse
 
@@ -191,7 +196,7 @@ brew install ntfs-3g
 
 # Install php
 
-curl --location "https://github.com/timonier/php/raw/master/bin/installer" | sh -s -- install
+curl --location "https://gitlab.com/timonier/php/raw/master/bin/installer" | sh -s -- install
 
 # Install phpstorm
 
@@ -202,7 +207,7 @@ xattr -d com.apple.quarantine /Applications/PhpStorm.app || :
 
 # Install postgresql
 
-curl --location "https://github.com/timonier/postgresql/raw/master/bin/installer" | sh -s -- install
+curl --location "https://gitlab.com/timonier/postgresql/raw/master/bin/installer" | sh -s -- install
 
 # Install postman
 
@@ -215,7 +220,7 @@ xattr -d com.apple.quarantine /Applications/Postman.app || :
 
 # Install redis
 
-curl --location "https://github.com/timonier/redis/raw/master/bin/installer" | sh -s -- install
+curl --location "https://gitlab.com/timonier/redis/raw/master/bin/installer" | sh -s -- install
 
 # Install shellcheck
 
@@ -225,7 +230,7 @@ chmod +x /usr/local/bin/shellcheck-folder
 
 # Install shfmt
 
-export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/mvdan/sh/latest" | xargs)
+export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/mvdan/sh/latest" | xargs)
 curl --location --output /usr/local/bin/shfmt "${SH_DARWIN_RELEASE}"
 chmod +x /usr/local/bin/shfmt
 cp src/system/rootfs/usr/local/bin/shell-cs-fixer /usr/local/bin/shell-cs-fixer
