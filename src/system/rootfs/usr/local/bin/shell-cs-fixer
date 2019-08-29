@@ -1,4 +1,10 @@
 #!/bin/bash
 set -e -u -x
 
-exec shfmt -ci -i 4 -kp -sr -w ./
+# fix bash scripts
+
+grep -e "^#\\!/bin/bash" -l -r "${PWD}" | grep -v "\\.git" | xargs -L1 shfmt -ci -i 4 -sr -w
+
+# fix sh scripts
+
+grep -e "^#\\!/bin/sh" -l -r "${PWD}" | grep -v "\\.git" | xargs -L1 shfmt -ci -i 4 -sr -w

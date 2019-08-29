@@ -18,6 +18,10 @@ shopt -s extglob
 shopt -s histappend
 shopt -s hostcomplete
 
+# direnv configuration
+
+eval "$(direnv hook bash)"
+
 # git configuration
 
 if [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]; then
@@ -120,4 +124,4 @@ __set_prompt() {
 
     PS1+="\n${RESET}\\\$ "
 }
-PROMPT_COMMAND="__set_prompt"
+PROMPT_COMMAND="${PROMPT_COMMAND};__set_prompt"

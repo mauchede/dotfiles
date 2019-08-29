@@ -45,6 +45,12 @@ else
 fi
 xattr -d com.apple.quarantine /Applications/Cyberduck.app || :
 
+# Install direnv
+
+export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/direnv/direnv/latest" | xargs)
+curl --location --output /usr/local/bin/direnv "${DIRENV_DARWIN_RELEASE}"
+chmod +x /usr/local/bin/direnv
+
 # Install docker-ce
 
 if [ -d /Applications/Docker.app ]; then

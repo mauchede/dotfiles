@@ -9,6 +9,7 @@ Files and scripts used to configure my computer
 * Add applications/aliases/commands:
   - [atom](https://atom.io)
   - [cyberduck](https://cyberduck.io)
+  - [direnv](https://direnv.net/)
   - [docker](https://www.docker.com)
   - [docker-compose](https://docs.docker.com/compose/overview)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://gitlab.com/timonier/drive))

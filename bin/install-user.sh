@@ -17,6 +17,12 @@ apm install language-docker
 apm install open-recent
 apm install quit-control
 
+# Configure environment
+
+if ! grep -F --quiet "EDITOR=" "${HOME}"/.env; then
+    echo "EDITOR=/usr/bin/nano" >> "${HOME}"/.env
+fi
+
 # Configure git
 
 git config --global alias.amend "commit --amend"
