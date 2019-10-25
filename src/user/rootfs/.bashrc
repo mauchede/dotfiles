@@ -87,7 +87,7 @@ __set_prompt() {
     # user
 
     if [ "${EUID}" == 0 ]; then
-        PS1+="${RED}\\h "
+        PS1+="${RED}\\u@\\h "
     else
         PS1+="${GREEN}\\u@\\h "
     fi
