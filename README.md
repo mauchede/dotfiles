@@ -4,20 +4,10 @@ Files and scripts used to configure my computer
 
 ## Linux
 
-### Xubuntu
+### Ubuntu
 
 ```sh
-git checkout linux/xubuntu
-
-# Follow instructions given in README
-```
-
-## macOS
-
-### Darwin
-
-```sh
-git checkout mac-os/darwin
+git checkout linux/ubuntu
 
 # Follow instructions given in README
 ```
