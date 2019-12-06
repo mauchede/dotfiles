@@ -2,6 +2,8 @@
 
 Files and scripts used to configure my computer
 
+⚠️ This branch is no longer maintained. ⚠️
+
 ## What kind of modifications are applied?
 
 ### System modifications
