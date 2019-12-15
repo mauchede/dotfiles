@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# Check arguments
+
+fail() {
+    echo 1>&2 "$1"
+    echo 1>&2 "Usage: $(basename "$0") [ARCHIVE].<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|exe|tar.bz2|tar.gz|tar.xz>"
+    exit 255
+}
+
+if [ -z "$1" ]; then
+    fail "Argument ARCHIVE is missing."
+fi
+
+if [ ! -f "$1" ]; then
+    fail "Archive $1 does not exist."
+fi
+
+# Extract archive
+
+create-folder() {
+    mkdir -p "$1"
+    cd "$1"
+}
+
+case "$1" in
+    *.7z)
+        create-folder "${1::-3}"
+        7z x "../$1"
+        ;;
+
+    *.tar.bz2)
+        create-folder "${1::-8}"
+        tar --bzip2 --extract --file "../$1" --verbose
+        ;;
+
+    *.bz2)
+        create-folder "${1::-4}"
+        mv "../$1" ./
+        bunzip2 --keep "$1"
+        mv "$1" ../
+        ;;
+
+    *.exe)
+        create-folder "${1::-4}"
+        cabextract "../$1"
+        ;;
+
+    *.tar.gz)
+        create-folder "${1::-7}"
+        tar --extract --file "../$1" --verbose --gzip
+        ;;
+
+    *.gz)
+        create-folder "${1::-3}"
+        gunzip "../$1"
+        ;;
+
+    *.lzma)
+        create-folder "${1::-5}"
+        unlzma "../$1"
+        ;;
+
+    *.rar)
+        unrar x -ad "$1"
+        ;;
+
+    *.tar)
+        create-folder "${1::-4}"
+        tar --extract --file "../$1" --verbose
+        ;;
+
+    *.tbz2)
+        create-folder "${1::-5}"
+        tar --bzip2 --extract --file "../$1" --verbose
+        ;;
+
+    *.tgz)
+        create-folder "${1::-4}"
+        tar --extract --file "../$1" --gzip --verbose
+        ;;
+
+    *.tar.xz)
+        create-folder "${1::-7}"
+        tar --extract --file "../$1" --verbose --xz
+        ;;
+
+    *.xz)
+        create-folder "${1::-3}"
+        unxz "../$1"
+        ;;
+
+    *.Z)
+        create-folder "${1::-2}"
+        uncompress "../$1"
+        ;;
+
+    *.zip)
+        create-folder "${1::-4}"
+        unzip "../$1"
+        ;;
+
+    *)
+        fail "Archive \"$1\" is not supported by this script."
+        ;;
+esac

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e -u
+
+# check bash
+
+grep -e "^#\!/bin/bash" -l -r "${PWD}" | grep -v "\.git" | xargs --no-run-if-empty shellcheck --shell bash
+
+# check shell
+
+grep -e "^#\!/bin/sh" -l -r "${PWD}" | grep -v "\.git" | xargs --no-run-if-empty shellcheck --shell sh
