@@ -17,11 +17,10 @@ fi
 apt-get update
 apt-get upgrade --yes
 apt-get dist-upgrade --yes
-snap refresh --list
 
 # Install base
 
-apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse exfat-utils htop p7zip-full printer-driver-escpr rar vim
+apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse exfat-utils gawk htop p7zip-full printer-driver-escpr python3-pip python3-setuptools rar vim xclip
 apt-get install --yes ubuntu-restricted-extras
 
 # Install docker-ce
@@ -55,10 +54,12 @@ cp --no-target-directory ./src/user/rootfs/.profile /root/.profile
 # Install atom
 
 snap install --classic atom
+snap refresh atom
 
-# Install chromium
+# Install aws-cli
 
-snap install --devmode chromium
+snap install --classic aws-cli
+snap refresh aws-cli
 
 # Install direnv
 
@@ -66,9 +67,7 @@ apt-get install --no-install-recommends --yes direnv
 
 # Install docker-compose
 
-export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/docker/compose/latest" | xargs)
-curl --location --output /usr/local/sbin/docker-compose "${COMPOSE_LINUX_RELEASE}"
-chmod +x /usr/local/sbin/docker-compose
+pip3 install docker-compose --no-cache-dir --upgrade
 
 # Install drive
 
@@ -85,6 +84,7 @@ apt-get install --no-install-recommends --yes filezilla
 # Install firefox
 
 snap install --devmode firefox
+snap refresh firefox
 
 # Install ffmpeg
 
@@ -93,6 +93,13 @@ apt-get install --no-install-recommends --yes ffmpeg
 # Install git
 
 apt-get install --no-install-recommends --yes git git-remote-gcrypt
+
+# Install google-chrome
+
+echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+curl --location --output - "https://dl-ssl.google.com/linux/linux_signing_key.pub" | apt-key add -
+apt-get update
+apt-get install --no-install-recommends google-chrome-stable
 
 # Install gparted
 
@@ -118,18 +125,28 @@ apt-get install --no-install-recommends --yes keybase
 # Install keepassxc
 
 snap install --devmode keepassxc
+snap refresh keepassxc
 
 # Install jq
 
 snap install --devmode jq
+snap refresh jq
 
 # Install libreoffice
 
 snap install --devmode libreoffice
+snap refresh libreoffice
 
 # Install license
 
 curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s -- install
+
+# Install mkcert
+
+apt-get install --no-install-recommends --yes libnss3-tools
+export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/filosottile/mkcert/latest" | xargs)
+curl --location --output /usr/local/bin/mkcert "${MKCERT_LINUX_RELEASE}"
+chmod +x /usr/local/bin/mkcert
 
 # Install myspell
 
@@ -142,11 +159,16 @@ snap install --classic phpstorm
 # Install postman
 
 snap install --devmode postman
+snap refresh postman
 
 # Install shellcheck
 
 apt-get install --no-install-recommends --yes shellcheck
 cp --no-target-directory ./src/system/rootfs/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
+
+# Install simple-scan
+
+apt-get install --no-install-recommends --yes simple-scan
 
 # Install shfmt
 
@@ -157,14 +179,17 @@ chmod +x /usr/local/bin/shfmt
 # Install skype
 
 snap install --classic skype
+snap refresh skype
 
 # Install slack
 
 snap install --classic slack
+snap refresh slack
 
 # Install spotify
 
 snap install --devmode spotify
+snap refresh spotify
 
 # Install sshuttle
 
@@ -173,6 +198,7 @@ curl --location "https://github.com/timonier/sshuttle/raw/master/bin/installer" 
 # Install vlc
 
 snap install --classic vlc
+snap refresh vlc
 
 # Install webstorm
 

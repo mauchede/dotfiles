@@ -1,0 +1,30 @@
+alias cp="cp -i"
+
+alias df="df -h"
+
+alias du="du -h"
+
+alias grep="grep --exclude-dir '.git' --color=tty"
+
+alias free="free -m"
+
+history-clean() {
+    > ~/.bash_history
+    history -c
+}
+
+alias l="ls -lh --color"
+
+alias ll="ls -lh --color"
+
+alias lla="ll -a --color"
+
+alias ls="ls --color"
+
+alias mv="mv -i"
+
+alias ssh-unsafe="ssh -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile /dev/null'"
+
+alias sudo="sudo "
+
+alias {up,..}="cd .."

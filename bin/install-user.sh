@@ -78,6 +78,12 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     fi
 EOF
 
+# Create custom certificates
+
+if [ ! -d "$(mkcert -CAROOT)" ]; then
+    mkcert -install
+fi
+
 # Fix duplicate directories in home folder (see https://bugs.launchpad.net/ubuntu/+source/snapcraft/+bug/1746710)
 
 sudo --set-home --shell --user "$1" -- bash << "EOF"
@@ -92,3 +98,13 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     ln --symbolic "${HOME}"/Modèles "${HOME}"/Templates
     ln --symbolic "${HOME}"/Vidéos "${HOME}"/Videos
 EOF
+
+# Install fonts
+
+mkdir -p "${HOME}"/.fonts
+
+rm -f /tmp/NotoColorEmoji.zip
+curl --location --output /tmp/NotoColorEmoji.zip "https://noto-website.storage.googleapis.com/pkgs/NotoColorEmoji-unhinted.zip"
+( cd "$(mktemp -d)" && unzip /tmp/NotoColorEmoji.zip && cp NotoColorEmoji.tff "${HOME}/.fonts/NotoColorEmoji.tff" )
+
+fc-cache -f -v

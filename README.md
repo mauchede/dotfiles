@@ -8,7 +8,7 @@ Files and scripts used to configure my computer
 
 * Add applications/aliases/commands:
   - [atom](https://atom.io)
-  - [chromium](https://www.chromium.org/)
+  - [aws-cli](https://aws.amazon.com/en/cli/)
   - [docker](https://www.docker.com)
   - [docker-compose](https://docs.docker.com/compose/overview)
   - [direnv](https://direnv.net/)
@@ -16,6 +16,7 @@ Files and scripts used to configure my computer
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [firefox](https://www.mozilla.org/en/firefox/)
   - [git](https://git-scm.com)
+  - [google-chrome](https://www.google.com/intl/fr_fr/chrome/)
   - [gparted](https://gparted.org/)
   - [guake](http://guake-project.org/)
   - [ffmpeg](https://www.ffmpeg.org/)
@@ -39,8 +40,8 @@ Files and scripts used to configure my computer
 ### User modifications
 
 * Add applications/aliases/commands/shortcuts:
-  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L20): get a container IP
-  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases#L40): run a ssh client without server key checking
+  - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases.d/docker#L1): get a container IP
+  - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases.d/ubuntu#L28): run a ssh client without server key checking
 
 * Configure bash prompt:
   - add a new line if the previous command does not insert it.
@@ -51,6 +52,9 @@ Files and scripts used to configure my computer
 * Configure git:
   - ignore PhpStorm metadata (`.idea` folder).
   - add [aliases](https://github.com/mauchede/dotfiles/blob/master/bin/install-user.sh#L63)
+
+* Install fonts:
+  - [Noto Color Emoji](https://www.google.com/get/noto/#emoji-zsye-color)
 
 ## Usage
 
@@ -80,6 +84,7 @@ If you like / use this project, please let me known by adding a [★](https://he
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
+* [how to enable color emoji on chrome for linux](https://www.omgubuntu.co.uk/2016/08/enable-color-emoji-linux-google-chrome-noto)
 * [human git aliases](http://gggritso.com/human-git-aliases)
 * [mauchede/version-lister](https://github.com/mauchede/version-lister)
 * [set environment variables from file](https://stackoverflow.com/questions/19331497/set-environment-variables-from-file)

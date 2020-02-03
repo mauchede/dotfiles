@@ -13,8 +13,10 @@ if [ -f /etc/bash_completion ] && [ ! "$(shopt -o -q posix)" ]; then
     source /etc/bash_completion
 fi
 
-if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
+if [ -d ~/.bash_aliases.d ]; then
+    for file in ~/.bash_aliases.d/*; do
+        source "$file"
+    done
 fi
 
 if [ -f ~/.env ]; then
@@ -41,17 +43,17 @@ export HISTSIZE=10000
 # xorg configuration
 
 if [ "$(which setxkbmap)" ]; then
-    setxkbmap -option "nbsp:none" > /dev/null 2> /dev/null
+    setxkbmap -option "nbsp:none" >/dev/null 2>/dev/null
 fi
 
 # prompt configuration
 
 __get_terminal_column() {
-    exec < /dev/tty
+    exec </dev/tty
     local oldstty
     oldstty="$(stty -g)"
     stty raw -echo min 0
-    echo -en "\033[6n" > /dev/tty
+    echo -en "\033[6n" >/dev/tty
     local pos
     IFS=";" read -r -d R -a pos
     stty "${oldstty}"
@@ -109,12 +111,12 @@ __set_prompt() {
         GIT_COLOR="${YELLOW}"
 
         # purple: no upstream configured for branch
-        if [ ! "$(git rev-parse "@{u}" 2> /dev/null)" ]; then
+        if [ ! "$(git rev-parse "@{u}" 2>/dev/null)" ]; then
             GIT_COLOR="${PURPLE}"
         fi
 
         # green: branch is up to date
-        if [ "$(git rev-parse @ 2> /dev/null)" == "$(git rev-parse "@{u}" 2> /dev/null)" ]; then
+        if [ "$(git rev-parse @ 2>/dev/null)" == "$(git rev-parse "@{u}" 2>/dev/null)" ]; then
             GIT_COLOR="${GREEN}"
         fi
 
