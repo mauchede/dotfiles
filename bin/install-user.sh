@@ -32,17 +32,6 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     fi
 EOF
 
-# Configure atom
-
-sudo --set-home --shell --user "$1" -- bash << "EOF"
-    set -e -u -x
-
-    apm install eclipse-keybindings
-    apm install file-icons
-    apm install language-docker
-    apm install open-recent
-EOF
-
 # Configure git
 
 sudo --set-home --shell --user "$1" -- bash << "EOF"
@@ -76,6 +65,8 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     if ! grep -F --quiet "yarn-*.log" "${HOME}"/.gitignore_global ; then
         echo "yarn-*.log" >> "${HOME}"/.gitignore_global
     fi
+
+    git config --global fetch.prune true
 EOF
 
 # Create custom certificates
@@ -89,8 +80,7 @@ fi
 sudo --set-home --shell --user "$1" -- bash << "EOF"
     set -e -u -x
 
-    rm -f -r "${HOME}"/Desktop "${HOME}"/Downloads "${HOME}"/Music "${HOME}"/Pictures "${HOME}"/snap/firefox/current/.config/Slack "${HOME}"/Templates "${HOME}"/Videos
-    ln --symbolic "${HOME}"/.config/Slack "${HOME}"/snap/firefox/current/.config/Slack
+    rm -f -r "${HOME}"/Desktop "${HOME}"/Downloads "${HOME}"/Music "${HOME}"/Pictures "${HOME}"/Templates "${HOME}"/Videos
     ln --symbolic "${HOME}"/Bureau "${HOME}"/Desktop
     ln --symbolic "${HOME}"/Téléchargements "${HOME}"/Downloads
     ln --symbolic "${HOME}"/Musique "${HOME}"/Music
@@ -101,10 +91,11 @@ EOF
 
 # Install fonts
 
-mkdir -p "${HOME}"/.fonts
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
 
-rm -f /tmp/NotoColorEmoji.zip
-curl --location --output /tmp/NotoColorEmoji.zip "https://noto-website.storage.googleapis.com/pkgs/NotoColorEmoji-unhinted.zip"
-( cd "$(mktemp -d)" && unzip /tmp/NotoColorEmoji.zip && cp NotoColorEmoji.tff "${HOME}/.fonts/NotoColorEmoji.tff" )
+    mkdir -p "${HOME}"/.fonts
+    ( cd "$(mktemp -d)" && curl --location --output NotoColorEmoji.zip "https://noto-website.storage.googleapis.com/pkgs/NotoColorEmoji-unhinted.zip" && unzip NotoColorEmoji.zip && cp NotoColorEmoji.ttf "${HOME}/.fonts/NotoColorEmoji.ttf" )
 
-fc-cache -f -v
+    fc-cache -f -v
+EOF

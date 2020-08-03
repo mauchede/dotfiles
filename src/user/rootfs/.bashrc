@@ -23,10 +23,6 @@ if [ -f ~/.env ]; then
     source <(sed --regexp-extended --silent "s/[^#]+/export &/ p" ~/.env)
 fi
 
-# direnv configuration
-
-eval "$(direnv hook bash)"
-
 # git configuration
 
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -132,4 +128,4 @@ __set_prompt() {
 
     PS1+="\n${RESET}\\\$ "
 }
-PROMPT_COMMAND="${PROMPT_COMMAND};__set_prompt"
+PROMPT_COMMAND="__set_prompt"

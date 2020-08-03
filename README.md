@@ -7,11 +7,11 @@ Files and scripts used to configure my computer
 ### System modifications
 
 * Add applications/aliases/commands:
-  - [atom](https://atom.io)
   - [aws-cli](https://aws.amazon.com/en/cli/)
+  - [composer](https://getcomposer.org/) ([dockerized](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/composer)
+  - [discord](https://discordapp.com/)
   - [docker](https://www.docker.com)
   - [docker-compose](https://docs.docker.com/compose/overview)
-  - [direnv](https://direnv.net/)
   - [drive](https://github.com/odeke-em/drive) ([dockerized](https://github.com/timonier/drive))
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [firefox](https://www.mozilla.org/en/firefox/)
@@ -21,6 +21,7 @@ Files and scripts used to configure my computer
   - [guake](http://guake-project.org/)
   - [ffmpeg](https://www.ffmpeg.org/)
   - [hostess](https://github.com/cbednarski/hostess)
+  - [hugo](https://gohugo.io/)
   - [keybase](https://keybase.io/)
   - [keepassxc](https://keepassxc.org/)
   - [jq](https://stedolan.github.io/jq/)
@@ -34,8 +35,9 @@ Files and scripts used to configure my computer
   - [slack](https://slack.com)
   - [spotify](https://www.spotify.com/)
   - [sshuttle](https://github.com/sshuttle/sshuttle)
+  - [telegram](https://telegram.org/)
+  - [visual studio code](https://code.visualstudio.com/)
   - [vlc](http://www.videolan.org/vlc)
-  - [webstorm](https://www.jetbrains.com/webstorm/)
 
 ### User modifications
 
@@ -73,9 +75,9 @@ sudo bin/install-user.sh [USER]
 ## Contributing
 
 1. Fork it.
-2. Create your branch: `git checkout -b my-new-feature`.
+2. Create your branch: `git checkout -b feature/my-new-feature`.
 3. Commit your changes: `git commit -am 'Add some feature'`.
-4. Push to the branch: `git push origin my-new-feature`.
+4. Push to the branch: `git push origin feature/my-new-feature`.
 5. Submit a pull request.
 
 If you like / use this project, please let me known by adding a [★](https://help.github.com/articles/about-stars/) on the [GitHub repository](https://github.com/mauchede/dotfiles).

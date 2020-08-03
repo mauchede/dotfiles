@@ -20,7 +20,7 @@ apt-get dist-upgrade --yes
 
 # Install base
 
-apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse exfat-utils gawk htop p7zip-full printer-driver-escpr python3-pip python3-setuptools rar vim xclip
+apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse exfat-utils gawk htop make p7zip-full printer-driver-escpr python3-pip python3-setuptools rar vim
 apt-get install --yes ubuntu-restricted-extras
 
 # Install docker-ce
@@ -38,32 +38,34 @@ mv /tmp/docker/* /usr/local/sbin/
 cp --no-target-directory ./src/system/rootfs/etc/systemd/system/docker.service /etc/systemd/system/docker.service
 cp --no-target-directory ./src/system/rootfs/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
 systemctl daemon-reload
+systemctl enable docker
 systemctl restart docker
 
-# Configure group "sudo"
+# Configure sudo
 
 cp --no-target-directory ./src/system/rootfs/etc/sudoers.d/sudo /etc/sudoers.d/sudo
 
 # Configure user "root"
 
-mkdir -p /root/.bin
-cp --no-target-directory ./src/user/rootfs/.bash_aliases /root/.bash_aliases
+mkdir -p /root/.bash_aliases.d /root/.bin
+cp --no-target-directory ./src/user/rootfs/.bash_aliases.d/docker /root/.bash_aliases.d/docker
+cp --no-target-directory ./src/user/rootfs/.bash_aliases.d/ubuntu /root/.bash_aliases.d/ubuntu
 cp --no-target-directory ./src/user/rootfs/.bashrc /root/.bashrc
 cp --no-target-directory ./src/user/rootfs/.profile /root/.profile
-
-# Install atom
-
-snap install --classic atom
-snap refresh atom
 
 # Install aws-cli
 
 snap install --classic aws-cli
 snap refresh aws-cli
 
-# Install direnv
+# Install composer
 
-apt-get install --no-install-recommends --yes direnv
+cp --no-target-directory ./src/system/rootfs/usr/local/bin/composer /usr/local/bin/composer
+
+# Install discord
+
+snap install --devmode discord
+snap refresh discord
 
 # Install docker-compose
 
@@ -83,8 +85,7 @@ apt-get install --no-install-recommends --yes filezilla
 
 # Install firefox
 
-snap install --devmode firefox
-snap refresh firefox
+apt-get install --no-install-recommends --yes firefox firefox-locale-fr
 
 # Install ffmpeg
 
@@ -114,6 +115,11 @@ apt-get install --no-install-recommends --yes guake
 export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/cbednarski/hostess/latest" | xargs)
 curl --location --output /usr/local/sbin/hostess "${HOSTESS_LINUX_RELEASE}"
 chmod +x /usr/local/sbin/hostess
+
+# Install hugo
+
+snap install --devmode hugo
+snap refresh hugo
 
 # Install keybase
 
@@ -155,6 +161,7 @@ apt-get install --no-install-recommends --yes myspell-fr
 # Install phpstorm
 
 snap install --classic phpstorm
+snap refresh phpstorm
 
 # Install postman
 
@@ -193,16 +200,22 @@ snap refresh spotify
 
 # Install sshuttle
 
-curl --location "https://github.com/timonier/sshuttle/raw/master/bin/installer" | sh -s -- install
+apt-get install --no-install-recommends --yes sshuttle
+
+# Install telegram
+
+snap install --devmode telegram-desktop
+snap refresh telegram-desktop
+
+# Install visual studio code
+
+snap install --classic code
+snap refresh code
 
 # Install vlc
 
 snap install --classic vlc
 snap refresh vlc
-
-# Install webstorm
-
-snap install --classic webstorm
 
 # Clean
 
