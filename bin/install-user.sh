@@ -69,6 +69,10 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     git config --global fetch.prune true
 EOF
 
+# Configure user
+
+adduser "$1" docker
+
 # Create custom certificates
 
 if [ ! -d "$(mkcert -CAROOT)" ]; then

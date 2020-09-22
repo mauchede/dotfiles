@@ -2,6 +2,8 @@
 
 Files and scripts used to configure my computer
 
+If you like / use this project, please let me known by adding a ★ on the [GitHub repository](https://github.com/mauchede/dotfiles).
+
 ## What kind of modifications are applied?
 
 ### System modifications
@@ -72,22 +74,11 @@ To configure the user:
 sudo bin/install-user.sh [USER]
 ```
 
-## Contributing
-
-1. Fork it.
-2. Create your branch: `git checkout -b feature/my-new-feature`.
-3. Commit your changes: `git commit -am 'Add some feature'`.
-4. Push to the branch: `git push origin feature/my-new-feature`.
-5. Submit a pull request.
-
-If you like / use this project, please let me known by adding a [★](https://help.github.com/articles/about-stars/) on the [GitHub repository](https://github.com/mauchede/dotfiles).
-
 ## Links
 
 * [customize bash prompt](https://wiki.archlinux.org/index.php/Color_Bash_Prompt)
 * [fix non-breaking spaces](https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/218637)
 * [how to enable color emoji on chrome for linux](https://www.omgubuntu.co.uk/2016/08/enable-color-emoji-linux-google-chrome-noto)
 * [human git aliases](http://gggritso.com/human-git-aliases)
-* [mauchede/version-lister](https://github.com/mauchede/version-lister)
 * [set environment variables from file](https://stackoverflow.com/questions/19331497/set-environment-variables-from-file)
 * [snap creates redundant duplicate directories in home folder](https://bugs.launchpad.net/ubuntu/+source/snapcraft/+bug/1746710)

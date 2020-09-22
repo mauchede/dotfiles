@@ -1,13 +1,3 @@
-docker-compose() {
-    if [ -z "${DOCKER_HOST}" ]; then
-        local context_host="$(docker context inspect --format "{{ .Endpoints.docker.Host }}")"
-        if [[ "${context_host}" == ssh://* ]] && [[ "${context_host}" != ssh://*@* ]]; then
-            context_host="$(echo "${context_host}" | sed "s/ssh:\/\//ssh:\/\/$(ssh -G "${context_host}" -T | grep "user " | cut -c 6-)@/g")"
-        fi
-    fi
-    DOCKER_HOST="${DOCKER_HOST:-"${context_host}"}" "$(which docker-compose)" "$@"
-}
-
 docker-ip() {
     docker inspect --format "{{ .NetworkSettings.IPAddress }}" "$1"
 }

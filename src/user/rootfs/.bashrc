@@ -91,9 +91,9 @@ __set_prompt() {
     # user
 
     if [ "${EUID}" == 0 ]; then
-        PS1+="${RED}\\u@\\h "
+        PS1+="${RED}\\u@\\H "
     else
-        PS1+="${GREEN}\\u@\\h "
+        PS1+="${GREEN}\\u@\\H "
     fi
 
     # working directory

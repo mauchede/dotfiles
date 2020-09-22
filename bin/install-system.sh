@@ -25,21 +25,9 @@ apt-get install --yes ubuntu-restricted-extras
 
 # Install docker-ce
 
-if [ -f /etc/systemd/system/docker.service ]; then
-    systemctl stop docker
-fi
-
-export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/docker/docker-ce/latest" | xargs)
-rm -f -r /tmp/docker* /usr/local/sbin/containerd* /usr/local/sbin/ctr /usr/local/sbin/docker* /usr/local/sbin/runc /usr/local/sbin/runc
-curl --location --output /tmp/docker.tgz "${DOCKER_CE_LINUX_RELEASE}"
-tar --directory /tmp --extract --file /tmp/docker.tgz
-mv /tmp/docker/* /usr/local/sbin/
-
-cp --no-target-directory ./src/system/rootfs/etc/systemd/system/docker.service /etc/systemd/system/docker.service
-cp --no-target-directory ./src/system/rootfs/etc/systemd/system/docker.socket /etc/systemd/system/docker.socket
-systemctl daemon-reload
+apt-get install --no-install-recommends --yes docker.io
 systemctl enable docker
-systemctl restart docker
+systemctl start docker
 
 # Configure sudo
 
@@ -69,7 +57,7 @@ snap refresh discord
 
 # Install docker-compose
 
-pip3 install docker-compose --no-cache-dir --upgrade
+apt-get install --no-install-recommends --yes docker-compose
 
 # Install drive
 
@@ -112,8 +100,7 @@ apt-get install --no-install-recommends --yes guake
 
 # Install hostess
 
-export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/cbednarski/hostess/latest" | xargs)
-curl --location --output /usr/local/sbin/hostess "${HOSTESS_LINUX_RELEASE}"
+curl --location --output /usr/local/sbin/hostess "https://github.com/cbednarski/hostess/releases/download/v0.5.2/hostess_linux_amd64"
 chmod +x /usr/local/sbin/hostess
 
 # Install hugo
@@ -150,8 +137,7 @@ curl --location "https://github.com/timonier/license/raw/master/bin/installer" |
 # Install mkcert
 
 apt-get install --no-install-recommends --yes libnss3-tools
-export $(curl --location "https://gitlab.com/mauchede/version-lister/raw/generated/filosottile/mkcert/latest" | xargs)
-curl --location --output /usr/local/bin/mkcert "${MKCERT_LINUX_RELEASE}"
+curl --location --output /usr/local/bin/mkcert "https://github.com/FiloSottile/mkcert/releases/download/v1.4.1/mkcert-v1.4.1-linux-amd64"
 chmod +x /usr/local/bin/mkcert
 
 # Install myspell
@@ -179,8 +165,7 @@ apt-get install --no-install-recommends --yes simple-scan
 
 # Install shfmt
 
-export $(curl --location "https://github.com/mauchede/version-lister/raw/generated/mvdan/sh/latest" | xargs)
-curl --location --output /usr/local/bin/shfmt "${SH_LINUX_RELEASE}"
+curl --location --output /usr/local/bin/shfmt "https://github.com/mvdan/sh/releases/download/v3.1.2/shfmt_v3.1.2_linux_amd64"
 chmod +x /usr/local/bin/shfmt
 
 # Install skype
