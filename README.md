@@ -34,7 +34,6 @@ If you like / use this project, please let me known by adding a ★ on the [GitH
   - [shellcheck](https://github.com/koalaman/shellcheck)
   - [shfmt](https://github.com/mvdan/sh/releases)
   - [skype](https://www.skype.com/en/)
-  - [slack](https://slack.com)
   - [spotify](https://www.spotify.com/)
   - [sshuttle](https://github.com/sshuttle/sshuttle)
   - [telegram](https://telegram.org/)

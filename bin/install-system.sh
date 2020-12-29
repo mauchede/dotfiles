@@ -52,7 +52,7 @@ cp --no-target-directory ./src/system/rootfs/usr/local/bin/composer /usr/local/b
 
 # Install discord
 
-snap install --devmode discord
+snap install discord
 snap refresh discord
 
 # Install docker-compose
@@ -73,7 +73,8 @@ apt-get install --no-install-recommends --yes filezilla
 
 # Install firefox
 
-apt-get install --no-install-recommends --yes firefox firefox-locale-fr
+apt-get remove --purge firefox firefox-*
+snap install firefox
 
 # Install ffmpeg
 
@@ -105,7 +106,7 @@ chmod +x /usr/local/sbin/hostess
 
 # Install hugo
 
-snap install --devmode hugo
+snap install hugo
 snap refresh hugo
 
 # Install keybase
@@ -117,17 +118,17 @@ apt-get install --no-install-recommends --yes keybase
 
 # Install keepassxc
 
-snap install --devmode keepassxc
+snap install keepassxc
 snap refresh keepassxc
 
 # Install jq
 
-snap install --devmode jq
+snap install jq
 snap refresh jq
 
 # Install libreoffice
 
-snap install --devmode libreoffice
+snap install libreoffice
 snap refresh libreoffice
 
 # Install license
@@ -173,14 +174,9 @@ chmod +x /usr/local/bin/shfmt
 snap install --classic skype
 snap refresh skype
 
-# Install slack
-
-snap install --classic slack
-snap refresh slack
-
 # Install spotify
 
-snap install --devmode spotify
+snap install spotify
 snap refresh spotify
 
 # Install sshuttle
@@ -189,7 +185,7 @@ apt-get install --no-install-recommends --yes sshuttle
 
 # Install telegram
 
-snap install --devmode telegram-desktop
+snap install telegram-desktop
 snap refresh telegram-desktop
 
 # Install visual studio code
@@ -199,7 +195,7 @@ snap refresh code
 
 # Install vlc
 
-snap install --classic vlc
+snap install vlc
 snap refresh vlc
 
 # Clean
