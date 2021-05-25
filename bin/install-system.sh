@@ -52,8 +52,9 @@ cp --no-target-directory ./src/system/rootfs/usr/local/bin/composer /usr/local/b
 
 # Install discord
 
-snap install discord
-snap refresh discord
+curl --location --output /tmp/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
+sudo apt-get install --no-install-recommends --yes libc++1
+sudo dpkg -i /tmp/discord.deb
 
 # Install docker-compose
 
@@ -109,17 +110,17 @@ chmod +x /usr/local/sbin/hostess
 snap install hugo
 snap refresh hugo
 
+# Install imagemagick
+
+apt-get install --no-install-recommends imagemagick
+sed -e 's@<policy domain="coder" rights="none" pattern="PDF" />@<policy domain="coder" rights="read | write" pattern="PDF" />@g' -i /etc/ImageMagick-6/policy.xml
+
 # Install keybase
 
 curl --location "https://keybase.io/docs/server_security/code_signing_key.asc" | apt-key add
 cp --no-target-directory ./src/system/rootfs/etc/apt/sources.list.d/keybase.list /etc/apt/sources.list.d/keybase.list
 apt-get update
 apt-get install --no-install-recommends --yes keybase
-
-# Install keepassxc
-
-snap install keepassxc
-snap refresh keepassxc
 
 # Install jq
 
