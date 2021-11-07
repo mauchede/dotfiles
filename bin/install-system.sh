@@ -35,11 +35,10 @@ cp --no-target-directory ./src/system/rootfs/etc/sudoers.d/sudo /etc/sudoers.d/s
 
 # Configure user "root"
 
-mkdir -p /root/.bash_aliases.d /root/.bin
-cp --no-target-directory ./src/user/rootfs/.bash_aliases.d/docker /root/.bash_aliases.d/docker
-cp --no-target-directory ./src/user/rootfs/.bash_aliases.d/ubuntu /root/.bash_aliases.d/ubuntu
+cp --no-target-directory --recursive ./src/user/rootfs/.bash_aliases.d /root/.bash_aliases.d
+cp --no-target-directory --recursive ./src/user/rootfs/.bash_environment.d /root/.bash_environment.d
+cp --no-target-directory ./src/user/rootfs/.bash_profile /root/.bash_profile
 cp --no-target-directory ./src/user/rootfs/.bashrc /root/.bashrc
-cp --no-target-directory ./src/user/rootfs/.profile /root/.profile
 
 # Install aws-cli
 
@@ -52,16 +51,13 @@ cp --no-target-directory ./src/system/rootfs/usr/local/bin/composer /usr/local/b
 
 # Install discord
 
-snap install --devmode discord
-snap refresh discord
+curl --location --output /tmp/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
+sudo apt-get install --no-install-recommends --yes libc++1
+sudo dpkg -i /tmp/discord.deb
 
 # Install docker-compose
 
 apt-get install --no-install-recommends --yes docker-compose
-
-# Install drive
-
-curl --location "https://github.com/timonier/drive/raw/master/bin/installer" | sh -s -- install
 
 # Install extract
 
@@ -73,7 +69,8 @@ apt-get install --no-install-recommends --yes filezilla
 
 # Install firefox
 
-apt-get install --no-install-recommends --yes firefox firefox-locale-fr
+apt-get remove --purge firefox firefox-*
+snap install firefox
 
 # Install ffmpeg
 
@@ -105,8 +102,13 @@ chmod +x /usr/local/sbin/hostess
 
 # Install hugo
 
-snap install --devmode hugo
+snap install hugo
 snap refresh hugo
+
+# Install imagemagick
+
+apt-get install --no-install-recommends imagemagick
+sed -e 's@<policy domain="coder" rights="none" pattern="PDF" />@<policy domain="coder" rights="read | write" pattern="PDF" />@g' -i /etc/ImageMagick-6/policy.xml
 
 # Install keybase
 
@@ -115,24 +117,15 @@ cp --no-target-directory ./src/system/rootfs/etc/apt/sources.list.d/keybase.list
 apt-get update
 apt-get install --no-install-recommends --yes keybase
 
-# Install keepassxc
-
-snap install --devmode keepassxc
-snap refresh keepassxc
-
 # Install jq
 
-snap install --devmode jq
+snap install jq
 snap refresh jq
 
 # Install libreoffice
 
-snap install --devmode libreoffice
+snap install libreoffice
 snap refresh libreoffice
-
-# Install license
-
-curl --location "https://github.com/timonier/license/raw/master/bin/installer" | sh -s -- install
 
 # Install mkcert
 
@@ -168,11 +161,6 @@ apt-get install --no-install-recommends --yes simple-scan
 curl --location --output /usr/local/bin/shfmt "https://github.com/mvdan/sh/releases/download/v3.1.2/shfmt_v3.1.2_linux_amd64"
 chmod +x /usr/local/bin/shfmt
 
-# Install skype
-
-snap install --classic skype
-snap refresh skype
-
 # Install slack
 
 snap install --classic slack
@@ -180,7 +168,7 @@ snap refresh slack
 
 # Install spotify
 
-snap install --devmode spotify
+snap install spotify
 snap refresh spotify
 
 # Install sshuttle
@@ -189,7 +177,7 @@ apt-get install --no-install-recommends --yes sshuttle
 
 # Install telegram
 
-snap install --devmode telegram-desktop
+snap install telegram-desktop
 snap refresh telegram-desktop
 
 # Install visual studio code
@@ -199,7 +187,7 @@ snap refresh code
 
 # Install vlc
 
-snap install --classic vlc
+snap install vlc
 snap refresh vlc
 
 # Clean

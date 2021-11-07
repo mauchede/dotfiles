@@ -19,8 +19,10 @@ if [ -d ~/.bash_aliases.d ]; then
     done
 fi
 
-if [ -f ~/.env ]; then
-    source <(sed --regexp-extended --silent "s/[^#]+/export &/ p" ~/.env)
+if [ -d ~/.bash_environment.d ]; then
+    for file in ~/.bash_environment.d/*; do
+        source "$file"
+    done
 fi
 
 # git configuration

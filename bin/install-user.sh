@@ -25,11 +25,8 @@ fi
 sudo --set-home --shell --user "$1" -- bash << "EOF"
     set -e -u -x
 
-    mkdir -p "${HOME}"/.bin
+    mkdir -p "${HOME}"/.local/bin
     cp --no-target-directory --recursive ./src/user/rootfs "${HOME}"/
-    if [ ! -f "${HOME}"/.env ] ; then
-        touch "${HOME}"/.env || :
-    fi
 EOF
 
 # Configure git
