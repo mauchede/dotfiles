@@ -9,7 +9,8 @@ If you like / use this project, please let me known by adding a ★ on the [GitH
 ### System modifications
 
 * Add applications/aliases/commands:
-  - [aws-cli](https://aws.amazon.com/en/cli/)
+  - [android-tools](https://developer.android.com/studio/command-line/adb)
+  - [chromium](https://www.chromium.org/)
   - [composer](https://getcomposer.org/) ([dockerized](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/composer)
   - [discord](https://discordapp.com/)
   - [docker](https://www.docker.com)
@@ -17,7 +18,6 @@ If you like / use this project, please let me known by adding a ★ on the [GitH
   - [extract](https://raw.githubusercontent.com/mauchede/dotfiles/master/src/system/usr/local/bin/extract): easily extract an archive
   - [firefox](https://www.mozilla.org/en/firefox/)
   - [git](https://git-scm.com)
-  - [google-chrome](https://www.google.com/intl/fr_fr/chrome/)
   - [gparted](https://gparted.org/)
   - [guake](http://guake-project.org/)
   - [ffmpeg](https://www.ffmpeg.org/)
@@ -34,7 +34,6 @@ If you like / use this project, please let me known by adding a ★ on the [GitH
   - [slack](https://slack.com)
   - [spotify](https://www.spotify.com/)
   - [sshuttle](https://github.com/sshuttle/sshuttle)
-  - [telegram](https://telegram.org/)
   - [visual studio code](https://code.visualstudio.com/)
   - [vlc](http://www.videolan.org/vlc)
 

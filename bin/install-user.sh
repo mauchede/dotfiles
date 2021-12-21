@@ -29,6 +29,15 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     cp --no-target-directory --recursive ./src/user/rootfs "${HOME}"/
 EOF
 
+# Configure gnome
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    gsettings set org.gnome.shell.extensions.desktop-icons show-home false
+    gsettings set org.gnome.shell.extensions.desktop-icons show-trash false
+EOF
+
 # Configure git
 
 sudo --set-home --shell --user "$1" -- bash << "EOF"

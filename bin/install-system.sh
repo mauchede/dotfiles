@@ -20,7 +20,7 @@ apt-get dist-upgrade --yes
 
 # Install base
 
-apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse exfat-utils gawk htop make p7zip-full printer-driver-escpr python3-pip python3-setuptools rar vim
+apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse exfat-utils gawk htop make p7zip-full printer-driver-escpr rar vim
 apt-get install --yes ubuntu-restricted-extras
 
 # Install docker-ce
@@ -40,10 +40,14 @@ cp --no-target-directory --recursive ./src/user/rootfs/.bash_environment.d /root
 cp --no-target-directory ./src/user/rootfs/.bash_profile /root/.bash_profile
 cp --no-target-directory ./src/user/rootfs/.bashrc /root/.bashrc
 
-# Install aws-cli
+# Install android-tools
 
-snap install --classic aws-cli
-snap refresh aws-cli
+apt-get install --no-install-recommends --yes android-tools-adb
+
+# Install chromium
+
+snap install chromium
+snap refresh chromium
 
 # Install composer
 
@@ -52,7 +56,7 @@ cp --no-target-directory ./src/system/rootfs/usr/local/bin/composer /usr/local/b
 # Install discord
 
 curl --location --output /tmp/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
-sudo apt-get install --no-install-recommends --yes libc++1
+sudo apt-get install --no-install-recommends --yes libappindicator1 libatomic1 libc++1 libgconf-2-4
 sudo dpkg -i /tmp/discord.deb
 
 # Install docker-compose
@@ -69,7 +73,7 @@ apt-get install --no-install-recommends --yes filezilla
 
 # Install firefox
 
-apt-get remove --purge firefox firefox-*
+apt-get remove --purge --yes firefox firefox-*
 snap install firefox
 
 # Install ffmpeg
@@ -79,13 +83,6 @@ apt-get install --no-install-recommends --yes ffmpeg
 # Install git
 
 apt-get install --no-install-recommends --yes git git-remote-gcrypt
-
-# Install google-chrome
-
-echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-curl --location --output - "https://dl-ssl.google.com/linux/linux_signing_key.pub" | apt-key add -
-apt-get update
-apt-get install --no-install-recommends google-chrome-stable
 
 # Install gparted
 
@@ -107,8 +104,8 @@ snap refresh hugo
 
 # Install imagemagick
 
-apt-get install --no-install-recommends imagemagick
-sed -e 's@<policy domain="coder" rights="none" pattern="PDF" />@<policy domain="coder" rights="read | write" pattern="PDF" />@g' -i /etc/ImageMagick-6/policy.xml
+apt-get install --no-install-recommends --yes imagemagick
+sed -e 's@<policy domain="coder" rights="none" pattern="PDF" />@<policy domain="coder" rights="read | write" pattern="PDF" />@g' -i /etc/ImageMagick-6/policy.xml
 
 # Install keybase
 
@@ -132,10 +129,6 @@ snap refresh libreoffice
 apt-get install --no-install-recommends --yes libnss3-tools
 curl --location --output /usr/local/bin/mkcert "https://github.com/FiloSottile/mkcert/releases/download/v1.4.1/mkcert-v1.4.1-linux-amd64"
 chmod +x /usr/local/bin/mkcert
-
-# Install myspell
-
-apt-get install --no-install-recommends --yes myspell-fr
 
 # Install phpstorm
 
@@ -174,11 +167,6 @@ snap refresh spotify
 # Install sshuttle
 
 apt-get install --no-install-recommends --yes sshuttle
-
-# Install telegram
-
-snap install telegram-desktop
-snap refresh telegram-desktop
 
 # Install visual studio code
 
