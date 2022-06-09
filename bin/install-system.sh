@@ -20,7 +20,7 @@ apt-get dist-upgrade --yes
 
 # Install base
 
-apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse exfat-utils gawk htop make p7zip-full printer-driver-escpr rar vim
+apt-get install --no-install-recommends --yes ca-certificates curl exfat-fuse gawk htop make p7zip-full printer-driver-escpr rar vim
 apt-get install --yes ubuntu-restricted-extras
 
 # Install docker-ce
@@ -56,8 +56,8 @@ cp --no-target-directory ./src/system/rootfs/usr/local/bin/composer /usr/local/b
 # Install discord
 
 curl --location --output /tmp/discord.deb "https://discord.com/api/download?platform=linux&format=deb"
-sudo apt-get install --no-install-recommends --yes libappindicator1 libatomic1 libc++1 libgconf-2-4
-sudo dpkg -i /tmp/discord.deb
+apt-get install --no-install-recommends --yes libappindicator1 libatomic1 libc++1 libgconf-2-4
+dpkg -i /tmp/discord.deb
 
 # Install docker-compose
 
@@ -73,8 +73,8 @@ apt-get install --no-install-recommends --yes filezilla
 
 # Install firefox
 
-apt-get remove --purge --yes firefox firefox-*
 snap install firefox
+snap refresh firefox
 
 # Install ffmpeg
 
@@ -97,22 +97,10 @@ apt-get install --no-install-recommends --yes guake
 curl --location --output /usr/local/sbin/hostess "https://github.com/cbednarski/hostess/releases/download/v0.5.2/hostess_linux_amd64"
 chmod +x /usr/local/sbin/hostess
 
-# Install hugo
-
-snap install hugo
-snap refresh hugo
-
 # Install imagemagick
 
 apt-get install --no-install-recommends --yes imagemagick
 sed -e 's@<policy domain="coder" rights="none" pattern="PDF" />@<policy domain="coder" rights="read | write" pattern="PDF" />@g' -i /etc/ImageMagick-6/policy.xml
-
-# Install keybase
-
-curl --location "https://keybase.io/docs/server_security/code_signing_key.asc" | apt-key add
-cp --no-target-directory ./src/system/rootfs/etc/apt/sources.list.d/keybase.list /etc/apt/sources.list.d/keybase.list
-apt-get update
-apt-get install --no-install-recommends --yes keybase
 
 # Install jq
 
@@ -127,7 +115,7 @@ snap refresh libreoffice
 # Install mkcert
 
 apt-get install --no-install-recommends --yes libnss3-tools
-curl --location --output /usr/local/bin/mkcert "https://github.com/FiloSottile/mkcert/releases/download/v1.4.1/mkcert-v1.4.1-linux-amd64"
+curl --location --output /usr/local/bin/mkcert "https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64"
 chmod +x /usr/local/bin/mkcert
 
 # Install phpstorm
@@ -140,33 +128,19 @@ snap refresh phpstorm
 snap install --devmode postman
 snap refresh postman
 
-# Install shellcheck
-
-apt-get install --no-install-recommends --yes shellcheck
-cp --no-target-directory ./src/system/rootfs/usr/local/bin/shellcheck-folder /usr/local/bin/shellcheck-folder
-
 # Install simple-scan
 
 apt-get install --no-install-recommends --yes simple-scan
 
-# Install shfmt
-
-curl --location --output /usr/local/bin/shfmt "https://github.com/mvdan/sh/releases/download/v3.1.2/shfmt_v3.1.2_linux_amd64"
-chmod +x /usr/local/bin/shfmt
-
 # Install slack
 
-snap install --classic slack
+snap install slack
 snap refresh slack
 
 # Install spotify
 
 snap install spotify
 snap refresh spotify
-
-# Install sshuttle
-
-apt-get install --no-install-recommends --yes sshuttle
 
 # Install visual studio code
 

@@ -22,18 +22,13 @@ If you like / use this project, please let me known by adding a ★ on the [GitH
   - [guake](http://guake-project.org/)
   - [ffmpeg](https://www.ffmpeg.org/)
   - [hostess](https://github.com/cbednarski/hostess)
-  - [hugo](https://gohugo.io/)
   - [imagemagick](https://imagemagick.org/)
-  - [keybase](https://keybase.io/)
   - [jq](https://stedolan.github.io/jq/)
   - [libreoffice](https://www.libreoffice.org)
   - [phpstorm](https://www.jetbrains.com/phpstorm)
   - [postman](https://www.getpostman.com/)
-  - [shellcheck](https://github.com/koalaman/shellcheck)
-  - [shfmt](https://github.com/mvdan/sh/releases)
   - [slack](https://slack.com)
   - [spotify](https://www.spotify.com/)
-  - [sshuttle](https://github.com/sshuttle/sshuttle)
   - [visual studio code](https://code.visualstudio.com/)
   - [vlc](http://www.videolan.org/vlc)
 
@@ -41,6 +36,7 @@ If you like / use this project, please let me known by adding a ★ on the [GitH
 
 * Add applications/aliases/commands/shortcuts:
   - [docker-ip](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases.d/docker#L1): get a container IP
+  - [joplin](https://joplinapp.org/)
   - [ssh-unsafe](https://github.com/mauchede/dotfiles/blob/master/src/user/.bash_aliases.d/ubuntu#L28): run a ssh client without server key checking
 
 * Configure bash prompt:
@@ -77,4 +73,3 @@ sudo bin/install-user.sh [USER]
 * [how to enable color emoji on chrome for linux](https://www.omgubuntu.co.uk/2016/08/enable-color-emoji-linux-google-chrome-noto)
 * [human git aliases](http://gggritso.com/human-git-aliases)
 * [set environment variables from file](https://stackoverflow.com/questions/19331497/set-environment-variables-from-file)
-* [snap creates redundant duplicate directories in home folder](https://bugs.launchpad.net/ubuntu/+source/snapcraft/+bug/1746710)

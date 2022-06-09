@@ -29,15 +29,6 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     cp --no-target-directory --recursive ./src/user/rootfs "${HOME}"/
 EOF
 
-# Configure gnome
-
-sudo --set-home --shell --user "$1" -- bash << "EOF"
-    set -e -u -x
-
-    gsettings set org.gnome.shell.extensions.desktop-icons show-home false
-    gsettings set org.gnome.shell.extensions.desktop-icons show-trash false
-EOF
-
 # Configure git
 
 sudo --set-home --shell --user "$1" -- bash << "EOF"
@@ -72,32 +63,14 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
         echo "yarn-*.log" >> "${HOME}"/.gitignore_global
     fi
 
+    git config --global init.defaultBranch master
+
     git config --global fetch.prune true
 EOF
 
 # Configure user
 
 adduser "$1" docker
-
-# Create custom certificates
-
-if [ ! -d "$(mkcert -CAROOT)" ]; then
-    mkcert -install
-fi
-
-# Fix duplicate directories in home folder (see https://bugs.launchpad.net/ubuntu/+source/snapcraft/+bug/1746710)
-
-sudo --set-home --shell --user "$1" -- bash << "EOF"
-    set -e -u -x
-
-    rm -f -r "${HOME}"/Desktop "${HOME}"/Downloads "${HOME}"/Music "${HOME}"/Pictures "${HOME}"/Templates "${HOME}"/Videos
-    ln --symbolic "${HOME}"/Bureau "${HOME}"/Desktop
-    ln --symbolic "${HOME}"/Téléchargements "${HOME}"/Downloads
-    ln --symbolic "${HOME}"/Musique "${HOME}"/Music
-    ln --symbolic "${HOME}"/Images "${HOME}"/Pictures
-    ln --symbolic "${HOME}"/Modèles "${HOME}"/Templates
-    ln --symbolic "${HOME}"/Vidéos "${HOME}"/Videos
-EOF
 
 # Install fonts
 
@@ -108,4 +81,12 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     ( cd "$(mktemp -d)" && curl --location --output NotoColorEmoji.zip "https://noto-website.storage.googleapis.com/pkgs/NotoColorEmoji-unhinted.zip" && unzip NotoColorEmoji.zip && cp NotoColorEmoji.ttf "${HOME}/.fonts/NotoColorEmoji.ttf" )
 
     fc-cache -f -v
+EOF
+
+# Install joplin
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    curl --location "https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh" | bash
 EOF
