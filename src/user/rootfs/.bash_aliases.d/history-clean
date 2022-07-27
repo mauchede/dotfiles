@@ -1,0 +1,4 @@
+history-clean() {
+    > ~/.bash_history
+    history -c
+}

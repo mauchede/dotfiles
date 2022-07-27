@@ -40,9 +40,13 @@ cp --no-target-directory --recursive ./src/user/rootfs/.bash_environment.d /root
 cp --no-target-directory ./src/user/rootfs/.bash_profile /root/.bash_profile
 cp --no-target-directory ./src/user/rootfs/.bashrc /root/.bashrc
 
-# Install android-tools
+## Install balena etcher
 
-apt-get install --no-install-recommends --yes android-tools-adb
+rm -f /tmp/balenaEtcher-1.7.9-x64.zip
+( cd /tmp && curl --location --output /tmp/balenaEtcher-1.7.9-x64.zip "https://github.com/balena-io/etcher/releases/download/v1.7.9/balena-etcher-electron-1.7.9-linux-x64.zip" && unzip /tmp/balenaEtcher-1.7.9-x64.zip )
+rm -f /tmp/balenaEtcher-1.7.9-x64.zip
+mv /tmp/balenaEtcher-1.7.9-x64.AppImage /usr/local/bin/balenaEtcher
+chmod +x /usr/local/bin/balenaEtcher
 
 # Install chromium
 
@@ -102,6 +106,10 @@ chmod +x /usr/local/sbin/hostess
 apt-get install --no-install-recommends --yes imagemagick
 sed -e 's@<policy domain="coder" rights="none" pattern="PDF" />@<policy domain="coder" rights="read | write" pattern="PDF" />@g' -i /etc/ImageMagick-6/policy.xml
 
+# Install java
+
+apt-get install --no-install-recommends --yes default-jdk default-jre
+
 # Install jq
 
 snap install jq
@@ -117,6 +125,11 @@ snap refresh libreoffice
 apt-get install --no-install-recommends --yes libnss3-tools
 curl --location --output /usr/local/bin/mkcert "https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64"
 chmod +x /usr/local/bin/mkcert
+
+# Install node
+
+snap install --classic node
+snap refresh node
 
 # Install phpstorm
 
@@ -142,15 +155,15 @@ snap refresh slack
 snap install spotify
 snap refresh spotify
 
-# Install visual studio code
-
-snap install --classic code
-snap refresh code
-
 # Install vlc
 
 snap install vlc
 snap refresh vlc
+
+# Install vscodium
+
+snap install --classic codium
+snap refresh codium
 
 # Clean
 

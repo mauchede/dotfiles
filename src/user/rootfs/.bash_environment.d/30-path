@@ -1,0 +1,2 @@
+export PATH="${HOME}"/.local/bin:"${PATH}"
+export PATH="$(printf %s "${PATH}" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}')"

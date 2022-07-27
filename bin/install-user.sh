@@ -72,6 +72,23 @@ EOF
 
 adduser "$1" docker
 
+# Install android sdk
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    if [ ! -d "${HOME}"/Android ]; then
+        rm -f "${HOME}"/cmdline-tools.zip
+        ( cd "${HOME}" && curl --location --output "${HOME}"/cmdline-tools.zip "https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip" && unzip "${HOME}"/cmdline-tools.zip )
+        rm -f "${HOME}"/cmdline-tools.zip
+
+        mkdir -p "${HOME}"/Android/Sdk/cmdline-tools
+        mv "${HOME}"/cmdline-tools "${HOME}"/Android/Sdk/cmdline-tools/latest
+
+        yes | "${HOME}"/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools"
+    fi
+EOF
+
 # Install fonts
 
 sudo --set-home --shell --user "$1" -- bash << "EOF"
