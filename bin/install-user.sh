@@ -46,7 +46,7 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     git config --global alias.up "pull --autostash --rebase"
 
     git config --global commit.gpgsign true
-    git config --global core.editor vim
+    git config --global core.editor nano
 
     git config --global core.excludesfile "${HOME}"/.gitignore_global
     touch "${HOME}"/.gitignore_global
