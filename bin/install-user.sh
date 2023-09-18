@@ -72,23 +72,6 @@ EOF
 
 adduser "$1" docker
 
-# Install android sdk
-
-sudo --set-home --shell --user "$1" -- bash << "EOF"
-    set -e -u -x
-
-    if [ ! -d "${HOME}"/Android ]; then
-        rm -f "${HOME}"/cmdline-tools.zip
-        ( cd "${HOME}" && curl --location --output "${HOME}"/cmdline-tools.zip "https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip" && unzip "${HOME}"/cmdline-tools.zip )
-        rm -f "${HOME}"/cmdline-tools.zip
-
-        mkdir -p "${HOME}"/Android/Sdk/cmdline-tools
-        mv "${HOME}"/cmdline-tools "${HOME}"/Android/Sdk/cmdline-tools/latest
-
-        yes | "${HOME}"/Android/Sdk/cmdline-tools/latest/bin/sdkmanager "platform-tools"
-    fi
-EOF
-
 # Install fonts
 
 sudo --set-home --shell --user "$1" -- bash << "EOF"
@@ -100,10 +83,76 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     fc-cache -f -v
 EOF
 
+# Install balenaEtcher
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    rm -f "${HOME}"/.local/bin/balenaEtcher
+    curl --location --output "${HOME}"/.local/bin/balenaEtcher "https://github.com/balena-io/etcher/releases/download/v1.18.11/balenaEtcher-1.18.11-x64.AppImage"
+    chmod +x "${HOME}"/.local/bin/balenaEtcher
+EOF
+
+# Install dotenv
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    curl --location --output "${HOME}"/.local/bin/dotenv "https://github.com/bashup/dotenv/raw/master/dotenv"
+    chmod +x "${HOME}"/.local/bin/dotenv
+EOF
+
+# Install ffmpeg
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    rm -f -r /tmp/ffmpeg
+    mkdir -p /tmp/ffmpeg
+    curl --location --output /tmp/ffmpeg/ffmpeg.tar.xz "https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz"
+    bash -c 'cd /tmp/ffmpeg && tar xvf ffmpeg.tar.xz'
+    mv /tmp/ffmpeg/ffmpeg-git-*-amd64-static/ffmpeg "${HOME}"/.local/bin/ffmpeg
+    chmod +x "${HOME}"/.local/bin/ffmpeg
+    mv /tmp/ffmpeg/ffmpeg-git-*-amd64-static/ffprobe "${HOME}"/.local/bin/ffprobe
+    chmod +x "${HOME}"/.local/bin/ffprobe
+    rm -f -r /tmp/ffmpeg
+EOF
+
+# Install hostess
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    curl --location --output "${HOME}"/.local/bin/hostess "https://github.com/cbednarski/hostess/releases/download/v0.5.2/hostess_linux_amd64"
+    chmod +x "${HOME}"/.local/bin/hostess
+EOF
+
 # Install joplin
 
 sudo --set-home --shell --user "$1" -- bash << "EOF"
     set -e -u -x
 
-    curl --location "https://raw.githubusercontent.com/laurent22/joplin/dev/Joplin_install_and_update.sh" | bash
+    curl --location --output /dev/stdout "https://github.com/laurent22/joplin/raw/dev/Joplin_install_and_update.sh" | bash -s -- --force
+EOF
+
+# Install mkcert
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    curl --location --output "${HOME}"/.local/bin/mkcert "https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64"
+    chmod +x "${HOME}"/.local/bin/mkcert
+EOF
+
+# Install taskfile
+
+sudo --set-home --shell --user "$1" -- bash << "EOF"
+    set -e -u -x
+
+    rm -f -r /tmp/task
+    mkdir -p /tmp/task
+    curl --location --output /tmp/task/task.tar.gz "https://github.com/go-task/task/releases/download/v3.30.1/task_linux_amd64.tar.gz"
+    cd /tmp/task
+    tar xvf task.tar.gz
+    mv /tmp/task/task "${HOME}"/.local/bin/task
+    chmod +x "${HOME}"/.local/bin/task
+    rm -f -r /tmp/task
 EOF
