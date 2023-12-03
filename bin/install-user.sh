@@ -48,19 +48,19 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
     git config --global commit.gpgsign true
     git config --global core.editor nano
 
-    git config --global core.excludesfile "${HOME}"/.gitignore_global
-    touch "${HOME}"/.gitignore_global
-    if ! grep -F --quiet ".idea" "${HOME}"/.gitignore_global ; then
-        echo ".idea" >> "${HOME}"/.gitignore_global
+    git config --global core.excludesfile "${HOME}"/.git_ignore_global
+    touch "${HOME}"/.git_ignore_global
+    if ! grep -F --quiet ".idea" "${HOME}"/.git_ignore_global ; then
+        echo ".idea" >> "${HOME}"/.git_ignore_global
     fi
-    if ! grep -F --quiet ".php_cs.cache" "${HOME}"/.gitignore_global ; then
-        echo ".php_cs.cache" >> "${HOME}"/.gitignore_global
+    if ! grep -F --quiet ".php_cs.cache" "${HOME}"/.git_ignore_global ; then
+        echo ".php_cs.cache" >> "${HOME}"/.git_ignore_global
     fi
-    if ! grep -F --quiet ".npm-*.log" "${HOME}"/.gitignore_global ; then
-        echo ".npm-*.log" >> "${HOME}"/.gitignore_global
+    if ! grep -F --quiet ".npm-*.log" "${HOME}"/.git_ignore_global ; then
+        echo ".npm-*.log" >> "${HOME}"/.git_ignore_global
     fi
-    if ! grep -F --quiet "yarn-*.log" "${HOME}"/.gitignore_global ; then
-        echo "yarn-*.log" >> "${HOME}"/.gitignore_global
+    if ! grep -F --quiet "yarn-*.log" "${HOME}"/.git_ignore_global ; then
+        echo "yarn-*.log" >> "${HOME}"/.git_ignore_global
     fi
 
     git config --global init.defaultBranch master
@@ -149,7 +149,7 @@ sudo --set-home --shell --user "$1" -- bash << "EOF"
 
     rm -f -r /tmp/task
     mkdir -p /tmp/task
-    curl --location --output /tmp/task/task.tar.gz "https://github.com/go-task/task/releases/download/v3.30.1/task_linux_amd64.tar.gz"
+    curl --location --output /tmp/task/task.tar.gz "https://github.com/go-task/task/releases/download/v3.32.0/task_linux_amd64.tar.gz"
     cd /tmp/task
     tar xvf task.tar.gz
     mv /tmp/task/task "${HOME}"/.local/bin/task
